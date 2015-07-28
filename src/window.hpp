@@ -57,9 +57,6 @@ public:
     int getHeight();
     bool isFullscreen();
 
-    float getWidthScale(){return width_scale;}
-    float getHeightScale(){return height_scale;}
-
 private:
 
     void setSDLWindow(SDL_Window* sdl_window);
@@ -75,9 +72,6 @@ private:
     int height;
     bool fullscreen;
     bool is_mouse_hidden;
-
-    float width_scale;
-    float height_scale;
 
     int requested_width;
     int requested_height;

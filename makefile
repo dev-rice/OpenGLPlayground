@@ -16,6 +16,8 @@ MAC_LIBRARIES := -framework OpenGl -framework CoreFoundation -I/usr/local/includ
 LINUX_LIBRARIES := -lGL -lGLEW -I /usr/lib/x86_64-linux-gnu/ -I /usr/local/include -lSOIL -lpthread `sdl2-config --cflags --libs` `freetype-config --libs` -ljsoncpp
 
 KILL_TIME := 5s
+# BUILD_SCRIPT := ./tools/buildcount_timeout.sh $(TIMEOUT_SCRIPT) $(KILL_TIME)
+BUILD_SCRIPT :=
 
 # Try to auto detect the platform to build for
 ifeq ($(PLATFORM),Darwin)
@@ -31,7 +33,7 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(COMPILER) -I$(SRCDIR) $(OBJECTS) $(LIBRARIES) -o $@
 
-	@ ./tools/buildcount_timeout.sh $(TIMEOUT_SCRIPT) $(KILL_TIME)
+	@ $(BUILD_SCRIPT)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
@@ -52,5 +54,3 @@ discard:
 
 clean:
 	rm -f $(OBJDIR)/*.o
-	rm -f $(OBJDIR)/particles/*.o
-	rm -f $(OBJDIR)/core_ui/*.o
