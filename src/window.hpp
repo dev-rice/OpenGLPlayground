@@ -62,6 +62,7 @@ private:
     void setSDLWindow(SDL_Window* sdl_window);
     void setGLContext(SDL_GLContext gl_context);
     void setupOpenGLContext(int major, int minor);
+    void setupGLEW();
     Uint32 getCreationFlags();
     void createSDLWindow();
     void enableDepthTest();

@@ -95,6 +95,15 @@ void Window::setupOpenGLContext(int major, int minor) {
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, minor );
 
     setGLContext(SDL_GL_CreateContext(getSDLWindow()));
+
+    setupGLEW();
+
+}
+
+void Window::setupGLEW() {
+    // GLEW lets us use abstracted OpenGL functions
+    glewExperimental = GL_TRUE;
+    glewInit();
 }
 
 Uint32 Window::getCreationFlags() {
@@ -155,10 +164,6 @@ void Window::initializeWindow(){
 
     centerMouse();
     showMouse();
-
-    // Set up GLEW so that we can use abstracted OpenGL functions
-    glewExperimental = GL_TRUE;
-    glewInit();
 
     // Print various info about OpenGL
     // Debug::info("Renderer:       %s\n", glGetString(GL_RENDERER));
