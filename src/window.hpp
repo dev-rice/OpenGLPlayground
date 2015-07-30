@@ -28,7 +28,6 @@ public:
     void initializeWindow();
     void display();
     void close();
-    void takeScreenshot();
 
     void requestClose();
     bool shouldClose();
@@ -41,17 +40,12 @@ public:
     void setMousePosition(int x, int y);
     void centerMouse();
 
-    void setWidth(int w);
-    void setHeight(int h);
-    void setFullscreen(bool f);
+    void setFullscreen(bool fullscreen);
     void setWindowed();
     void setVsync(bool);
-    void setShouldClose(bool should_close);
 
     SDL_Window* getSDLWindow();
     SDL_GLContext getGLContext();
-
-    WindowDimensions getFullscreenDimensions();
 
     int getWidth();
     int getHeight();
@@ -59,6 +53,7 @@ public:
 
 private:
 
+    void setShouldClose(bool should_close);
     void setSDLWindow(SDL_Window* sdl_window);
     void setGLContext(SDL_GLContext gl_context);
     void setupOpenGLContext(int major, int minor);
@@ -68,6 +63,11 @@ private:
     void enableDepthTest();
     void enableBackfaceCulling();
     void setupAlphaBlending();
+
+    void setWidth(int w);
+    void setHeight(int h);
+
+    WindowDimensions getFullscreenDimensions();
 
     int width;
     int height;
