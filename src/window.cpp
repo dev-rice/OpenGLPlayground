@@ -1,12 +1,8 @@
-#include "window.hpp"
+#include "Window.hpp"
 
-Window::Window(int width, int height, bool fullscreen){
+Window::Window(int width, int height, bool fullscreen) : width(width), height(height), fullscreen(fullscreen) {
 
-    setWidth(width);
-    setHeight(height);
-    setFullscreen(fullscreen);
     setShouldClose(false);
-
     initializeWindow();
 
 }
@@ -34,7 +30,6 @@ bool Window::isOpen() {
 
 void Window::close(){
     // Quit SDL
-    SDL_GL_DeleteContext(gl_context);
     SDL_DestroyWindow(getSDLWindow());
     SDL_Quit();
 }
@@ -89,22 +84,6 @@ bool Window::isFullscreen() {
     return fullscreen;
 }
 
-void Window::setupOpenGLContext(int major, int minor) {
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, major );
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, minor );
-
-    setGLContext(SDL_GL_CreateContext(getSDLWindow()));
-
-    setupGLEW();
-
-}
-
-void Window::setupGLEW() {
-    // GLEW lets us use abstracted OpenGL functions
-    glewExperimental = GL_TRUE;
-    glewInit();
-}
 
 Uint32 Window::getCreationFlags() {
     Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
@@ -133,74 +112,16 @@ void Window::createSDLWindow() {
         SDL_WINDOWPOS_UNDEFINED, width, height, flags));
 }
 
-void Window::enableDepthTest() {
-    // Set up the correct depth rendering
-    glEnable(GL_DEPTH_TEST);
-}
-
-void Window::enableBackfaceCulling() {
-    // Describe what constitutes the front face, and enable backface culling
-    glFrontFace(GL_CCW);
-    glEnable(GL_CULL_FACE);
-}
-
-void Window::setupAlphaBlending() {
-    // Alpha transparency
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-}
-
 SDL_Window* Window::getSDLWindow() {
     return sdl_window;
 }
 
-SDL_GLContext Window::getGLContext() {
-    return gl_context;
-}
-
 void Window::initializeWindow(){
     createSDLWindow();
-    setupOpenGLContext(4, 1);
-
-    centerMouse();
-    showMouse();
 
     // Print various info about OpenGL
     // Debug::info("Renderer:       %s\n", glGetString(GL_RENDERER));
     // Debug::info("OpenGL version: %s\n", glGetString(GL_VERSION));
     // Debug::info("GLSL version:   %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-    enableDepthTest();
-    enableBackfaceCulling();
-    setupAlphaBlending();
 
-}
-
-bool Window::isMouseHidden() {
-    return is_mouse_hidden;
-}
-
-void Window::hideMouse() {
-    is_mouse_hidden = true;
-    SDL_ShowCursor(SDL_DISABLE);
-}
-
-void Window::showMouse() {
-    is_mouse_hidden = false;
-    SDL_ShowCursor(SDL_ENABLE);
-}
-
-void Window::toggleMouse() {
-    if (isMouseHidden()) {
-        showMouse();
-    } else {
-        hideMouse();
-    }
-}
-
-void Window::setMousePosition(int x, int y){
-    SDL_WarpMouseInWindow(getSDLWindow(), x, y);
-}
-
-void Window::centerMouse(){
-    setMousePosition(getWidth() / 2, getHeight() / 2);
 }

@@ -33,36 +33,24 @@ public:
     bool shouldClose();
     bool isOpen();
 
-    void hideMouse();
-    void showMouse();
-    void toggleMouse();
-    bool isMouseHidden();
-    void setMousePosition(int x, int y);
-    void centerMouse();
-
     void setFullscreen(bool fullscreen);
     void setWindowed();
     void setVsync(bool);
-
-    SDL_Window* getSDLWindow();
-    SDL_GLContext getGLContext();
 
     int getWidth();
     int getHeight();
     bool isFullscreen();
 
+    void setGLContext(SDL_GLContext gl_context);
+    SDL_Window* getSDLWindow();
+
 private:
 
     void setShouldClose(bool should_close);
     void setSDLWindow(SDL_Window* sdl_window);
-    void setGLContext(SDL_GLContext gl_context);
-    void setupOpenGLContext(int major, int minor);
-    void setupGLEW();
+
     Uint32 getCreationFlags();
     void createSDLWindow();
-    void enableDepthTest();
-    void enableBackfaceCulling();
-    void setupAlphaBlending();
 
     void setWidth(int w);
     void setHeight(int h);
