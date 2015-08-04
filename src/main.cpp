@@ -25,22 +25,24 @@ void handleInputs(Mouse& mouse, Window& window) {
     // Misleading argument and function name combination. The input handling does not draw from the mouse or window at all, it simply does things with them
 
     SDL_Event event;
-    SDL_PollEvent(&event);
-    if (event.type == SDL_QUIT) {
-        window.requestClose();
-    }
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            window.requestClose();
+        }
 
 
-    // SDL_Event event;
-    // SDL_PollEvent(&event);
-    //
-    // SDL_Scancode key_scancode = event.key.keysym.scancode;
-    char key = getKeyboardInputCharacter(event);
-    if (key == 'm'){
-        mouse.hide();
-    } else if (key == 'c') {
-        mouse.centerInWindow();
+        // SDL_Event event;
+        // SDL_PollEvent(&event);
+        //
+        // SDL_Scancode key_scancode = event.key.keysym.scancode;
+        char key = getKeyboardInputCharacter(event);
+        if (key == 'm'){
+            mouse.hide();
+        } else if (key == 'c') {
+            mouse.centerInWindow();
+        }
     }
+
 }
 
 int main(int argc, char* argv[]) {
