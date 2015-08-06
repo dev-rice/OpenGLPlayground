@@ -8,8 +8,13 @@ class Mesh {
 public:
     Mesh();
     void draw();
+    void clearBuffer();
+    void show();
+    void hide();
+    void toggle();
+    bool isHidden();
 private:
-
+    bool is_hidden;
 };
 
 #endif

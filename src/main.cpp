@@ -13,7 +13,7 @@ using namespace std;
 char getKeyboardInputCharacter(SDL_Event& event) {
 
     char key = 0;
-    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+    if (event.type == SDL_KEYDOWN) {
         SDL_Keycode keycode = event.key.keysym.sym;
         key = keycode;
         printf("%c\n", key);
@@ -22,7 +22,7 @@ char getKeyboardInputCharacter(SDL_Event& event) {
     return key;
 }
 
-void handleInputs(Mouse& mouse, Window& window) {
+void handleInputs(Mouse& mouse, Window& window, Mesh& mesh) {
     // Misleading argument and function name combination. The input handling does not draw from the mouse or window at all, it simply does things with them
 
     SDL_Event event;
@@ -41,6 +41,9 @@ void handleInputs(Mouse& mouse, Window& window) {
             mouse.hide();
         } else if (key == 'c') {
             mouse.centerInWindow();
+        } else if (key == 'h') {
+            mesh.toggle();
+            cout << "mesh hidden? " << (mesh.isHidden() ? "true" : "false") << "\n";
         }
     }
 
@@ -58,7 +61,7 @@ int main(int argc, char* argv[]) {
     while(window.isOpen()) {
         mesh.draw();
 
-        handleInputs(mouse, window);
+        handleInputs(mouse, window, mesh);
         window.display();
 
     }

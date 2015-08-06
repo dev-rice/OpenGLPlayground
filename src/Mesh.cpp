@@ -78,11 +78,36 @@ Mesh::Mesh() {
     glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
 }
 
-void Mesh::draw() {
-    // Clear the screen to black
+void Mesh::clearBuffer() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+}
 
-    // Draw a rectangle from the 2 triangles using 6 indices
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+void Mesh::draw() {
+    clearBuffer();
+
+    if (!isHidden()) {
+        // Draw a rectangle from the 2 triangles using 6 indices
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    }
+}
+
+void Mesh::show() {
+    is_hidden = false;
+}
+
+void Mesh::hide() {
+    is_hidden = true;
+}
+
+bool Mesh::isHidden() {
+    return is_hidden;
+}
+
+void Mesh::toggle() {
+    if (isHidden()) {
+        show();
+    } else {
+        hide();
+    }
 }
