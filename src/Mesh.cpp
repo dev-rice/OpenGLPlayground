@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(): shader("src/shaders/temp.vs", "src/shaders/temp.fs") {
+Mesh::Mesh(ShaderProgram& shader) : shader(&shader) {
 
     // Create a Vertex Array Object
     GLuint vao;
@@ -34,17 +34,21 @@ Mesh::Mesh(): shader("src/shaders/temp.vs", "src/shaders/temp.fs") {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
-    linkMeshToShader(shader.getGLId());
+    linkMeshToShader(getShaderProgram());
 
 }
 
-void Mesh::linkMeshToShader(GLuint shaderProgram) {
+ShaderProgram& Mesh::getShaderProgram() {
+    return *shader;
+}
+
+void Mesh::linkMeshToShader(ShaderProgram& shaderProgram) {
     // Specify the layout of the vertex data
-    GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+    GLint posAttrib = glGetAttribLocation(shaderProgram.getGLId(), "position");
     glEnableVertexAttribArray(posAttrib);
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
 
-    GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
+    GLint colAttrib = glGetAttribLocation(shaderProgram.getGLId(), "color");
     glEnableVertexAttribArray(colAttrib);
     glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
 }
@@ -57,7 +61,7 @@ void Mesh::clearBuffer() {
 void Mesh::draw() {
     clearBuffer();
 
-    shader.use();
+    getShaderProgram().use();
 
     if (!isHidden()) {
         // Draw a rectangle from the 2 triangles using 6 indices

@@ -6,24 +6,25 @@
 #include "includes/gl.hpp"
 #include "includes/glm.hpp"
 
-#include "Shader.hpp"
+#include "ShaderProgram.hpp"
 
 using namespace std;
 
 class Mesh {
 public:
-    Mesh();
+    Mesh(ShaderProgram& shader);
     void draw();
     void clearBuffer();
     void show();
     void hide();
     void toggleVisibility();
     bool isHidden();
-private:
-    void linkMeshToShader(GLuint shader_program);
+    ShaderProgram& getShaderProgram();
 
+private:
+    void linkMeshToShader(ShaderProgram& shader_program);
     bool is_hidden;
-    Shader shader;
+    ShaderProgram* shader;
 };
 
 #endif

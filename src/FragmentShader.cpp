@@ -16,7 +16,7 @@ GLuint FragmentShader::loadShader(string fs_filename){
     // Compile it
     glCompileShader(fragment_shader);
 
-    cout << "Error compiling shader: " << getShaderErrorLog() << "\n";
+    cout << "Error compiling shader: " << getErrorLog() << "\n";
 
     return fragment_shader;
 }

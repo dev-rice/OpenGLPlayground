@@ -16,7 +16,11 @@ void ShaderFile::setGLId(GLuint id) {
     shader_id = id;
 }
 
-string ShaderFile::getShaderErrorLog() {
+void ShaderFile::attachTo(GLuint shader_program) {
+    glAttachShader(shader_program, getGLId());
+}
+
+string ShaderFile::getErrorLog() {
     string error_log = "";
     GLint status;
     glGetShaderiv(getGLId(), GL_COMPILE_STATUS, &status);

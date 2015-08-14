@@ -16,7 +16,7 @@ GLuint VertexShader::loadShader(string vs_filename){
     // Compile it
     glCompileShader(vertex_shader);
 
-    cout << "Error compiling shader: " << getShaderErrorLog() << "\n";
+    cout << "Error compiling shader: " << getErrorLog() << "\n";
 
     return vertex_shader;
 }

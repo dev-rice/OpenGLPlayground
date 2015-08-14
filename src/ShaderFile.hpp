@@ -15,13 +15,14 @@ public:
     ~ShaderFile();
 
     GLuint getGLId();
+    void attachTo(GLuint shader_program);
 
 private:
     GLuint shader_id;
 
 protected:
     void setGLId(GLuint id);
-    string getShaderErrorLog();
+    string getErrorLog();
     string getFileContents(string filename);
     virtual GLuint loadShader(string filename) = 0;
 };
