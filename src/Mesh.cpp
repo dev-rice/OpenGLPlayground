@@ -1,24 +1,8 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh() {
-    // Shader sources
-    const GLchar* vertexSource =
-        "#version 150 core\n"
-        "in vec2 position;"
-        "in vec3 color;"
-        "out vec3 Color;"
-        "void main() {"
-        "   Color = color;"
-        "   gl_Position = vec4(position, 0.0, 1.0);"
-        "}";
-    const GLchar* fragmentSource =
-        "#version 150 core\n"
-        "in vec3 Color;"
-        "out vec4 outColor;"
-        "void main() {"
-        "   outColor = vec4(Color, 1.0);"
-        "}";
+Mesh::Mesh(): shader("src/shaders/temp.vs", "src/shaders/temp.fs") {
 
+    // Create a Vertex Array Object
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -46,28 +30,15 @@ Mesh::Mesh() {
         2, 3, 0
     };
 
-    // Create Vertex Array Object
+    // Create Element Buffer Object
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
-    // Create and compile the vertex shader
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexSource, NULL);
-    glCompileShader(vertexShader);
+    linkMeshToShader(shader.getGLId());
 
-    // Create and compile the fragment shader
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
-    glCompileShader(fragmentShader);
+}
 
-    // Link the vertex and fragment shader into a shader program
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glBindFragDataLocation(shaderProgram, 0, "outColor");
-    glLinkProgram(shaderProgram);
-    glUseProgram(shaderProgram);
-
+void Mesh::linkMeshToShader(GLuint shaderProgram) {
     // Specify the layout of the vertex data
     GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
     glEnableVertexAttribArray(posAttrib);
@@ -85,6 +56,8 @@ void Mesh::clearBuffer() {
 
 void Mesh::draw() {
     clearBuffer();
+
+    shader.use();
 
     if (!isHidden()) {
         // Draw a rectangle from the 2 triangles using 6 indices
@@ -104,7 +77,7 @@ bool Mesh::isHidden() {
     return is_hidden;
 }
 
-void Mesh::toggle() {
+void Mesh::toggleVisibility() {
     if (isHidden()) {
         show();
     } else {

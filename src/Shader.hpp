@@ -16,7 +16,12 @@ public:
     Shader(string vs_filename, string fs_filename);
 
     GLuint getGLId();
+
+    void use();
 private:
+
+    string getFileContents(string filename);
+    string getShaderErrorLog(GLuint shader_id);
 
     GLuint loadVertexShader(string vs_filename);
     GLuint loadFragmentShader(string fs_filename);

@@ -31,20 +31,20 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh) {
             window.requestClose();
         }
 
-        // SDL_Event event;
-        // SDL_PollEvent(&event);
-        //
-        // SDL_Scancode key_scancode = event.key.keysym.scancode;
-        char key = getKeyboardInputCharacter(event);
+        SDL_Scancode key_scancode = event.key.keysym.scancode;
+        if (key_scancode == SDL_SCANCODE_ESCAPE) {
+            window.requestClose();
+        }
 
+        char key = getKeyboardInputCharacter(event);
         if (key == 'm'){
-            mouse.hide();
+            mouse.toggleVisibility();
         } else if (key == 'c') {
             mouse.centerInWindow();
         } else if (key == 'h') {
-            mesh.toggle();
-            cout << "mesh hidden? " << (mesh.isHidden() ? "true" : "false") << "\n";
+            mesh.toggleVisibility();
         }
+
     }
 
 }
