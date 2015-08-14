@@ -4,6 +4,10 @@ ShaderFile::ShaderFile(string filename) {
 
 }
 
+ShaderFile::~ShaderFile() {
+    glDeleteShader(getGLId());
+}
+
 GLuint ShaderFile::getGLId() {
     return shader_id;
 }

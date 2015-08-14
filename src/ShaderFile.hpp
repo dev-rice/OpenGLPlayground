@@ -12,6 +12,7 @@ using namespace std;
 class ShaderFile {
 public:
     ShaderFile(string filename);
+    ~ShaderFile();
 
     GLuint getGLId();
 

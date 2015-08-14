@@ -40,11 +40,6 @@ GLuint Shader::combineShaderProgram(GLuint vertex_shader, GLuint fragment_shader
     // Put the shader on the graphics card.
     glLinkProgram(shader_program);
 
-    // Free up the space from the vetex and fragment shader because
-    // they have been combined into the shader program.
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
-
     return shader_program;
 }
 
