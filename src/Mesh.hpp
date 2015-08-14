@@ -4,6 +4,8 @@
 #include "includes/gl.hpp"
 #include "includes/glm.hpp"
 
+#include "Shader.hpp"
+
 class Mesh {
 public:
     Mesh();
@@ -15,6 +17,7 @@ public:
     bool isHidden();
 private:
     bool is_hidden;
+    Shader shader;
 };
 
 #endif
