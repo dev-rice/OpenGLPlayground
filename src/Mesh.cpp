@@ -2,7 +2,6 @@
 
 Mesh::Mesh(ShaderProgram& shader) : shader(&shader) {
 
-
     createVAO();
     createVBO();
     createEBO();
@@ -22,20 +21,15 @@ void Mesh::createVBO() {
     GLuint vbo;
     glGenBuffers(1, &vbo);
 
-    GLfloat vertices[] = {
-        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
-    };
+    vector<GLfloat> vertices = getVertices();
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
 }
 
 vector<GLfloat> Mesh::getVertices() {
-    GLfloat vertices[] = {
+    return {
         -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
          0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
          0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right

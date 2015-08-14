@@ -14,12 +14,15 @@ using namespace std;
 class Mesh {
 public:
     Mesh(ShaderProgram& shader);
-    void draw();
+
     void clearBuffer();
+    void draw();
+
     void show();
     void hide();
     void toggleVisibility();
     bool isHidden();
+
     ShaderProgram& getShaderProgram();
 
 private:
@@ -27,7 +30,9 @@ private:
     void createVBO();
     void createEBO();
     vector<GLfloat> getVertices();
+
     void linkMeshToShader(ShaderProgram& shader_program);
+
     bool is_hidden;
     ShaderProgram* shader;
 };
