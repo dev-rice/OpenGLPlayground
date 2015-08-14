@@ -1,14 +1,10 @@
 #include "FragmentShader.hpp"
 
-FragmentShader::FragmentShader(string filename) {
-    shader_id = loadFragmentShader(filename);
+FragmentShader::FragmentShader(string filename) : ShaderFile(filename) {
+    setGLId(loadShader(filename));
 }
 
-GLuint FragmentShader::getGLId() {
-    return shader_id;
-}
-
-GLuint FragmentShader::loadFragmentShader(string fs_filename){
+GLuint FragmentShader::loadShader(string fs_filename){
     string fs_source = getFileContents(fs_filename);
     const char* fs_source_c = fs_source.c_str();
 
@@ -20,26 +16,7 @@ GLuint FragmentShader::loadFragmentShader(string fs_filename){
     // Compile it
     glCompileShader(fragment_shader);
 
-    cout << getShaderErrorLog();
+    cout << "Error compiling shader: " << getShaderErrorLog() << "\n";
 
     return fragment_shader;
-}
-
-string FragmentShader::getShaderErrorLog() {
-    string error_log = "";
-    GLint status;
-    glGetShaderiv(getGLId(), GL_COMPILE_STATUS, &status);
-    if (status != GL_TRUE){
-        char info_log[512];
-        glGetShaderInfoLog(shader_id, 512, NULL, info_log);
-        error_log = info_log;
-    }
-    return error_log;
-}
-
-string FragmentShader::getFileContents(string filename) {
-    ifstream input_stream(filename);
-    string contents((istreambuf_iterator<char>(input_stream)), istreambuf_iterator<char>());
-    // cout << contents;
-    return contents;
 }

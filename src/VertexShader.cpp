@@ -1,14 +1,10 @@
 #include "VertexShader.hpp"
 
-VertexShader::VertexShader(string filename) {
-    shader_id = loadVertexShader(filename);
+VertexShader::VertexShader(string filename) : ShaderFile(filename) {
+    setGLId(loadShader(filename));
 }
 
-GLuint VertexShader::getGLId() {
-    return shader_id;
-}
-
-GLuint VertexShader::loadVertexShader(string vs_filename){
+GLuint VertexShader::loadShader(string vs_filename){
     // Create the vertex shader
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -20,26 +16,7 @@ GLuint VertexShader::loadVertexShader(string vs_filename){
     // Compile it
     glCompileShader(vertex_shader);
 
-    cout << getShaderErrorLog();
+    cout << "Error compiling shader: " << getShaderErrorLog() << "\n";
 
     return vertex_shader;
-}
-
-string VertexShader::getShaderErrorLog() {
-    string error_log = "";
-    GLint status;
-    glGetShaderiv(getGLId(), GL_COMPILE_STATUS, &status);
-    if (status != GL_TRUE){
-        char info_log[512];
-        glGetShaderInfoLog(shader_id, 512, NULL, info_log);
-        error_log = info_log;
-    }
-    return error_log;
-}
-
-string VertexShader::getFileContents(string filename) {
-    ifstream input_stream(filename);
-    string contents((istreambuf_iterator<char>(input_stream)), istreambuf_iterator<char>());
-    // cout << contents;
-    return contents;
 }

@@ -1,24 +1,16 @@
 #ifndef VertexShader_h
 #define VertexShader_h
 
-#include <string>
-#include <fstream>
-#include <iostream>
-
-#include "includes/gl.hpp"
+#include "ShaderFile.hpp"
 
 using namespace std;
 
-class VertexShader {
+class VertexShader : public ShaderFile {
 public:
     VertexShader(string filename);
-
-    GLuint getGLId();
 private:
-    GLuint loadVertexShader(string filename);
-    GLuint shader_id;
-    string getShaderErrorLog();
-    string getFileContents(string filename);
+    GLuint loadShader(string filename);
+
 };
 
 #endif
