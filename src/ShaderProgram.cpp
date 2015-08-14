@@ -5,6 +5,7 @@ ShaderProgram::ShaderProgram(){
 }
 
 ShaderProgram::ShaderProgram(VertexShader& vertex_shader, FragmentShader& fragment_shader) {
+
     gl_shader_id = glCreateProgram();
 
     combineShaderPrograms(vertex_shader, fragment_shader);

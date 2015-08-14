@@ -1,6 +1,6 @@
 #include "ShaderFile.hpp"
 
-ShaderFile::ShaderFile(string filename) {
+ShaderFile::ShaderFile(string filename) : filename(filename) {
 
 }
 
@@ -10,6 +10,10 @@ ShaderFile::~ShaderFile() {
 
 GLuint ShaderFile::getGLId() {
     return shader_id;
+}
+
+string ShaderFile::getFilename() {
+    return filename;
 }
 
 void ShaderFile::setGLId(GLuint id) {
@@ -44,6 +48,6 @@ string ShaderFile::getFileContents(string filename) {
 
 void ShaderFile::printErrors() {
     if (hasErrors()) {
-        cout << "Error compiling shader: \n" << getErrorLog() << "\n";
+        cout << "Error compiling shader '" << getFilename() << "':\n" << getErrorLog() << "\n";
     }
 }
