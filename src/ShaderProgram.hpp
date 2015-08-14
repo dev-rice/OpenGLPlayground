@@ -22,7 +22,9 @@ public:
 
 private:
 
-    GLuint combineShaderProgram(VertexShader& vertex_shader, FragmentShader& fragment_shader);
+    void combineShaderPrograms(VertexShader& vertex_shader, FragmentShader& fragment_shader);
+    void bindFragmentDataLocation();
+    void link();
 
     GLuint gl_shader_id;
 

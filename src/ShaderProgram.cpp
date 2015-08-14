@@ -5,7 +5,11 @@ ShaderProgram::ShaderProgram(){
 }
 
 ShaderProgram::ShaderProgram(VertexShader& vertex_shader, FragmentShader& fragment_shader) {
-    gl_shader_id = combineShaderProgram(vertex_shader, fragment_shader);
+    gl_shader_id = glCreateProgram();
+
+    combineShaderPrograms(vertex_shader, fragment_shader);
+    bindFragmentDataLocation();
+    link();
 }
 
 GLuint ShaderProgram::getGLId() {
@@ -16,17 +20,17 @@ void ShaderProgram::use() {
     glUseProgram(getGLId());
 }
 
-GLuint ShaderProgram::combineShaderProgram(VertexShader& vertex_shader, FragmentShader& fragment_shader) {
-    // Combine the shaders into a single program
-    GLuint shader_program = glCreateProgram();
-    vertex_shader.attachTo(shader_program);
-    fragment_shader.attachTo(shader_program);
+void ShaderProgram::combineShaderPrograms(VertexShader& vertex_shader, FragmentShader& fragment_shader) {
 
-    // Tell the OpenGL to use the variable outColor for its output
-    glBindFragDataLocation(shader_program, 0, "outColor");
+    vertex_shader.attachTo(gl_shader_id);
+    fragment_shader.attachTo(gl_shader_id);
 
-    // Put the shader on the graphics card.
-    glLinkProgram(shader_program);
+}
 
-    return shader_program;
+void ShaderProgram::bindFragmentDataLocation() {
+    glBindFragDataLocation(gl_shader_id, 0, "outColor");
+}
+
+void ShaderProgram::link() {
+    glLinkProgram(gl_shader_id);
 }

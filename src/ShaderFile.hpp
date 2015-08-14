@@ -16,6 +16,8 @@ public:
 
     GLuint getGLId();
     void attachTo(GLuint shader_program);
+    void printErrors();
+    bool hasErrors();
 
 private:
     GLuint shader_id;

@@ -2,6 +2,7 @@
 
 FragmentShader::FragmentShader(string filename) : ShaderFile(filename) {
     setGLId(loadShader(filename));
+    printErrors();
 }
 
 GLuint FragmentShader::loadShader(string fs_filename){
@@ -15,8 +16,6 @@ GLuint FragmentShader::loadShader(string fs_filename){
 
     // Compile it
     glCompileShader(fragment_shader);
-
-    cout << "Error compiling shader: " << getErrorLog() << "\n";
 
     return fragment_shader;
 }
