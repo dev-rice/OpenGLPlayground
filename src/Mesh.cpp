@@ -2,11 +2,22 @@
 
 Mesh::Mesh(ShaderProgram& shader) : shader(&shader) {
 
-    // Create a Vertex Array Object
+
+    createVAO();
+    createVBO();
+    createEBO();
+
+    linkMeshToShader(getShaderProgram());
+
+}
+
+void Mesh::createVAO() {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
+}
 
+void Mesh::createVBO() {
     // Create a Vertex Buffer Object and copy the vertex data to it
     GLuint vbo;
     glGenBuffers(1, &vbo);
@@ -21,6 +32,18 @@ Mesh::Mesh(ShaderProgram& shader) : shader(&shader) {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+}
+
+vector<GLfloat> Mesh::getVertices() {
+    GLfloat vertices[] = {
+        -0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
+         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
+        -0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
+    };
+}
+
+void Mesh::createEBO() {
     // Create an element array
     GLuint ebo;
     glGenBuffers(1, &ebo);
@@ -33,9 +56,6 @@ Mesh::Mesh(ShaderProgram& shader) : shader(&shader) {
     // Create Element Buffer Object
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
-    linkMeshToShader(getShaderProgram());
-
 }
 
 ShaderProgram& Mesh::getShaderProgram() {

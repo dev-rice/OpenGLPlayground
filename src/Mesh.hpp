@@ -2,6 +2,7 @@
 #define Mesh_h
 
 #include <iostream>
+#include <vector>
 
 #include "includes/gl.hpp"
 #include "includes/glm.hpp"
@@ -22,6 +23,10 @@ public:
     ShaderProgram& getShaderProgram();
 
 private:
+    void createVAO();
+    void createVBO();
+    void createEBO();
+    vector<GLfloat> getVertices();
     void linkMeshToShader(ShaderProgram& shader_program);
     bool is_hidden;
     ShaderProgram* shader;
