@@ -7,6 +7,9 @@
 
 #include "includes/gl.hpp"
 
+#include "VertexShader.hpp"
+#include "FragmentShader.hpp"
+
 using namespace std;
 
 class Shader {
