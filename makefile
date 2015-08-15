@@ -61,16 +61,11 @@ discard:
 
 clean:
 	rm -f $(OBJDIR)/*.o
+	rm *.o
 
-Window.o : $(SRCDIR)/Window.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
 
-Mouse.o : $(SRCDIR)/Mouse.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
-
-test_test.o : $(TEST_SRC_DIR)/test.cpp
+$(OBJDIR)/all_tests.o : $(TEST_SRC_DIR)/test.cpp
 	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_DIR)/include -I$(SRCDIR) $< -o $@
 
-
-test_test: Window.o Mouse.o test_test.o
-	g++ -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES)  $^ -o $@
+all_tests: $(OBJDIR)/Window.o $(OBJDIR)/Mouse.o $(OBJDIR)/all_tests.o
+	g++ -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES) $^ -o $@
