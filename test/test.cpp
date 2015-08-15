@@ -1,7 +1,13 @@
 #include "gtest/gtest.h"
 
-TEST(blahTest, blah1) {
-    EXPECT_EQ(1, 1);
+#include "Window.hpp"
+#include "Mouse.hpp"
+
+TEST(MouseTest, hideTest) {
+    Window window(1600, 900, false);
+    Mouse mouse(window);
+    mouse.hide();
+    EXPECT_EQ(mouse.isHidden(), true);
 }
 
 int main (int argc, char** argv) {

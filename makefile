@@ -19,6 +19,13 @@ KILL_TIME := 5s
 # BUILD_SCRIPT := ./tools/buildcount_timeout.sh $(TIMEOUT_SCRIPT) $(KILL_TIME)
 BUILD_SCRIPT :=
 
+# Test stuff
+GOOGLE_TEST_DIR := gtest-1.7.0
+LIBRARY_DIR := lib
+TEST_SRC_DIR := test
+TEST_EXECUTABLE := test_executable
+
+
 # Try to auto detect the platform to build for
 ifeq ($(PLATFORM),Darwin)
 	LIBRARIES := $(MAC_LIBRARIES)
@@ -54,3 +61,16 @@ discard:
 
 clean:
 	rm -f $(OBJDIR)/*.o
+
+Window.o : $(SRCDIR)/Window.cpp
+	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
+
+Mouse.o : $(SRCDIR)/Mouse.cpp
+	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
+
+test_test.o : $(TEST_SRC_DIR)/test.cpp
+	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_DIR)/include -I$(SRCDIR) $< -o $@
+
+
+test_test: Window.o Mouse.o test_test.o
+	g++  -pthread -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES)  $^ -o $@
