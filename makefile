@@ -73,4 +73,4 @@ test_test.o : $(TEST_SRC_DIR)/test.cpp
 
 
 test_test: Window.o Mouse.o test_test.o
-	g++  -pthread -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES)  $^ -o $@
+	g++ -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES)  $^ -o $@

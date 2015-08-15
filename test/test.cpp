@@ -10,6 +10,25 @@ TEST(MouseTest, hideTest) {
     EXPECT_EQ(mouse.isHidden(), true);
 }
 
+TEST(MouseTest, showTest) {
+    Window window(1600, 900, false);
+    Mouse mouse(window);
+    mouse.show();
+    EXPECT_EQ(mouse.isHidden(), false);
+}
+
+TEST(MouseTest, toggleTest) {
+    Window window(1600, 900, false);
+    Mouse mouse(window);
+    mouse.hide();
+    mouse.toggleVisibility();
+    EXPECT_EQ(mouse.isHidden(), false);
+
+    mouse.show();
+    mouse.toggleVisibility();
+    EXPECT_EQ(mouse.isHidden(), true);
+}
+
 int main (int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
