@@ -19,6 +19,11 @@ public:
     void enableBackfaceCulling();
     void setupAlphaBlending();
     void printVersionInformation();
+
+    string getRendererString();
+    string getVersionString();
+    string getGLSLVersionString();
+    
 private:
 
     void setDefaults();

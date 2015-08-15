@@ -25,16 +25,23 @@ public:
 
     ShaderProgram& getShaderProgram();
 
+    void bindVAO();
+
 private:
     void createVAO();
     void createVBO();
     void createEBO();
     vector<GLfloat> getVertices();
+    vector<GLuint> getElements();
+    int getNumElements();
+
 
     void linkMeshToShader(ShaderProgram& shader_program);
 
     bool is_hidden;
     ShaderProgram* shader;
+
+    GLuint vao;
 };
 
 #endif

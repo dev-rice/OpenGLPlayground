@@ -4,6 +4,7 @@
 #include "OpenGLContext.hpp"
 #include "Mouse.hpp"
 #include "Mesh.hpp"
+#include "Camera.hpp"
 
 #include <iostream>
 #include <cstdio>
@@ -60,8 +61,29 @@ int main(int argc, char* argv[]) {
     ShaderProgram shader(vs, fs);
     Mesh mesh(shader);
 
+    glm::vec3 pos(0, 0, 1);
+    glm::vec3 rot(0, 0, 0);
+    float move_sensitivity = 1;
+    float rotate_sensitivity = 1;
+    float fov = 45.0f;
+    Camera camera(window, pos, rot, move_sensitivity, rotate_sensitivity, fov);
+
     // Display loop
     while(window.isOpen()) {
+        mesh.bindVAO();
+
+        glm::mat4 model = glm::mat4(1.0);
+        GLint model_uniform = glGetUniformLocation(shader.getGLId(), "model");
+        glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+        glm::mat4 view = camera.getViewMatrix();
+        GLint view_uniform = glGetUniformLocation(shader.getGLId(), "view");
+        glUniformMatrix4fv(view_uniform, 1, GL_FALSE, glm::value_ptr(view));
+
+        glm::mat4 proj = camera.getProjectionMatrix();
+        GLint proj_uniform = glGetUniformLocation(shader.getGLId(), "proj");
+        glUniformMatrix4fv(proj_uniform, 1, GL_FALSE, glm::value_ptr(proj));
+
         mesh.draw();
 
         handleInputs(mouse, window, mesh);

@@ -54,9 +54,21 @@ void OpenGLContext::cleanup() {
     SDL_GL_DeleteContext(gl_context);
 }
 
+string OpenGLContext::getRendererString() {
+    return string(reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+}
+
+string OpenGLContext::getVersionString() {
+    return string(reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+}
+
+string OpenGLContext::getGLSLVersionString() {
+    return string(reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
+}
+
 void OpenGLContext::printVersionInformation() {
     // Print various info about OpenGL
-    cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
-    cout << "OpenGL version: " << glGetString(GL_VERSION) << "\n";
-    cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n";
+    cout << "Renderer: " << getRendererString() << "\n";
+    cout << "OpenGL version: " << getVersionString() << "\n";
+    cout << "GLSL version: " << getGLSLVersionString() << "\n";
 }
