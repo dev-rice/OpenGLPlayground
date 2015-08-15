@@ -67,6 +67,7 @@ clean:
 	rm *.o
 
 google-test:
+	@ mkdir -p lib
 	g++ -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_TEST_DIR) -c $(GOOGLE_TEST_SRC_DIR)/gtest-all.cc
 	@ ar -rv $(LIBRARY_DIR)/libgtest.a gtest-all.o
 	@ rm gtest-all.o
