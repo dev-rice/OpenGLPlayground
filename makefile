@@ -21,7 +21,9 @@ BUILD_SCRIPT :=
 
 # Test stuff
 GOOGLE_TEST_DIR := gtest-1.7.0
+GOOGLE_TEST_SRC_DIR := $(GOOGLE_TEST_DIR)/src
 GOOGLE_TEST_INCLUDE_DIR := $(GOOGLE_TEST_DIR)/include
+GOOGLE_TEST_MAKE_DIR := $(GOOGLE_TEST_DIR)/make
 LIBRARY_DIR := lib
 TEST_SRC_DIR := test
 TEST_EXECUTABLE := test_executable
@@ -63,6 +65,11 @@ discard:
 clean:
 	rm -f $(OBJDIR)/*.o
 	rm *.o
+
+google-test:
+	g++ -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_TEST_DIR) -c $(GOOGLE_TEST_SRC_DIR)/gtest-all.cc
+	@ ar -rv $(LIBRARY_DIR)/libgtest.a gtest-all.o
+	@ rm gtest-all.o
 
 
 $(OBJDIR)/all_tests.o : $(TEST_SRC)
