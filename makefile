@@ -38,12 +38,15 @@ else ifeq ($(PLATFORM),Linux)
 	TIMEOUT_SCRIPT := timeout
 endif
 
-all: $(SOURCES) $(EXECUTABLE)
+all: $(OBJDIR) $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(COMPILER) -I$(SRCDIR) $(OBJECTS) $(LIBRARIES) -o $@
 
 	@ $(BUILD_SCRIPT)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
