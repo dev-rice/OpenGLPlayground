@@ -114,10 +114,4 @@ SDL_Window* Window::getSDLWindow() {
 
 void Window::initializeWindow(){
     createSDLWindow();
-
-    // Print various info about OpenGL
-    // Debug::info("Renderer:       %s\n", glGetString(GL_RENDERER));
-    // Debug::info("OpenGL version: %s\n", glGetString(GL_VERSION));
-    // Debug::info("GLSL version:   %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
 }
