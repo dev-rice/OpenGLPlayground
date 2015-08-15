@@ -99,10 +99,6 @@ void Window::setSDLWindow(SDL_Window* sdl_window) {
     this->sdl_window = sdl_window;
 }
 
-void Window::setGLContext(SDL_GLContext gl_context) {
-    this->gl_context = gl_context;
-}
-
 void Window::createSDLWindow() {
     Uint32 flags = getCreationFlags();
 
@@ -118,10 +114,4 @@ SDL_Window* Window::getSDLWindow() {
 
 void Window::initializeWindow(){
     createSDLWindow();
-
-    // Print various info about OpenGL
-    // Debug::info("Renderer:       %s\n", glGetString(GL_RENDERER));
-    // Debug::info("OpenGL version: %s\n", glGetString(GL_VERSION));
-    // Debug::info("GLSL version:   %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
 }

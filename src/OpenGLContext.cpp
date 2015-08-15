@@ -4,6 +4,7 @@ OpenGLContext::OpenGLContext(int major, int minor, Window& window) {
     setVersion(major, minor);
     setupOpenGLContext(window);
     setDefaults();
+    printVersionInformation();
 }
 
 void OpenGLContext::setVersion(int major, int minor) {
@@ -15,7 +16,6 @@ void OpenGLContext::setVersion(int major, int minor) {
 void OpenGLContext::setupOpenGLContext(Window& window) {
 
     SDL_GLContext context = SDL_GL_CreateContext(window.getSDLWindow());
-    window.setGLContext(context);
 
     setupGLEW();
 
@@ -52,4 +52,11 @@ void OpenGLContext::setDefaults() {
 
 void OpenGLContext::cleanup() {
     SDL_GL_DeleteContext(gl_context);
+}
+
+void OpenGLContext::printVersionInformation() {
+    // Print various info about OpenGL
+    cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
+    cout << "OpenGL version: " << glGetString(GL_VERSION) << "\n";
+    cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n";
 }

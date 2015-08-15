@@ -1,11 +1,15 @@
 #ifndef OpenGLContext_h
 #define OpenGLContext_h
 
+#include <iostream>
+
 #include "includes/gl.hpp"
 #include "includes/sdl.hpp"
 #include "includes/glm.hpp"
 
 #include "Window.hpp"
+
+using namespace std;
 
 class OpenGLContext {
 public:
@@ -14,7 +18,7 @@ public:
     void enableDepthTest();
     void enableBackfaceCulling();
     void setupAlphaBlending();
-
+    void printVersionInformation();
 private:
 
     void setDefaults();
