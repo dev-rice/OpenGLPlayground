@@ -3,23 +3,27 @@
 #include "Window.hpp"
 #include "Mouse.hpp"
 
-TEST(MouseTest, hideTest) {
-    Window window(1600, 900, false);
-    Mouse mouse(window);
+class MouseTest : public ::testing::Test {
+public:
+    MouseTest() : window(1600, 900, false), mouse(window) {
+
+    }
+protected:
+     Window window;
+     Mouse mouse;
+};
+
+TEST_F(MouseTest, hideTest) {
     mouse.hide();
     EXPECT_EQ(mouse.isHidden(), true);
 }
 
-TEST(MouseTest, showTest) {
-    Window window(1600, 900, false);
-    Mouse mouse(window);
+TEST_F(MouseTest, showTest) {
     mouse.show();
     EXPECT_EQ(mouse.isHidden(), false);
 }
 
-TEST(MouseTest, toggleTest) {
-    Window window(1600, 900, false);
-    Mouse mouse(window);
+TEST_F(MouseTest, toggleVisibilityTest) {
     mouse.hide();
     mouse.toggleVisibility();
     EXPECT_EQ(mouse.isHidden(), false);

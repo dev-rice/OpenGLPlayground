@@ -21,10 +21,11 @@ BUILD_SCRIPT :=
 
 # Test stuff
 GOOGLE_TEST_DIR := gtest-1.7.0
+GOOGLE_TEST_INCLUDE_DIR := $(GOOGLE_TEST_DIR)/include
 LIBRARY_DIR := lib
 TEST_SRC_DIR := test
 TEST_EXECUTABLE := test_executable
-
+TEST_SRC := $(TEST_SRC_DIR)/all_tests.cpp
 
 # Try to auto detect the platform to build for
 ifeq ($(PLATFORM),Darwin)
@@ -64,8 +65,8 @@ clean:
 	rm *.o
 
 
-$(OBJDIR)/all_tests.o : $(TEST_SRC_DIR)/test.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_DIR)/include -I$(SRCDIR) $< -o $@
+$(OBJDIR)/all_tests.o : $(TEST_SRC)
+	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_INCLUDE_DIR) -I$(SRCDIR) $< -o $@
 
 all_tests: $(OBJDIR)/Window.o $(OBJDIR)/Mouse.o $(OBJDIR)/all_tests.o
 	g++ -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES) $^ -o $@
