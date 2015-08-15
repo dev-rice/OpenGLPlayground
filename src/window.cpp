@@ -99,10 +99,6 @@ void Window::setSDLWindow(SDL_Window* sdl_window) {
     this->sdl_window = sdl_window;
 }
 
-void Window::setGLContext(SDL_GLContext gl_context) {
-    this->gl_context = gl_context;
-}
-
 void Window::createSDLWindow() {
     Uint32 flags = getCreationFlags();
 

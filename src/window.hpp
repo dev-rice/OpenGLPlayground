@@ -41,7 +41,6 @@ public:
     int getHeight();
     bool isFullscreen();
 
-    void setGLContext(SDL_GLContext gl_context);
     SDL_Window* getSDLWindow();
 
 private:
@@ -68,7 +67,6 @@ private:
     bool should_close;
 
     SDL_Window* sdl_window;
-    SDL_GLContext gl_context;
 
 };
 

@@ -4,13 +4,12 @@
 #include "Mouse.hpp"
 
 class MouseTest : public ::testing::Test {
-public:
+protected:
     MouseTest() : window(1600, 900, false), mouse(window) {
 
     }
-protected:
-     Window window;
-     Mouse mouse;
+    Window window;
+    Mouse mouse;
 };
 
 TEST_F(MouseTest, hideTest) {
@@ -31,6 +30,25 @@ TEST_F(MouseTest, toggleVisibilityTest) {
     mouse.show();
     mouse.toggleVisibility();
     EXPECT_EQ(mouse.isHidden(), true);
+}
+
+class WindowTest : public ::testing::Test {
+protected:
+    WindowTest() : window(1600, 900, false) {
+
+    }
+    Window window;
+};
+
+TEST_F(WindowTest, requestCloseTest) {
+    window.requestClose();
+    EXPECT_EQ(window.shouldClose(), true);
+}
+
+TEST_F(WindowTest, isOpenTest) {
+    // No close request was sent, so it should not expect to close, and be open
+    EXPECT_EQ(window.shouldClose(), false);
+    EXPECT_EQ(window.isOpen(), true);
 }
 
 int main (int argc, char** argv) {
