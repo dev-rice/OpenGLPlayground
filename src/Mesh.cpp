@@ -32,12 +32,44 @@ void Mesh::createVBO() {
 }
 
 vector<GLfloat> Mesh::getVertices() {
+    // return {
+    //     -0.5f,  0.5f, 0.5f, 1.0f, 0.0f, 0.0f,  // Top-left
+    //      0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  // Top-right
+    //      0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+    //     -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,  // Bottom-left
+    // };
     return {
-        -0.5f,  0.5f, 0.5f, 1.0f, 0.0f, 0.0f,  // Top-left
-         0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  // Top-right
-         0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
-        -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,  // Bottom-left
+         0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+
+         0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+
     };
+}
+
+vector<GLuint> Mesh::getElements() {
+     return {
+        0, 1, 2,
+        2, 3, 0,
+
+        4, 5, 6,
+        6, 7, 4,
+
+        8, 9, 10,
+        10, 11, 8,
+
+    };
+
 }
 
 void Mesh::createEBO() {
@@ -50,14 +82,6 @@ void Mesh::createEBO() {
     // Create Element Buffer Object
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(GLuint), elements.data(), GL_STATIC_DRAW);
-}
-
-vector<GLuint> Mesh::getElements() {
-     return {
-        0, 1, 2,
-        2, 3, 0,
-    };
-
 }
 
 ShaderProgram& Mesh::getShaderProgram() {
@@ -75,13 +99,22 @@ void Mesh::linkMeshToShader(ShaderProgram& shaderProgram) {
     glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 }
 
-void Mesh::clearBuffer() {
+void Mesh::clearBuffers() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    clearDepthBuffer();
+    clearColorBuffer();
+}
+
+void Mesh::clearDepthBuffer() {
+    glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void Mesh::clearColorBuffer() {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Mesh::draw() {
-    clearBuffer();
+    clearBuffers();
 
     getShaderProgram().use();
 

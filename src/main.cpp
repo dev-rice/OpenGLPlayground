@@ -23,7 +23,7 @@ char getKeyboardInputCharacter(SDL_Event& event) {
     return key;
 }
 
-void handleInputs(Mouse& mouse, Window& window, Mesh& mesh) {
+void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
     // Misleading argument and function name combination. The input handling does not draw from the mouse or window at all, it simply does things with them
 
     SDL_Event event;
@@ -44,6 +44,26 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh) {
             mouse.centerInWindow();
         } else if (key == 'h') {
             mesh.toggleVisibility();
+        } else if (key == 'w') {
+            camera.moveZ(-0.1);
+        } else if (key == 's') {
+            camera.moveZ(0.1);
+        } else if (key == 'a') {
+            camera.moveX(-0.1);
+        } else if (key == 'd') {
+            camera.moveX(0.1);
+        } else if (key == 'z') {
+            camera.moveY(0.1);
+        } else if (key == 'x') {
+            camera.moveY(-0.1);
+        } else if (key == 'q') {
+            camera.rotateY(0.1);
+        } else if (key == 'e') {
+            camera.rotateY(-0.1);
+        } else if (key == 'r') {
+            camera.rotateX(0.1);
+        } else if (key == 'f') {
+            camera.rotateX(-0.1);
         }
 
     }
@@ -63,10 +83,8 @@ int main(int argc, char* argv[]) {
 
     glm::vec3 pos(0, 0, 1);
     glm::vec3 rot(0, 0, 0);
-    float move_sensitivity = 1;
-    float rotate_sensitivity = 1;
     float fov = 45.0f;
-    Camera camera(window, pos, rot, move_sensitivity, rotate_sensitivity, fov);
+    Camera camera(window, pos, rot, fov);
 
     // Display loop
     while(window.isOpen()) {
@@ -86,7 +104,7 @@ int main(int argc, char* argv[]) {
 
         mesh.draw();
 
-        handleInputs(mouse, window, mesh);
+        handleInputs(mouse, window, mesh, camera);
         window.display();
 
     }

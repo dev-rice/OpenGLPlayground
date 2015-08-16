@@ -45,9 +45,9 @@ void OpenGLContext::setupAlphaBlending() {
 }
 
 void OpenGLContext::setDefaults() {
-    // enableDepthTest();
-    // enableBackfaceCulling();
     setupAlphaBlending();
+    enableDepthTest();
+    enableBackfaceCulling();
 }
 
 void OpenGLContext::cleanup() {

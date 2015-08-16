@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-Camera::Camera(Window& window, glm::vec3 position, glm::vec3 rotation, float move_sensitivity, float rotate_sensitivity, float fov){
+Camera::Camera(Window& window, glm::vec3 position, glm::vec3 rotation, float fov){
 
     this->position = position;
     this->rotation = rotation;
@@ -8,9 +8,6 @@ Camera::Camera(Window& window, glm::vec3 position, glm::vec3 rotation, float mov
     local_x = glm::vec3(1.0f, 0.0f, 0.0f);
     local_y = glm::vec3(0.0f, 1.0f, 0.0f);
     local_z = glm::vec3(0.0f, 0.0f, 1.0f);
-
-    this->move_sensitivity = move_sensitivity;
-    this->rotate_sensitivity = rotate_sensitivity;
 
     // Default projection matrix
     int width = window.getWidth();
@@ -33,40 +30,40 @@ void Camera::setRotation(glm::vec3 rotation){
     this->rotation = rotation;
 }
 
-void Camera::moveX(int direction){
-    position += move_sensitivity * direction * local_x;
+void Camera::moveX(float direction){
+    position += direction * local_x;
 }
 
-void Camera::moveY(int direction){
-    position += move_sensitivity * direction * local_y;
+void Camera::moveY(float direction){
+    position += direction * local_y;
 }
 
-void Camera::moveZ(int direction){
-    position += move_sensitivity * direction * local_z;
+void Camera::moveZ(float direction){
+    position += direction * local_z;
 }
 
-void Camera::moveGlobalX(int direction){
-    position.x += move_sensitivity * direction;
+void Camera::moveGlobalX(float direction){
+    position.x += direction;
 }
 
-void Camera::moveGlobalY(int direction){
-    position.y += move_sensitivity * direction;
+void Camera::moveGlobalY(float direction){
+    position.y += direction;
 }
 
-void Camera::moveGlobalZ(int direction){
-    position.z += move_sensitivity * direction;
+void Camera::moveGlobalZ(float direction){
+    position.z += direction;
 }
 
-void Camera::rotateX(int direction){
-    rotation.x += rotate_sensitivity * direction;
+void Camera::rotateX(float direction){
+    rotation.x += direction;
 }
 
-void Camera::rotateY(int direction){
-    rotation.y += rotate_sensitivity * direction;
+void Camera::rotateY(float direction){
+    rotation.y += direction;
 }
 
-void Camera::rotateZ(int direction){
-    rotation.z += rotate_sensitivity * direction;
+void Camera::rotateZ(float direction){
+    rotation.z += direction;
 }
 
 glm::mat4 Camera::getViewMatrix(){

@@ -7,19 +7,19 @@
 
 class Camera {
 public:
-    Camera(Window& window, glm::vec3, glm::vec3, float, float, float);
+    Camera(Window& window, glm::vec3, glm::vec3, float);
 
-    void moveX(int);
-    void moveY(int);
-    void moveZ(int);
+    void moveX(float);
+    void moveY(float);
+    void moveZ(float);
 
-    void rotateX(int);
-    void rotateY(int);
-    void rotateZ(int);
+    void rotateX(float);
+    void rotateY(float);
+    void rotateZ(float);
 
-    void moveGlobalX(int);
-    void moveGlobalY(int);
-    void moveGlobalZ(int);
+    void moveGlobalX(float);
+    void moveGlobalY(float);
+    void moveGlobalZ(float);
 
     void setPosition(glm::vec3);
     void setRotation(glm::vec3);
@@ -42,9 +42,6 @@ private:
     glm::vec3 local_x;
     glm::vec3 local_y;
     glm::vec3 local_z;
-
-    float move_sensitivity;
-    float rotate_sensitivity;
 
     // Proj matrix and intrinsic values
     float fov;

@@ -15,7 +15,7 @@ class Mesh {
 public:
     Mesh(ShaderProgram& shader);
 
-    void clearBuffer();
+    void clearBuffers();
     void draw();
 
     void show();
@@ -35,6 +35,8 @@ private:
     vector<GLuint> getElements();
     int getNumElements();
 
+    void clearDepthBuffer();
+    void clearColorBuffer();
 
     void linkMeshToShader(ShaderProgram& shader_program);
 
