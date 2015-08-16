@@ -15,6 +15,11 @@ void Mesh::createVAO() {
     bindVAO();
 }
 
+void Mesh::prepareToBeDrawn() {
+    getShaderProgram().use();
+    bindVAO();
+}
+
 void Mesh::bindVAO() {
     glBindVertexArray(vao);
 }
@@ -93,28 +98,14 @@ void Mesh::linkMeshToShader(ShaderProgram& shaderProgram) {
     glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 }
 
-void Mesh::clearBuffers() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    clearDepthBuffer();
-    clearColorBuffer();
-}
-
-void Mesh::clearDepthBuffer() {
-    glClear(GL_DEPTH_BUFFER_BIT);
-}
-
-void Mesh::clearColorBuffer() {
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 void Mesh::draw() {
-    clearBuffers();
-
-    getShaderProgram().use();
-
     if (!isHidden()) {
-        glDrawElements(GL_TRIANGLES, getNumElements(), GL_UNSIGNED_INT, 0);
+        drawAllElements();
     }
+}
+
+void Mesh::drawAllElements() {
+    glDrawElements(GL_TRIANGLES, getNumElements(), GL_UNSIGNED_INT, 0);
 }
 
 int Mesh::getNumElements() {

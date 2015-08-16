@@ -114,3 +114,17 @@ SDL_Window* Window::getSDLWindow() {
 void Window::initializeWindow(){
     createSDLWindow();
 }
+
+void Window::clearBuffers() {
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    clearDepthBuffer();
+    clearColorBuffer();
+}
+
+void Window::clearDepthBuffer() {
+    glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void Window::clearColorBuffer() {
+    glClear(GL_COLOR_BUFFER_BIT);
+}

@@ -22,6 +22,8 @@ public:
     void display();
     void close();
 
+    void clearBuffers();
+
     void requestClose();
     bool shouldClose();
     bool isOpen();
@@ -41,6 +43,9 @@ public:
     Viewport& getViewport();
 
 private:
+
+    void clearDepthBuffer();
+    void clearColorBuffer();
 
     void setShouldClose(bool should_close);
     void setSDLWindow(SDL_Window* sdl_window);

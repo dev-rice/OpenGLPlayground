@@ -81,15 +81,18 @@ int main(int argc, char* argv[]) {
     ShaderProgram shader(vs, fs);
 
     Mesh mesh(shader);
+    Mesh mesh2(shader);
 
-    glm::vec3 pos(0, 0, 1);
+    glm::vec3 pos(-1, 2, 4);
     glm::vec3 rot(0, 0, 0);
     float fov = 45.0f;
     Camera camera(viewport, pos, rot, fov);
 
     // Display loop
     while(window.isOpen()) {
-        mesh.bindVAO();
+        window.clearBuffers();
+
+        mesh.prepareToBeDrawn();
 
         glm::mat4 model = glm::mat4(1.0);
         GLint model_uniform = glGetUniformLocation(shader.getGLId(), "model");
@@ -104,6 +107,24 @@ int main(int argc, char* argv[]) {
         glUniformMatrix4fv(proj_uniform, 1, GL_FALSE, glm::value_ptr(proj));
 
         mesh.draw();
+
+        mesh2.prepareToBeDrawn();
+
+        glm::vec3 position(0, 2, 0);
+        glm::mat4 model2 = glm::translate(glm::mat4(), position);
+
+        GLint model_uniform2 = glGetUniformLocation(shader.getGLId(), "model");
+        glUniformMatrix4fv(model_uniform2, 1, GL_FALSE, glm::value_ptr(model2));
+
+        glm::mat4 view2 = camera.getViewMatrix();
+        GLint view_uniform2 = glGetUniformLocation(shader.getGLId(), "view");
+        glUniformMatrix4fv(view_uniform2, 1, GL_FALSE, glm::value_ptr(view2));
+
+        glm::mat4 proj2 = camera.getProjectionMatrix();
+        GLint proj_uniform2 = glGetUniformLocation(shader.getGLId(), "proj");
+        glUniformMatrix4fv(proj_uniform2, 1, GL_FALSE, glm::value_ptr(proj2));
+        mesh2.draw();
+
 
         handleInputs(mouse, window, mesh, camera);
         window.display();

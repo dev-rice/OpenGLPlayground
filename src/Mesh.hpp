@@ -26,6 +26,7 @@ public:
     ShaderProgram& getShaderProgram();
 
     void bindVAO();
+    void prepareToBeDrawn();
 
 private:
     void createVAO();
@@ -35,9 +36,7 @@ private:
     vector<GLuint> getElements();
     int getNumElements();
 
-    void clearDepthBuffer();
-    void clearColorBuffer();
-
+    void drawAllElements();
     void linkMeshToShader(ShaderProgram& shader_program);
 
     bool is_hidden;
