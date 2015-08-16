@@ -17,7 +17,6 @@ char getKeyboardInputCharacter(SDL_Event& event) {
     if (event.type == SDL_KEYDOWN) {
         SDL_Keycode keycode = event.key.keysym.sym;
         key = keycode;
-        printf("%c\n", key);
     }
 
     return key;
@@ -72,19 +71,21 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
 
 int main(int argc, char* argv[]) {
 
-    Window window(1600, 900, false);
+    Viewport viewport(1600, 900);
+    Window window(viewport, false);
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse(window);
 
     VertexShader vs("src/shaders/temp.vs");
     FragmentShader fs("src/shaders/temp.fs");
     ShaderProgram shader(vs, fs);
+
     Mesh mesh(shader);
 
     glm::vec3 pos(0, 0, 1);
     glm::vec3 rot(0, 0, 0);
     float fov = 45.0f;
-    Camera camera(window, pos, rot, fov);
+    Camera camera(viewport, pos, rot, fov);
 
     // Display loop
     while(window.isOpen()) {
@@ -111,9 +112,6 @@ int main(int argc, char* argv[]) {
 
     // Close the window
     window.close();
-
-    // Add a line break before going back to the terminal prompt.
-    printf("\n");
 
     // Nothing went wrong!
     return 0;

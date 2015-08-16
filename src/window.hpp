@@ -10,20 +10,13 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
+#include "Viewport.hpp"
 
-struct WindowDimensions {
-    WindowDimensions(int w, int h) {
-        width = w;
-        height = h;
-    }
-    int width;
-    int height;
-};
+using namespace std;
 
 class Window {
 public:
-    Window(int width, int height, bool fullscreen);
+    Window(Viewport& viewport, bool fullscreen);
 
     void initializeWindow();
     void display();
@@ -39,9 +32,13 @@ public:
 
     int getWidth();
     int getHeight();
+
+    void setViewport(Viewport& viewport);
+
     bool isFullscreen();
 
     SDL_Window* getSDLWindow();
+    Viewport& getViewport();
 
 private:
 
@@ -51,18 +48,10 @@ private:
     Uint32 getCreationFlags();
     void createSDLWindow();
 
-    void setWidth(int w);
-    void setHeight(int h);
+    Viewport getFullscreenDimensions();
 
-    WindowDimensions getFullscreenDimensions();
-
-    int width;
-    int height;
+    Viewport* viewport;
     bool fullscreen;
-    bool is_mouse_hidden;
-
-    int requested_width;
-    int requested_height;
 
     bool should_close;
 

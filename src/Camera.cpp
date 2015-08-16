@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-Camera::Camera(Window& window, glm::vec3 position, glm::vec3 rotation, float fov){
+Camera::Camera(Viewport& viewport, glm::vec3 position, glm::vec3 rotation, float fov){
 
     this->position = position;
     this->rotation = rotation;
@@ -10,8 +10,8 @@ Camera::Camera(Window& window, glm::vec3 position, glm::vec3 rotation, float fov
     local_z = glm::vec3(0.0f, 0.0f, 1.0f);
 
     // Default projection matrix
-    int width = window.getWidth();
-    int height = window.getHeight();
+    int width = viewport.getWidth();
+    int height = viewport.getHeight();
 
     // Set intrinsic parameters
     this->fov = fov;

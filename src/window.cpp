@@ -1,6 +1,6 @@
 #include "Window.hpp"
 
-Window::Window(int width, int height, bool fullscreen) : width(width), height(height), fullscreen(fullscreen) {
+Window::Window(Viewport& viewport, bool fullscreen) : viewport(&viewport), fullscreen(fullscreen) {
 
     setShouldClose(false);
     initializeWindow();
@@ -44,9 +44,8 @@ void Window::setVsync(bool value){
 
 void Window::setFullscreen(bool fullscreen){
     if (fullscreen){
-        WindowDimensions dim = getFullscreenDimensions();
-        setWidth(dim.width);
-        setHeight(dim.height);
+        Viewport viewport_fullscreen = getFullscreenDimensions();
+        setViewport(viewport_fullscreen);
     }
     this->fullscreen = fullscreen;
 }
@@ -56,28 +55,28 @@ void Window::setWindowed() {
     setFullscreen(false);
 }
 
-WindowDimensions Window::getFullscreenDimensions() {
+int Window::getWidth() {
+    return getViewport().getWidth();
+}
+
+int Window::getHeight() {
+    return getViewport().getHeight();
+}
+
+Viewport Window::getFullscreenDimensions() {
     SDL_DisplayMode mode;
     SDL_GetDisplayMode(0, 0, &mode);
-    WindowDimensions dim(mode.w, mode.h);
+    Viewport viewport_fullscreen(mode.w, mode.h);
 
-    return dim;
+    return viewport_fullscreen;
 }
 
-void Window::setWidth(int width){
-    this->width = width;
+Viewport& Window::getViewport() {
+    return *viewport;
 }
 
-void Window::setHeight(int height){
-    this->height = height;
-}
-
-int Window::getWidth(){
-    return width;
-}
-
-int Window::getHeight(){
-    return height;
+void Window::setViewport(Viewport& viewport) {
+    this->viewport = &viewport;
 }
 
 bool Window::isFullscreen() {
@@ -105,7 +104,7 @@ void Window::createSDLWindow() {
     SDL_Init(SDL_INIT_EVERYTHING);
 
     setSDLWindow(SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED, width, height, flags));
+        SDL_WINDOWPOS_UNDEFINED, getViewport().getWidth(), getViewport().getHeight(), flags));
 }
 
 SDL_Window* Window::getSDLWindow() {

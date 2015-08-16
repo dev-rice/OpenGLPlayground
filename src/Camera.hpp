@@ -7,7 +7,7 @@
 
 class Camera {
 public:
-    Camera(Window& window, glm::vec3, glm::vec3, float);
+    Camera(Viewport& viewport, glm::vec3, glm::vec3, float);
 
     void moveX(float);
     void moveY(float);
