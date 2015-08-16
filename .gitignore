@@ -1,4 +1,4 @@
-opengl_playground
 *.o
 all_tests
 *.a
+main

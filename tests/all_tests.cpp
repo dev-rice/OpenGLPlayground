@@ -1,13 +1,15 @@
 #include "gtest/gtest.h"
 
+#include "Viewport.hpp"
 #include "Window.hpp"
 #include "Mouse.hpp"
 
 class MouseTest : public ::testing::Test {
 protected:
-    MouseTest() : window(1600, 900, false), mouse(window) {
+    MouseTest() : viewport(1600, 900), window(viewport, false), mouse(window) {
 
     }
+    Viewport viewport;
     Window window;
     Mouse mouse;
 };
@@ -34,9 +36,10 @@ TEST_F(MouseTest, toggleVisibilityTest) {
 
 class WindowTest : public ::testing::Test {
 protected:
-    WindowTest() : window(1600, 900, false) {
+    WindowTest() : viewport(1600, 900), window(viewport, false) {
 
     }
+    Viewport viewport;
     Window window;
 };
 

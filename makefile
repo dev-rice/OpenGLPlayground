@@ -25,9 +25,11 @@ GOOGLE_TEST_SRC_DIR := $(GOOGLE_TEST_DIR)/src
 GOOGLE_TEST_INCLUDE_DIR := $(GOOGLE_TEST_DIR)/include
 GOOGLE_TEST_MAKE_DIR := $(GOOGLE_TEST_DIR)/make
 LIBRARY_DIR := lib
-TEST_SRC_DIR := test
+TEST_SRC_DIR := tests
 TEST_EXECUTABLE := test_executable
 TEST_SRC := $(TEST_SRC_DIR)/all_tests.cpp
+
+APP_DIR := apps
 
 # Try to auto detect the platform to build for
 ifeq ($(PLATFORM),Darwin)
@@ -37,6 +39,9 @@ else ifeq ($(PLATFORM),Linux)
 	LIBRARIES := $(LINUX_LIBRARIES)
 	TIMEOUT_SCRIPT := timeout
 endif
+
+main: $(OBJDIR) $(SOURCES) $(OBJECTS)
+	$(COMPILER) -I$(SRCDIR) $(OBJECTS) $(LIBRARIES) $(APP_DIR)/main.$(SRCEXT) -o 	 main
 
 all: $(OBJDIR) $(SOURCES) $(EXECUTABLE)
 
@@ -81,5 +86,5 @@ google-test:
 $(OBJDIR)/all_tests.o : $(TEST_SRC)
 	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_INCLUDE_DIR) -I$(SRCDIR) $< -o $@
 
-all_tests: $(OBJDIR)/Window.o $(OBJDIR)/Mouse.o $(OBJDIR)/all_tests.o
+all_tests: $(OBJECTS) $(OBJDIR)/all_tests.o
 	g++ -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES) $^ -o $@
