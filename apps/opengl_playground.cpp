@@ -76,8 +76,8 @@ int main(int argc, char* argv[]) {
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse(window);
 
-    VertexShader vs("src/shaders/temp.vs");
-    FragmentShader fs("src/shaders/temp.fs");
+    VertexShader vs("shaders/temp.vs");
+    FragmentShader fs("shaders/temp.fs");
     ShaderProgram shader(vs, fs);
 
     Mesh mesh(shader);
