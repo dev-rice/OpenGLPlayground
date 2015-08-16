@@ -10,8 +10,6 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJDIR  := obj
 OBJECTS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
 
-EXECUTABLE := opengl_playground
-
 MAC_LIBRARIES := -framework OpenGl -framework CoreFoundation -I/usr/local/include -lglew -lSOIL `sdl2-config --libs` `freetype-config --libs` -ljsoncpp
 LINUX_LIBRARIES := -lGL -lGLEW -I /usr/lib/x86_64-linux-gnu/ -I /usr/local/include -lSOIL -lpthread `sdl2-config --cflags --libs` `freetype-config --libs` -ljsoncpp
 
@@ -40,15 +38,10 @@ else ifeq ($(PLATFORM),Linux)
 	TIMEOUT_SCRIPT := timeout
 endif
 
-main: $(OBJDIR) $(SOURCES) $(OBJECTS)
-	$(COMPILER) -I$(SRCDIR) $(OBJECTS) $(LIBRARIES) $(APP_DIR)/main.$(SRCEXT) -o 	 main
+opengl_playground: all
+	$(COMPILER) -I$(SRCDIR) $(OBJECTS) $(LIBRARIES) $(APP_DIR)/opengl_playground.$(SRCEXT) -o opengl_playground
 
-all: $(OBJDIR) $(SOURCES) $(EXECUTABLE)
-
-$(EXECUTABLE): $(OBJECTS)
-	$(COMPILER) -I$(SRCDIR) $(OBJECTS) $(LIBRARIES) -o $@
-
-	@ $(BUILD_SCRIPT)
+all: $(OBJDIR) $(SOURCES) $(OBJECTS)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
