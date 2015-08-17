@@ -19,6 +19,7 @@ public:
 
     GLuint getGLId();
     void use();
+    GLint getUniformLocation(string uniform_name);
 
 private:
 

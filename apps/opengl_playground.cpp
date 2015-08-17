@@ -8,6 +8,7 @@
 #include "Drawable.hpp"
 
 #include <iostream>
+#include <map>
 #include <cstdio>
 
 using namespace std;
@@ -26,6 +27,7 @@ char getKeyboardInputCharacter(SDL_Event& event) {
 void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
     // Misleading argument and function name combination. The input handling does not draw from the mouse or window at all, it simply does things with them
 
+    // Key repeat delay input
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
@@ -44,29 +46,50 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
             mouse.centerInWindow();
         } else if (key == 'h') {
             mesh.toggleVisibility();
-        } else if (key == 'w') {
-            camera.moveZ(-0.1);
-        } else if (key == 's') {
-            camera.moveZ(0.1);
-        } else if (key == 'a') {
-            camera.moveX(-0.1);
-        } else if (key == 'd') {
-            camera.moveX(0.1);
-        } else if (key == 'z') {
-            camera.moveY(0.1);
-        } else if (key == 'x') {
-            camera.moveY(-0.1);
-        } else if (key == 'q') {
-            camera.rotateY(0.1);
-        } else if (key == 'e') {
-            camera.rotateY(-0.1);
-        } else if (key == 'r') {
-            camera.rotateX(0.1);
-        } else if (key == 'f') {
-            camera.rotateX(-0.1);
         }
 
     }
+
+    // Continuous input
+    const Uint8* keyboard = SDL_GetKeyboardState(NULL);
+
+    glm::vec3 camera_movement(0, 0, 0);
+    if (keyboard[SDL_SCANCODE_W]) {
+        camera_movement += glm::vec3(0, 0, -1);
+    }
+    if (keyboard[SDL_SCANCODE_S]) {
+        camera_movement += glm::vec3(0, 0, 1);
+    }
+    if (keyboard[SDL_SCANCODE_A]) {
+        camera_movement += glm::vec3(-1, 0, 0);
+    }
+    if (keyboard[SDL_SCANCODE_D]) {
+        camera_movement += glm::vec3(1, 0, 0);
+    }
+    if (keyboard[SDL_SCANCODE_SPACE]) {
+        camera_movement += glm::vec3(0, 1, 0);
+    }
+    if (keyboard[SDL_SCANCODE_LSHIFT]) {
+        camera_movement += glm::vec3(0, -1, 0);
+    }
+    if (keyboard[SDL_SCANCODE_Q]) {
+        camera.rotateY(0.01);
+    }
+    if (keyboard[SDL_SCANCODE_E]) {
+        camera.rotateY(-0.01);
+    }
+    if (keyboard[SDL_SCANCODE_R]) {
+        camera.rotateX(0.01);
+    }
+    if (keyboard[SDL_SCANCODE_F]) {
+        camera.rotateX(-0.01);
+    }
+
+    if (glm::length(camera_movement) != 0){
+        camera_movement = glm::normalize(camera_movement);
+    }
+    camera_movement = camera_movement * 0.1f;
+    camera.moveByLocal(camera_movement);
 
 }
 
@@ -81,13 +104,13 @@ int main(int argc, char* argv[]) {
     FragmentShader fs("shaders/temp.fs");
     ShaderProgram shader(vs, fs);
 
-    Mesh cube_mesh(shader);
+    Mesh cube_mesh;
 
-    Drawable cube1(cube_mesh);
-    Drawable cube2(cube_mesh);
+    Drawable cube1(cube_mesh, shader);
+    Drawable cube2(cube_mesh, shader);
     cube2.setPosition(glm::vec3(1, 1, 1));
 
-    glm::vec3 pos(-1, 2, 4);
+    glm::vec3 pos(-1, 2, 6);
     glm::vec3 rot(0, 0, 0);
     float fov = 45.0f;
     Camera camera(viewport, pos, rot, fov);

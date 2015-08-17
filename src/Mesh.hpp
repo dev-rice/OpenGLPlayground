@@ -13,7 +13,7 @@ using namespace std;
 
 class Mesh {
 public:
-    Mesh(ShaderProgram& shader);
+    Mesh();
 
     void clearBuffers();
     void draw();
@@ -23,10 +23,10 @@ public:
     void toggleVisibility();
     bool isHidden();
 
-    ShaderProgram& getShaderProgram();
-
     void bindVAO();
     void prepareToBeDrawn();
+
+    void linkToShader(ShaderProgram& shader_program);
 
 private:
     void createVAO();
@@ -37,10 +37,8 @@ private:
     int getNumElements();
 
     void drawAllElements();
-    void linkMeshToShader(ShaderProgram& shader_program);
 
     bool is_hidden;
-    ShaderProgram* shader;
 
     GLuint vao;
 };

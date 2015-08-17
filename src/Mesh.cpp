@@ -1,12 +1,10 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(ShaderProgram& shader) : shader(&shader) {
+Mesh::Mesh() {
 
     createVAO();
     createVBO();
     createEBO();
-
-    linkMeshToShader(getShaderProgram());
 
 }
 
@@ -16,7 +14,6 @@ void Mesh::createVAO() {
 }
 
 void Mesh::prepareToBeDrawn() {
-    getShaderProgram().use();
     bindVAO();
 }
 
@@ -83,11 +80,7 @@ void Mesh::createEBO() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(GLuint), elements.data(), GL_STATIC_DRAW);
 }
 
-ShaderProgram& Mesh::getShaderProgram() {
-    return *shader;
-}
-
-void Mesh::linkMeshToShader(ShaderProgram& shaderProgram) {
+void Mesh::linkToShader(ShaderProgram& shaderProgram) {
     // Specify the layout of the vertex data
     GLint posAttrib = glGetAttribLocation(shaderProgram.getGLId(), "position");
     glEnableVertexAttribArray(posAttrib);

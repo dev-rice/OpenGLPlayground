@@ -17,6 +17,9 @@ public:
     void rotateY(float);
     void rotateZ(float);
 
+    void moveByGlobal(glm::vec3 move_vector);
+    void moveByLocal(glm::vec3 move_vector);
+
     void moveGlobalX(float);
     void moveGlobalY(float);
     void moveGlobalZ(float);

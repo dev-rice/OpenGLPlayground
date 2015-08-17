@@ -21,6 +21,10 @@ void ShaderProgram::use() {
     glUseProgram(getGLId());
 }
 
+GLint ShaderProgram::getUniformLocation(string uniform_name) {
+    return glGetUniformLocation(getGLId(), uniform_name.c_str());
+}
+
 void ShaderProgram::combineShaderPrograms(VertexShader& vertex_shader, FragmentShader& fragment_shader) {
 
     vertex_shader.attachTo(gl_shader_id);

@@ -30,40 +30,50 @@ void Camera::setRotation(glm::vec3 rotation){
     this->rotation = rotation;
 }
 
-void Camera::moveX(float direction){
-    position += direction * local_x;
+void Camera::moveX(float move_amount){
+    moveByGlobal(move_amount * local_x);
 }
 
-void Camera::moveY(float direction){
-    position += direction * local_y;
+void Camera::moveY(float move_amount){
+    moveByGlobal(move_amount * local_y);
 }
 
-void Camera::moveZ(float direction){
-    position += direction * local_z;
+void Camera::moveZ(float move_amount){
+    moveByGlobal(move_amount * local_z);
 }
 
-void Camera::moveGlobalX(float direction){
-    position.x += direction;
+void Camera::moveByGlobal(glm::vec3 move_vector) {
+    setPosition(getPosition() + move_vector);
 }
 
-void Camera::moveGlobalY(float direction){
-    position.y += direction;
+void Camera::moveByLocal(glm::vec3 move_vector) {
+    moveX(move_vector.x);
+    moveY(move_vector.y);
+    moveZ(move_vector.z);
 }
 
-void Camera::moveGlobalZ(float direction){
-    position.z += direction;
+void Camera::moveGlobalX(float move_amount){
+    moveByGlobal(glm::vec3(1, 0, 0) * move_amount);
 }
 
-void Camera::rotateX(float direction){
-    rotation.x += direction;
+void Camera::moveGlobalY(float move_amount){
+    moveByGlobal(glm::vec3(0, 1, 0) * move_amount);
 }
 
-void Camera::rotateY(float direction){
-    rotation.y += direction;
+void Camera::moveGlobalZ(float move_amount){
+    moveByGlobal(glm::vec3(0, 0, 1) * move_amount);
 }
 
-void Camera::rotateZ(float direction){
-    rotation.z += direction;
+void Camera::rotateX(float rotate_amount){
+    rotation.x += rotate_amount;
+}
+
+void Camera::rotateY(float rotate_amount){
+    rotation.y += rotate_amount;
+}
+
+void Camera::rotateZ(float rotate_amount){
+    rotation.z += rotate_amount;
 }
 
 glm::mat4 Camera::getViewMatrix(){
