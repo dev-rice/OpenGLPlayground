@@ -25,7 +25,7 @@ char getKeyboardInputCharacter(SDL_Event& event) {
 }
 
 glm::vec2 last_pos;
-void rotateCameraFromMouse(Camera& camera, Mouse& mouse) {
+void rotateCameraFromMouse(Camera& camera, Mouse& mouse, Window& window) {
     glm::vec2 difference = mouse.getPosition() - last_pos;
 
     difference = difference * 0.001f;
@@ -33,7 +33,7 @@ void rotateCameraFromMouse(Camera& camera, Mouse& mouse) {
     glm::vec3 rotation_vec(difference.y, -difference.x, 0);
     camera.setRotation(camera.getRotation() + rotation_vec);
 
-    mouse.centerInWindow();
+    mouse.centerInWindow(window);
     last_pos = mouse.getPosition();
 }
 
@@ -56,7 +56,7 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
         if (key == 'm'){
             mouse.toggleVisibility();
         } else if (key == 'c') {
-            mouse.centerInWindow();
+            mouse.centerInWindow(window);
         } else if (key == 'h') {
             mesh.toggleVisibility();
         }
@@ -93,8 +93,7 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
     camera.moveByLocal(camera_movement);
 
     // Handle mouse rotation
-    rotateCameraFromMouse(camera, mouse);
-
+    rotateCameraFromMouse(camera, mouse, window);
 
 }
 
@@ -103,7 +102,7 @@ int main(int argc, char* argv[]) {
     Viewport viewport(1600, 900);
     Window window(viewport, false);
     OpenGLContext gl_context(4, 1, window);
-    Mouse mouse(window);
+    Mouse mouse;
 
     VertexShader vs("shaders/temp.vs");
     FragmentShader fs("shaders/temp.fs");
@@ -123,7 +122,7 @@ int main(int argc, char* argv[]) {
     window.setVsync(true);
 
     mouse.hide();
-    mouse.centerInWindow();
+    mouse.centerInWindow(window);
     last_pos = mouse.getPosition();
 
     // Display loop

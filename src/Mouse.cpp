@@ -1,8 +1,6 @@
 #include "Mouse.hpp"
 
-Mouse::Mouse(Window& window) {
-    setWindow(window);
-    centerInWindow();
+Mouse::Mouse() {
     show();
 }
 
@@ -17,14 +15,6 @@ void Mouse::setHidden(bool hidden) {
     } else {
         SDL_ShowCursor(SDL_ENABLE);
     }
-}
-
-Window& Mouse::getWindow() {
-    return *window;
-}
-
-void Mouse::setWindow(Window& window) {
-    this->window = &window;
 }
 
 void Mouse::hide() {
@@ -49,10 +39,14 @@ glm::vec2 Mouse::getPosition() {
     return glm::vec2(x, y);
 }
 
-void Mouse::setPosition(glm::vec2 position){
-    SDL_WarpMouseInWindow(getWindow().getSDLWindow(), position.x, position.y);
+void Mouse::setPositionGlobal(glm::vec2 position) {
+    // SDL_WarpMouseGlobal(position.x, position.y);
 }
 
-void Mouse::centerInWindow(){
-    setPosition(getWindow().getViewport().getCenter());
+void Mouse::setPositionInWindow(Window& window, glm::vec2 position){
+    SDL_WarpMouseInWindow(window.getSDLWindow(), position.x, position.y);
+}
+
+void Mouse::centerInWindow(Window& window){
+    setPositionInWindow(window, window.getViewport().getCenter());
 }

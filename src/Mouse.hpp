@@ -7,23 +7,24 @@
 
 class Mouse {
 public:
-    Mouse(Window& window);
+    Mouse();
+
     void hide();
     void show();
     void toggleVisibility();
+
+    void centerInWindow(Window& window);
+
+    void setPositionGlobal(glm::vec2 position);
+    void setPositionInWindow(Window& window, glm::vec2 position);
+
     bool isHidden();
     glm::vec2 getPosition();
-    void setPosition(glm::vec2 position);
-    void centerInWindow();
 
 private:
-    void setWindow(Window& window);
-    Window& getWindow();
 
     void setHidden(bool hidden);
     bool is_hidden;
-
-    Window* window;
 };
 
 #endif

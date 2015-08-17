@@ -15,7 +15,6 @@ class Mesh {
 public:
     Mesh();
 
-    void clearBuffers();
     void draw();
 
     void show();

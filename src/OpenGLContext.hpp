@@ -14,6 +14,7 @@ using namespace std;
 class OpenGLContext {
 public:
     OpenGLContext(int major, int minor, Window& window);
+
     void setupGLEW();
     void enableDepthTest();
     void enableBackfaceCulling();
@@ -23,7 +24,7 @@ public:
     string getRendererString();
     string getVersionString();
     string getGLSLVersionString();
-    
+
 private:
 
     void setDefaults();
