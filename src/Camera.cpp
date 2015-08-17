@@ -30,15 +30,15 @@ void Camera::setRotation(glm::vec3 rotation){
     this->rotation = rotation;
 }
 
-void Camera::moveX(float move_amount){
+void Camera::moveXLocal(float move_amount){
     moveByGlobal(move_amount * local_x);
 }
 
-void Camera::moveY(float move_amount){
+void Camera::moveYLocal(float move_amount){
     moveByGlobal(move_amount * local_y);
 }
 
-void Camera::moveZ(float move_amount){
+void Camera::moveZLocal(float move_amount){
     moveByGlobal(move_amount * local_z);
 }
 
@@ -47,9 +47,9 @@ void Camera::moveByGlobal(glm::vec3 move_vector) {
 }
 
 void Camera::moveByLocal(glm::vec3 move_vector) {
-    moveX(move_vector.x);
-    moveY(move_vector.y);
-    moveZ(move_vector.z);
+    moveXLocal(move_vector.x);
+    moveYLocal(move_vector.y);
+    moveZLocal(move_vector.z);
 }
 
 void Camera::moveGlobalX(float move_amount){

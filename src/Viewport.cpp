@@ -12,3 +12,7 @@ int Viewport::getWidth() {
 int Viewport::getHeight() {
     return height;
 }
+
+glm::vec2 Viewport::getCenter() {
+    return glm::vec2(width / 2.0f, height / 2.0f);
+}

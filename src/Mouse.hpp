@@ -12,7 +12,8 @@ public:
     void show();
     void toggleVisibility();
     bool isHidden();
-    void setMousePosition(int x, int y);
+    glm::vec2 getPosition();
+    void setPosition(glm::vec2 position);
     void centerInWindow();
 
 private:

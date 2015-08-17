@@ -9,9 +9,9 @@ class Camera {
 public:
     Camera(Viewport& viewport, glm::vec3, glm::vec3, float);
 
-    void moveX(float);
-    void moveY(float);
-    void moveZ(float);
+    void moveXLocal(float);
+    void moveYLocal(float);
+    void moveZLocal(float);
 
     void rotateX(float);
     void rotateY(float);

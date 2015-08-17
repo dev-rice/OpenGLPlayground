@@ -43,10 +43,16 @@ void Mouse::toggleVisibility() {
     }
 }
 
-void Mouse::setMousePosition(int x, int y){
-    SDL_WarpMouseInWindow(getWindow().getSDLWindow(), x, y);
+glm::vec2 Mouse::getPosition() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    return glm::vec2(x, y);
+}
+
+void Mouse::setPosition(glm::vec2 position){
+    SDL_WarpMouseInWindow(getWindow().getSDLWindow(), position.x, position.y);
 }
 
 void Mouse::centerInWindow(){
-    setMousePosition(getWindow().getWidth() / 2, getWindow().getHeight() / 2);
+    setPosition(getWindow().getViewport().getCenter());
 }
