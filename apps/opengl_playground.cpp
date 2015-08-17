@@ -73,16 +73,16 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
         camera_movement += glm::vec3(0, -1, 0);
     }
     if (keyboard[SDL_SCANCODE_Q]) {
-        camera.rotateY(0.01);
+        camera.rotateY(0.03);
     }
     if (keyboard[SDL_SCANCODE_E]) {
-        camera.rotateY(-0.01);
+        camera.rotateY(-0.03);
     }
     if (keyboard[SDL_SCANCODE_R]) {
-        camera.rotateX(0.01);
+        camera.rotateX(0.03);
     }
     if (keyboard[SDL_SCANCODE_F]) {
-        camera.rotateX(-0.01);
+        camera.rotateX(-0.03);
     }
 
     if (glm::length(camera_movement) != 0){
