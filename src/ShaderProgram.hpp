@@ -7,15 +7,14 @@
 
 #include "includes/gl.hpp"
 
-#include "VertexShader.hpp"
-#include "FragmentShader.hpp"
+#include "ShaderFile.hpp"
 
 using namespace std;
 
 class ShaderProgram {
 public:
     ShaderProgram();
-    ShaderProgram(VertexShader& vertex_shader, FragmentShader& fragment_shader);
+    ShaderProgram(ShaderFile& vertex_shader, ShaderFile& fragment_shader);
 
     void use();
     GLint getUniformLocation(string uniform_name);
@@ -24,7 +23,7 @@ public:
 
 private:
 
-    void combineShaderPrograms(VertexShader& vertex_shader, FragmentShader& fragment_shader);
+    void combineShaderPrograms(ShaderFile& vertex_shader, ShaderFile& fragment_shader);
     void bindFragmentDataLocation();
     void link();
 

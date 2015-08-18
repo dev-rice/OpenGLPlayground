@@ -1,7 +1,9 @@
 #include "ShaderFile.hpp"
 
-ShaderFile::ShaderFile(string filename) : filename(filename) {
-    
+ShaderFile::ShaderFile(string filename, ShaderCreator& shader_creator) : filename(filename), shader_creator(&shader_creator) {
+
+    setGLId(loadShader(filename));
+
 }
 
 ShaderFile::~ShaderFile() {
@@ -46,6 +48,10 @@ string ShaderFile::getFileContents(string filename) {
     return contents;
 }
 
+ShaderCreator& ShaderFile::getShaderCreator() {
+    return *shader_creator;
+}
+
 void ShaderFile::printErrors() {
     if (hasErrors()) {
         cout << "Error compiling shader '" << getFilename() << "':\n" << getErrors() << "\n";
@@ -53,7 +59,7 @@ void ShaderFile::printErrors() {
 }
 
 GLuint ShaderFile::loadShader(string filename){
-    GLuint shader = createShader();
+    GLuint shader = getShaderCreator().create();
 
     string contents = getFileContents(filename);
     const char* contents_as_cstr = contents.c_str();

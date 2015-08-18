@@ -4,7 +4,7 @@ ShaderProgram::ShaderProgram(){
     gl_shader_id = 0;
 }
 
-ShaderProgram::ShaderProgram(VertexShader& vertex_shader, FragmentShader& fragment_shader) {
+ShaderProgram::ShaderProgram(ShaderFile& vertex_shader, ShaderFile& fragment_shader) {
 
     gl_shader_id = glCreateProgram();
 
@@ -25,7 +25,7 @@ GLint ShaderProgram::getUniformLocation(string uniform_name) {
     return glGetUniformLocation(getGLId(), uniform_name.c_str());
 }
 
-void ShaderProgram::combineShaderPrograms(VertexShader& vertex_shader, FragmentShader& fragment_shader) {
+void ShaderProgram::combineShaderPrograms(ShaderFile& vertex_shader, ShaderFile& fragment_shader) {
 
     vertex_shader.attachTo(gl_shader_id);
     fragment_shader.attachTo(gl_shader_id);

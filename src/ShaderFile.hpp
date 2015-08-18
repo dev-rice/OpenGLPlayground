@@ -7,11 +7,13 @@
 
 #include "includes/gl.hpp"
 
+#include "ShaderCreator.hpp"
+
 using namespace std;
 
 class ShaderFile {
 public:
-    ShaderFile(string filename);
+    ShaderFile(string filename, ShaderCreator& shader_creator);
     ~ShaderFile();
 
     void attachTo(GLuint shader_program);
@@ -21,16 +23,16 @@ public:
     void printErrors();
     GLuint getGLId();
     string getFilename();
+    ShaderCreator& getShaderCreator();
 
 private:
     GLuint shader_id;
     string filename;
-
-protected:
     void setGLId(GLuint id);
     string getFileContents(string filename);
     GLuint loadShader(string filename);
-    virtual GLuint createShader() = 0;
+
+    ShaderCreator* shader_creator;
 };
 
 #endif

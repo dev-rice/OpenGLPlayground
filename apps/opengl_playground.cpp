@@ -6,6 +6,9 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "Drawable.hpp"
+#include "VertexShaderCreator.hpp"
+#include "FragmentShaderCreator.hpp"
+
 
 #include <iostream>
 #include <map>
@@ -104,9 +107,13 @@ int main(int argc, char* argv[]) {
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
 
-    VertexShader vs("shaders/temp.vs");
-    FragmentShader fs("shaders/temp.fs");
-    ShaderProgram shader(vs, fs);
+
+    VertexShaderCreator vertex_shader_creator;
+    FragmentShaderCreator fragment_shader_creator;
+
+    ShaderFile vertex_shader("shaders/temp.vs", vertex_shader_creator);
+    ShaderFile fragment_shader("shaders/temp.fs", fragment_shader_creator);
+    ShaderProgram shader(vertex_shader, fragment_shader);
 
     Mesh cube_mesh;
 
