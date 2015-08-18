@@ -115,18 +115,17 @@ int main(int argc, char* argv[]) {
     ShaderFile fragment_shader("shaders/temp.fs", fragment_shader_creator);
     ShaderProgram shader(vertex_shader, fragment_shader);
 
+    float field_of_view = 45.0f;
+    Camera camera(viewport, field_of_view);
+
+    glm::vec3 camera_start_position(-1, 2, 6);
+    camera.setPosition(camera_start_position);
+
     Mesh cube_mesh;
 
     Drawable cube1(cube_mesh, shader);
     Drawable cube2(cube_mesh, shader);
     cube2.setPosition(glm::vec3(1, 1, 1));
-
-    glm::vec3 pos(-1, 2, 6);
-    glm::vec3 rot(0, 0, 0);
-    float fov = 45.0f;
-    Camera camera(viewport, pos, rot, fov);
-
-    window.setVsync(true);
 
     mouse.hide();
     mouse.centerInWindow(window);

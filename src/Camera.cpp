@@ -1,25 +1,22 @@
 #include "Camera.hpp"
 
-Camera::Camera(Viewport& viewport, glm::vec3 position, glm::vec3 rotation, float fov){
+Camera::Camera(Viewport& viewport, float field_of_view) : field_of_view(field_of_view), viewport(&viewport){
 
-    this->position = position;
-    this->rotation = rotation;
+    setLocalAxes();
+    setIntrinsicParameters();
 
+}
+
+void Camera::setLocalAxes() {
     local_x = glm::vec3(1.0f, 0.0f, 0.0f);
     local_y = glm::vec3(0.0f, 1.0f, 0.0f);
     local_z = glm::vec3(0.0f, 0.0f, 1.0f);
+}
 
-    // Default projection matrix
-    int width = viewport.getWidth();
-    int height = viewport.getHeight();
-
-    // Set intrinsic parameters
-    this->fov = fov;
-    aspect_ratio = (float)width / (float)height;
+void Camera::setIntrinsicParameters() {
+    aspect_ratio = getViewport().getAspectRatio();
     near_clip = 0.1f;
     far_clip = 500.0f;
-    calculateProjectionMatrix();
-
 }
 
 void Camera::setPosition(glm::vec3 position){
@@ -28,6 +25,10 @@ void Camera::setPosition(glm::vec3 position){
 
 void Camera::setRotation(glm::vec3 rotation){
     this->rotation = rotation;
+}
+
+Viewport& Camera::getViewport() {
+    return *viewport;
 }
 
 void Camera::moveXLocal(float move_amount){
@@ -73,7 +74,7 @@ glm::vec3 Camera::getRotation(){
 }
 
 float Camera::getFOV(){
-    return fov;
+    return field_of_view;
 }
 
 glm::mat4 Camera::calculateViewMatrix() {
@@ -114,5 +115,5 @@ glm::mat4 Camera::calculateViewMatrix() {
 
 glm::mat4 Camera::calculateProjectionMatrix(){
     // Use all of the intrinsic values to create the projection matrix
-    return glm::perspective(fov, aspect_ratio, near_clip, far_clip);
+    return glm::perspective(field_of_view, aspect_ratio, near_clip, far_clip);
 }

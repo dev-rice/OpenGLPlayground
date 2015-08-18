@@ -7,7 +7,7 @@
 
 class Camera {
 public:
-    Camera(Viewport& viewport, glm::vec3, glm::vec3, float);
+    Camera(Viewport& viewport, float field_of_view);
 
     void moveByGlobal(glm::vec3 move_vector);
     void moveByLocal(glm::vec3 move_vector);
@@ -20,11 +20,16 @@ public:
     void setPosition(glm::vec3);
     void setRotation(glm::vec3);
 
+    Viewport& getViewport();
+
     float getFOV();
     glm::vec3 getPosition();
     glm::vec3 getRotation();
 
 private:
+
+    void setLocalAxes();
+    void setIntrinsicParameters();
 
     void moveXLocal(float);
     void moveYLocal(float);
@@ -42,12 +47,14 @@ private:
     glm::vec3 local_z;
 
     // Proj matrix and intrinsic values
-    float fov;
+    float field_of_view;
     float aspect_ratio;
     float near_clip;
     float far_clip;
     glm::mat4 proj_matrix;
     glm::mat4 view_matrix;
+
+    Viewport* viewport;
 };
 
 #endif

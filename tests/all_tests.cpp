@@ -6,6 +6,7 @@
 #include "Viewport.hpp"
 #include "Window.hpp"
 #include "Mouse.hpp"
+#include "Camera.hpp"
 
 ///////////////////////////////
 // Camera Tests
@@ -19,8 +20,28 @@ protected:
     Viewport viewport;
 };
 
-TEST_F(CameraTest, moveByGlobalTest) {
-    FAIL();
+TEST_F(CameraTest, moveByGlobalTest1) {
+    Camera camera(viewport, 45.0f);
+
+    glm::vec3 start_position = glm::vec3(0, 0, 0);
+    camera.setPosition(start_position);
+
+    glm::vec3 move_amount = glm::vec3(1, 0, 52);
+    camera.moveByGlobal(move_amount);
+
+    EXPECT_EQ(camera.getPosition(), start_position + move_amount);
+}
+
+TEST_F(CameraTest, moveByGlobalTest2) {
+    Camera camera(viewport, 45.0f);
+
+    glm::vec3 start_position = glm::vec3(10, -50, 32);
+    camera.setPosition(start_position);
+
+    glm::vec3 move_amount = glm::vec3(-40, 0, 52);
+    camera.moveByGlobal(move_amount);
+
+    EXPECT_EQ(camera.getPosition(), start_position + move_amount);
 }
 
 TEST_F(CameraTest, moveByLocalTest) {
@@ -206,6 +227,14 @@ TEST(ViewportTest, getCenterTest) {
 
     viewport = Viewport(1920, 1080);
     EXPECT_EQ(viewport.getCenter(), glm::vec2(960, 540));
+}
+
+TEST(ViewportTest, getAspectRatioTest) {
+    Viewport viewport(1600, 900);
+    EXPECT_NEAR(viewport.getAspectRatio(), 1.778, 0.01);
+
+    viewport = Viewport(800, 600);
+    EXPECT_NEAR(viewport.getAspectRatio(), 1.333, 0.01);
 }
 
 ///////////////////////////////
