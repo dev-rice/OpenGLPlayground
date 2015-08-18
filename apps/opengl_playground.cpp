@@ -27,9 +27,8 @@ char getKeyboardInputCharacter(SDL_Event& event) {
     return key;
 }
 
-glm::vec2 last_pos;
 void rotateCameraFromMouse(Camera& camera, Mouse& mouse, Window& window) {
-    glm::vec2 difference = mouse.getPosition() - last_pos;
+    glm::vec2 difference = mouse.getPosition() - window.getViewport().getCenter();
 
     difference = difference * 0.001f;
 
@@ -37,7 +36,6 @@ void rotateCameraFromMouse(Camera& camera, Mouse& mouse, Window& window) {
     camera.rotateByLocal(rotation_vec);
 
     mouse.centerInWindow(window);
-    last_pos = mouse.getPosition();
 }
 
 void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
@@ -130,7 +128,6 @@ int main(int argc, char* argv[]) {
 
     mouse.hide();
     mouse.centerInWindow(window);
-    last_pos = mouse.getPosition();
 
     // Display loop
     while(window.isOpen()) {

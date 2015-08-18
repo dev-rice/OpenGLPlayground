@@ -3,7 +3,7 @@
 
 #include "includes/sdl.hpp"
 
-#include "window.hpp"
+#include "Window.hpp"
 
 class Mouse {
 public:
