@@ -121,7 +121,8 @@ int main(int argc, char* argv[]) {
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
 
-    Mesh cube_mesh;
+    MeshLoader mesh_loader("res/castle_tower.dae");
+    Mesh cube_mesh(mesh_loader);
 
     Drawable cube1(cube_mesh, shader);
     Drawable cube2(cube_mesh, shader);

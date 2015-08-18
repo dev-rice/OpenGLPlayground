@@ -1,10 +1,12 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh() {
+Mesh::Mesh(MeshLoader& mesh_loader) : mesh_loader(&mesh_loader) {
 
     createVAO();
     createVBO();
     createEBO();
+
+
 
 }
 
@@ -34,37 +36,41 @@ void Mesh::createVBO() {
 }
 
 vector<GLfloat> Mesh::getVertices() {
-    return {
-         0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+    // return {
+    //      0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+    //     -0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+    //     -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+    //      0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+    //
+    //      0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+    //     -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+    //     -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+    //      0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+    //
+    //     -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+    //     -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+    //     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+    //     -0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+    //
+    // };
 
-         0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-
-        -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-
-    };
+    return getMeshLoader().getVertexArray();
 }
 
 vector<GLuint> Mesh::getElements() {
-     return {
-        0, 1, 2,
-        2, 3, 0,
+    //  return {
+    //     0, 1, 2,
+    //     2, 3, 0,
+    //
+    //     4, 5, 6,
+    //     6, 7, 4,
+    //
+    //     8, 9, 10,
+    //     10, 11, 8,
+    //
+    // };
 
-        4, 5, 6,
-        6, 7, 4,
-
-        8, 9, 10,
-        10, 11, 8,
-
-    };
+    return getMeshLoader().getFaceArray();
 
 }
 
@@ -123,4 +129,8 @@ void Mesh::toggleVisibility() {
     } else {
         hide();
     }
+}
+
+MeshLoader& Mesh::getMeshLoader() {
+    return *mesh_loader;
 }
