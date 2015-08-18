@@ -11,6 +11,7 @@ public:
     int getHeight();
 
     glm::vec2 getCenter();
+    float getAspectRatio();
 
 private:
     int width;

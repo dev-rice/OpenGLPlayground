@@ -16,3 +16,7 @@ int Viewport::getHeight() {
 glm::vec2 Viewport::getCenter() {
     return glm::vec2(width / 2.0f, height / 2.0f);
 }
+
+float Viewport::getAspectRatio() {
+    return (float)getWidth() / (float)getHeight();
+}

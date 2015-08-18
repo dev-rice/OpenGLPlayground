@@ -20,23 +20,23 @@ protected:
 };
 
 TEST_F(CameraTest, moveByGlobalTest) {
-
+    FAIL();
 }
 
 TEST_F(CameraTest, moveByLocalTest) {
-
+    FAIL();
 }
 
 TEST_F(CameraTest, rotateByLocalTest) {
-
+    FAIL();
 }
 
 TEST_F(CameraTest, getViewMatrixTest) {
-
+    FAIL();
 }
 
 TEST_F(CameraTest, getProjectionMatrixTest) {
-
+    FAIL();
 }
 
 ///////////////////////////////
@@ -50,7 +50,7 @@ protected:
 };
 
 TEST_F(DrawableTest, drawTest) {
-
+    FAIL();
 }
 
 ///////////////////////////////
@@ -64,15 +64,15 @@ protected:
 };
 
 TEST_F(MeshTest, drawTest) {
-
+    FAIL();
 }
 
 TEST_F(MeshTest, prepareToBeDrawnTest) {
-
+    FAIL();
 }
 
 TEST_F(MeshTest, linkToShaderTest) {
-
+    FAIL();
 }
 
 ///////////////////////////////
@@ -116,11 +116,11 @@ TEST_F(MouseTest, centerInWindowTest) {
 }
 
 TEST_F(MouseTest, setPositionGlobalTest) {
-
+    FAIL();
 }
 
 TEST_F(MouseTest, setPositionInWindowTest) {
-
+    FAIL();
 }
 
 ///////////////////////////////
@@ -134,27 +134,27 @@ protected:
 };
 
 TEST_F(OpenGLContextTest, enableDepthTestTest) {
-
+    FAIL();
 }
 
 TEST_F(OpenGLContextTest, enableBackfaceCullingTest) {
-
+    FAIL();
 }
 
 TEST_F(OpenGLContextTest, setupAlphaBlendingTest) {
-
+    FAIL();
 }
 
 TEST_F(OpenGLContextTest, getRendererStringTest) {
-
+    FAIL();
 }
 
 TEST_F(OpenGLContextTest, getVersionStringTest) {
-
+    FAIL();
 }
 
 TEST_F(OpenGLContextTest, getGLSLVersionStringTest) {
-
+    FAIL();
 }
 
 ///////////////////////////////
@@ -168,15 +168,15 @@ protected:
 };
 
 TEST_F(ShaderFileTest, attachToTest) {
-
+    FAIL();
 }
 
 TEST_F(ShaderFileTest, getErrorsTest) {
-
+    FAIL();
 }
 
 TEST_F(ShaderFileTest, hasErrorsTest) {
-
+    FAIL();
 }
 
 ///////////////////////////////
@@ -190,11 +190,11 @@ protected:
 };
 
 TEST_F(ShaderProgramTest, useTest) {
-
+    FAIL();
 }
 
 TEST_F(ShaderProgramTest, getUniformLocationTest) {
-
+    FAIL();
 }
 
 ///////////////////////////////
@@ -221,23 +221,23 @@ protected:
 };
 
 TEST_F(WindowTest, displayTest) {
-
+    FAIL();
 }
 
 TEST_F(WindowTest, closeTest) {
-
+    FAIL();
 }
 
 TEST_F(WindowTest, clearBuffersTest) {
-
+    FAIL();
 }
 
 TEST_F(WindowTest, setFullscreenTest) {
-
+    FAIL();
 }
 
 TEST_F(WindowTest, setVsyncTest) {
-
+    FAIL();
 }
 
 TEST_F(WindowTest, requestCloseTest) {
