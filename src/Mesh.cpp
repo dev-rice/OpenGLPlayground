@@ -34,42 +34,11 @@ void Mesh::createVBO() {
 }
 
 vector<GLfloat> Mesh::getVertices() {
-    // return {
-    //      0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-    //     -0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-    //     -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-    //      0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-    //
-    //      0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-    //     -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-    //     -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-    //      0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-    //
-    //     -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-    //     -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-    //     -0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-    //
-    // };
-
     return getMeshFileParser().getVertexArray();
 }
 
 vector<GLuint> Mesh::getElements() {
-    //  return {
-    //     0, 1, 2,
-    //     2, 3, 0,
-    //
-    //     4, 5, 6,
-    //     6, 7, 4,
-    //
-    //     8, 9, 10,
-    //     10, 11, 8,
-    //
-    // };
-
     return getMeshFileParser().getFaceArray();
-
 }
 
 void Mesh::createEBO() {
@@ -86,13 +55,17 @@ void Mesh::createEBO() {
 
 void Mesh::linkToShader(ShaderProgram& shaderProgram) {
     // Specify the layout of the vertex data
-    GLint posAttrib = glGetAttribLocation(shaderProgram.getGLId(), "position");
-    glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
+    GLint position_attribute = glGetAttribLocation(shaderProgram.getGLId(), "position");
+    glEnableVertexAttribArray(position_attribute);
+    glVertexAttribPointer(position_attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
 
-    GLint colAttrib = glGetAttribLocation(shaderProgram.getGLId(), "color");
-    glEnableVertexAttribArray(colAttrib);
-    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+    GLint normal_attribute = glGetAttribLocation(shaderProgram.getGLId(), "normal");
+    glEnableVertexAttribArray(normal_attribute);
+    glVertexAttribPointer(normal_attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+
+    // GLint texture_attribute = glGetAttribLocation(shaderProgram.getGLId(), "texture_coordinate");
+    // glEnableVertexAttribArray(texture_attribute);
+    // glVertexAttribPointer(texture_attribute, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
 }
 
 void Mesh::draw() {
