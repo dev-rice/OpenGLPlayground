@@ -29,7 +29,8 @@ private:
 protected:
     void setGLId(GLuint id);
     string getFileContents(string filename);
-    virtual GLuint loadShader(string filename) = 0;
+    GLuint loadShader(string filename);
+    virtual GLuint createShader() = 0;
 };
 
 #endif

@@ -11,7 +11,6 @@ public:
 
 private:
     GLuint createShader();
-    GLuint loadShader(string filename);
 
 };
 
