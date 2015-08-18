@@ -1,7 +1,3 @@
-// mesh_file_parser.h
-// Header file for *.obj file importing
-// and mesh object creation
-// Trevor Westphal
 #ifndef MeshFileParser_h
 #define MeshFileParser_h
 
@@ -9,39 +5,21 @@
 #include "includes/glm.hpp"
 
 #include <vector>
-#include <cmath>
 #include <string>
-#include <algorithm>
-#include <map>
-
-#include "pugixml.hpp" // PUGI xml library
-#include "vertex.hpp"
 
 using namespace std;
 
-class MeshFileParser{
+class MeshFileParser {
 public:
-    MeshFileParser(string filename);
+    MeshFileParser() {;}
 
-    std::vector<GLfloat> getVertexArray() {return final_vertices;}
-    std::vector<GLuint>  getFaceArray() {return final_faces;}
+    virtual std::vector<GLfloat> getVertexArray() = 0;
+    virtual std::vector<GLuint>  getFaceArray() = 0;
 
-
-private:
-    void loadMeshFromDAE(string filename);
-    void writeFinalArrays(std::vector<Vertex>&, std::vector<GLuint>&);
-    void calculateTangentsAndBinormals(std::vector<Vertex>&, std::vector<GLuint>&);
-    bool getVerticesAndElements(pugi::xml_node, std::vector<Vertex>&, std::vector<GLuint>&);
-
+protected:
     std::vector<GLfloat> final_vertices;
     std::vector<GLuint> final_faces;
 
-    std::vector<Vertex> unique_vertices;
-    std::map<int, int> vertex_to_unique;
-
-    string filename;
-
-    bool flat_shading;
 };
 
 #endif

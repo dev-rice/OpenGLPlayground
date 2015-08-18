@@ -8,7 +8,7 @@
 #include "Drawable.hpp"
 #include "VertexShaderCreator.hpp"
 #include "FragmentShaderCreator.hpp"
-
+#include "MeshFileParserDAE.hpp"
 
 #include <iostream>
 #include <map>
@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
 
-    MeshFileParser mesh_file_parser("res/castle_tower.dae");
+    MeshFileParserDAE mesh_file_parser("res/castle_tower.dae");
     Mesh cube_mesh(mesh_file_parser);
 
     Drawable cube1(cube_mesh, shader);
