@@ -9,6 +9,8 @@
 #include "VertexShaderCreator.hpp"
 #include "FragmentShaderCreator.hpp"
 #include "MeshFileParserDAE.hpp"
+#include "MeshFileParserOBJ.hpp"
+
 
 #include <iostream>
 #include <map>
@@ -126,6 +128,12 @@ int main(int argc, char* argv[]) {
     Drawable cube2(cube_mesh, shader);
     cube2.setPosition(glm::vec3(1, 1, 1));
 
+    MeshFileParserOBJ mesh_file_parser_obj("res/fence.obj");
+    Mesh fence_mesh(mesh_file_parser_obj);
+
+    Drawable fence(fence_mesh, shader);
+    fence.setPosition(glm::vec3(1, 2, 1));
+
     mouse.hide();
     mouse.centerInWindow(window);
 
@@ -135,6 +143,7 @@ int main(int argc, char* argv[]) {
 
         cube1.draw(camera);
         cube2.draw(camera);
+        fence.draw(camera);
 
         handleInputs(mouse, window, cube_mesh, camera);
         window.display();
