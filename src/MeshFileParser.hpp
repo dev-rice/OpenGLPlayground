@@ -1,9 +1,9 @@
-// mesh_loader.h
+// mesh_file_parser.h
 // Header file for *.obj file importing
 // and mesh object creation
 // Trevor Westphal
-#ifndef MeshLoader_h
-#define MeshLoader_h
+#ifndef MeshFileParser_h
+#define MeshFileParser_h
 
 #include "includes/gl.hpp"
 #include "includes/glm.hpp"
@@ -19,9 +19,9 @@
 
 using namespace std;
 
-class MeshLoader{
+class MeshFileParser{
 public:
-    MeshLoader(string filename);
+    MeshFileParser(string filename);
 
     std::vector<GLfloat> getVertexArray() {return final_vertices;}
     std::vector<GLuint>  getFaceArray() {return final_faces;}

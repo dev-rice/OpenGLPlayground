@@ -1,6 +1,6 @@
-#include "MeshLoader.hpp"
+#include "MeshFileParser.hpp"
 
-MeshLoader::MeshLoader(string filename){
+MeshFileParser::MeshFileParser(string filename){
     flat_shading = false;
     loadMeshFromDAE(filename);
 }
@@ -92,7 +92,7 @@ bool isAllThrees(std::string input){
     return result;
 }
 
-void MeshLoader::loadMeshFromDAE(string filename){
+void MeshFileParser::loadMeshFromDAE(string filename){
     // float start_time = GameClock::getInstance()->getCurrentTime();
     this->filename = filename;
 
@@ -124,7 +124,7 @@ void MeshLoader::loadMeshFromDAE(string filename){
     }
 }
 
-void MeshLoader::writeFinalArrays(std::vector<Vertex>& vertices, std::vector<GLuint>& elements){
+void MeshFileParser::writeFinalArrays(std::vector<Vertex>& vertices, std::vector<GLuint>& elements){
     final_vertices.clear();
     final_faces.clear();
 
@@ -151,7 +151,7 @@ void MeshLoader::writeFinalArrays(std::vector<Vertex>& vertices, std::vector<GLu
     final_faces = elements;
 }
 
-void MeshLoader::calculateTangentsAndBinormals(std::vector<Vertex>& vertices, std::vector<GLuint>& elements) {
+void MeshFileParser::calculateTangentsAndBinormals(std::vector<Vertex>& vertices, std::vector<GLuint>& elements) {
     // For every face declaration calculate the
     // face tangents and binormals.
 
@@ -239,7 +239,7 @@ void MeshLoader::calculateTangentsAndBinormals(std::vector<Vertex>& vertices, st
     }
 }
 
-bool MeshLoader::getVerticesAndElements(pugi::xml_node geometry_node, std::vector<Vertex>& vertices, std::vector<GLuint>& elements){
+bool MeshFileParser::getVerticesAndElements(pugi::xml_node geometry_node, std::vector<Vertex>& vertices, std::vector<GLuint>& elements){
     bool success = true;
 
     vertices.clear();

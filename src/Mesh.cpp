@@ -1,12 +1,10 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(MeshLoader& mesh_loader) : mesh_loader(&mesh_loader) {
+Mesh::Mesh(MeshFileParser& mesh_file_parser) : mesh_file_parser(&mesh_file_parser) {
 
     createVAO();
     createVBO();
     createEBO();
-
-
 
 }
 
@@ -54,7 +52,7 @@ vector<GLfloat> Mesh::getVertices() {
     //
     // };
 
-    return getMeshLoader().getVertexArray();
+    return getMeshFileParser().getVertexArray();
 }
 
 vector<GLuint> Mesh::getElements() {
@@ -70,7 +68,7 @@ vector<GLuint> Mesh::getElements() {
     //
     // };
 
-    return getMeshLoader().getFaceArray();
+    return getMeshFileParser().getFaceArray();
 
 }
 
@@ -131,6 +129,6 @@ void Mesh::toggleVisibility() {
     }
 }
 
-MeshLoader& Mesh::getMeshLoader() {
-    return *mesh_loader;
+MeshFileParser& Mesh::getMeshFileParser() {
+    return *mesh_file_parser;
 }

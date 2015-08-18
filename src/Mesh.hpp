@@ -8,13 +8,13 @@
 #include "includes/glm.hpp"
 
 #include "ShaderProgram.hpp"
-#include "MeshLoader.hpp"
+#include "MeshFileParser.hpp"
 
 using namespace std;
 
 class Mesh {
 public:
-    Mesh(MeshLoader& mesh_loader);
+    Mesh(MeshFileParser& mesh_file_parser);
 
     void draw();
     void prepareToBeDrawn();
@@ -25,7 +25,7 @@ public:
     void toggleVisibility();
     bool isHidden();
 
-    MeshLoader& getMeshLoader();
+    MeshFileParser& getMeshFileParser();
 
 private:
     void bindVAO();
@@ -41,7 +41,7 @@ private:
     bool is_hidden;
 
     GLuint vao;
-    MeshLoader* mesh_loader;
+    MeshFileParser* mesh_file_parser;
 };
 
 #endif
