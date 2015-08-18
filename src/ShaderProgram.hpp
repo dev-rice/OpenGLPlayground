@@ -17,9 +17,10 @@ public:
     ShaderProgram();
     ShaderProgram(VertexShader& vertex_shader, FragmentShader& fragment_shader);
 
-    GLuint getGLId();
     void use();
     GLint getUniformLocation(string uniform_name);
+
+    GLuint getGLId();
 
 private:
 

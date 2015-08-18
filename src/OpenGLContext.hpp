@@ -15,18 +15,19 @@ class OpenGLContext {
 public:
     OpenGLContext(int major, int minor, Window& window);
 
-    void setupGLEW();
     void enableDepthTest();
     void enableBackfaceCulling();
     void setupAlphaBlending();
-    void printVersionInformation();
 
     string getRendererString();
     string getVersionString();
     string getGLSLVersionString();
 
+    void printVersionInformation();
+
 private:
 
+    void setupGLEW();
     void setDefaults();
 
     void setVersion(int major, int minor);

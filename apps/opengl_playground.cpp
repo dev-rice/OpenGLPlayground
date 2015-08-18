@@ -31,7 +31,7 @@ void rotateCameraFromMouse(Camera& camera, Mouse& mouse, Window& window) {
     difference = difference * 0.001f;
 
     glm::vec3 rotation_vec(difference.y, -difference.x, 0);
-    camera.setRotation(camera.getRotation() + rotation_vec);
+    camera.rotateByLocal(rotation_vec);
 
     mouse.centerInWindow(window);
     last_pos = mouse.getPosition();

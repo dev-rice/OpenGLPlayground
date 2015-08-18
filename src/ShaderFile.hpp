@@ -14,11 +14,13 @@ public:
     ShaderFile(string filename);
     ~ShaderFile();
 
+    void attachTo(GLuint shader_program);
+    string getErrors();
+    bool hasErrors();
+
+    void printErrors();
     GLuint getGLId();
     string getFilename();
-    void attachTo(GLuint shader_program);
-    void printErrors();
-    bool hasErrors();
 
 private:
     GLuint shader_id;
@@ -26,7 +28,6 @@ private:
 
 protected:
     void setGLId(GLuint id);
-    string getErrorLog();
     string getFileContents(string filename);
     virtual GLuint loadShader(string filename) = 0;
 };

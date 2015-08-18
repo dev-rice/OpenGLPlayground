@@ -24,7 +24,7 @@ void ShaderFile::attachTo(GLuint shader_program) {
     glAttachShader(shader_program, getGLId());
 }
 
-string ShaderFile::getErrorLog() {
+string ShaderFile::getErrors() {
     char info_log[512] = "";
 
     if (hasErrors()){
@@ -48,6 +48,6 @@ string ShaderFile::getFileContents(string filename) {
 
 void ShaderFile::printErrors() {
     if (hasErrors()) {
-        cout << "Error compiling shader '" << getFilename() << "':\n" << getErrorLog() << "\n";
+        cout << "Error compiling shader '" << getFilename() << "':\n" << getErrors() << "\n";
     }
 }

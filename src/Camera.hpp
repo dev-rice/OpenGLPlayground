@@ -9,35 +9,30 @@ class Camera {
 public:
     Camera(Viewport& viewport, glm::vec3, glm::vec3, float);
 
-    void moveXLocal(float);
-    void moveYLocal(float);
-    void moveZLocal(float);
-
-    void rotateX(float);
-    void rotateY(float);
-    void rotateZ(float);
-
     void moveByGlobal(glm::vec3 move_vector);
     void moveByLocal(glm::vec3 move_vector);
 
-    void moveGlobalX(float);
-    void moveGlobalY(float);
-    void moveGlobalZ(float);
+    void rotateByLocal(glm::vec3 rotation_vector);
+
+    glm::mat4 getViewMatrix();
+    glm::mat4 getProjectionMatrix();
 
     void setPosition(glm::vec3);
     void setRotation(glm::vec3);
 
-    void print();
-
+    float getFOV();
     glm::vec3 getPosition();
     glm::vec3 getRotation();
-    glm::mat4 getViewMatrix();
-    glm::mat4 getProjectionMatrix();
-    float getFOV();
 
 private:
+
+    void moveXLocal(float);
+    void moveYLocal(float);
+    void moveZLocal(float);
+
     void initializer(glm::vec3, glm::vec3, float, float, float);
-    void updateProjectionMatrix();
+    glm::mat4 calculateProjectionMatrix();
+    glm::mat4 calculateViewMatrix();
 
     glm::vec3 position;
     glm::vec3 rotation;

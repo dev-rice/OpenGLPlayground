@@ -16,18 +16,17 @@ public:
     Mesh();
 
     void draw();
+    void prepareToBeDrawn();
+    void linkToShader(ShaderProgram& shader_program);
 
     void show();
     void hide();
     void toggleVisibility();
     bool isHidden();
 
-    void bindVAO();
-    void prepareToBeDrawn();
-
-    void linkToShader(ShaderProgram& shader_program);
 
 private:
+    void bindVAO();
     void createVAO();
     void createVBO();
     void createEBO();

@@ -12,12 +12,13 @@ class Drawable {
 public:
     Drawable(Mesh& mesh, ShaderProgram& shader);
 
+    void draw(Camera& camera);
+
+    void setPosition(glm::vec3 position);
+
     Mesh& getMesh();
     glm::vec3 getPosition();
     ShaderProgram& getShaderProgram();
-
-    void setPosition(glm::vec3 position);
-    void draw(Camera& camera);
 private:
 
     Mesh* mesh;

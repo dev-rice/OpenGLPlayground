@@ -18,7 +18,7 @@ Camera::Camera(Viewport& viewport, glm::vec3 position, glm::vec3 rotation, float
     aspect_ratio = (float)width / (float)height;
     near_clip = 0.1f;
     far_clip = 500.0f;
-    updateProjectionMatrix();
+    calculateProjectionMatrix();
 
 }
 
@@ -52,31 +52,31 @@ void Camera::moveByLocal(glm::vec3 move_vector) {
     moveZLocal(move_vector.z);
 }
 
-void Camera::moveGlobalX(float move_amount){
-    moveByGlobal(glm::vec3(1, 0, 0) * move_amount);
-}
-
-void Camera::moveGlobalY(float move_amount){
-    moveByGlobal(glm::vec3(0, 1, 0) * move_amount);
-}
-
-void Camera::moveGlobalZ(float move_amount){
-    moveByGlobal(glm::vec3(0, 0, 1) * move_amount);
-}
-
-void Camera::rotateX(float rotate_amount){
-    rotation.x += rotate_amount;
-}
-
-void Camera::rotateY(float rotate_amount){
-    rotation.y += rotate_amount;
-}
-
-void Camera::rotateZ(float rotate_amount){
-    rotation.z += rotate_amount;
+void Camera::rotateByLocal(glm::vec3 rotation_vector) {
+    setRotation(getRotation() + rotation_vector);
 }
 
 glm::mat4 Camera::getViewMatrix(){
+    return calculateViewMatrix();
+}
+
+glm::mat4 Camera::getProjectionMatrix(){
+    return calculateProjectionMatrix();
+}
+
+glm::vec3 Camera::getPosition(){
+    return position;
+}
+
+glm::vec3 Camera::getRotation(){
+    return rotation;
+}
+
+float Camera::getFOV(){
+    return fov;
+}
+
+glm::mat4 Camera::calculateViewMatrix() {
     // Original vectors
     // eye      <x, y, z>
     // center   <x, y, z> - <0, 0, 1>
@@ -109,28 +109,10 @@ glm::mat4 Camera::getViewMatrix(){
     local_y = rotation_matrix * glm::vec3(0.0f, 1.0f, 0.0f);
     local_z = rotation_matrix * glm::vec3(0.0f, 0.0f, 1.0f);
 
-    view_matrix = glm::lookAt(eye, center, up);
-
-    return view_matrix;
+    return glm::lookAt(eye, center, up);;
 }
 
-glm::mat4 Camera::getProjectionMatrix(){
-    return proj_matrix;
-}
-
-glm::vec3 Camera::getPosition(){
-    return position;
-}
-
-glm::vec3 Camera::getRotation(){
-    return rotation;
-}
-
-float Camera::getFOV(){
-    return fov;
-}
-
-void Camera::updateProjectionMatrix(){
+glm::mat4 Camera::calculateProjectionMatrix(){
     // Use all of the intrinsic values to create the projection matrix
-    proj_matrix = glm::perspective(fov, aspect_ratio, near_clip, far_clip);
+    return glm::perspective(fov, aspect_ratio, near_clip, far_clip);
 }
