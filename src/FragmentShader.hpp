@@ -10,6 +10,7 @@ public:
     FragmentShader(string filename);
 
 private:
+    GLuint createShader();
     GLuint loadShader(string filename);
 
 };

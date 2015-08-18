@@ -5,9 +5,12 @@ VertexShader::VertexShader(string filename) : ShaderFile(filename) {
     printErrors();
 }
 
+GLuint VertexShader::createShader() {
+    return glCreateShader(GL_VERTEX_SHADER);
+}
+
 GLuint VertexShader::loadShader(string filename){
-    // Create the vertex shader
-    GLuint shader = glCreateShader(GL_VERTEX_SHADER);
+    GLuint shader = createShader();
 
     string contents = getFileContents(filename);
     const char* contents_as_cstr = contents.c_str();

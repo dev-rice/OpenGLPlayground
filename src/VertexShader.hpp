@@ -9,6 +9,7 @@ class VertexShader : public ShaderFile {
 public:
     VertexShader(string filename);
 private:
+    GLuint createShader();
     GLuint loadShader(string filename);
 
 };

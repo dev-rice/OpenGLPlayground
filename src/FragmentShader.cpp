@@ -5,9 +5,12 @@ FragmentShader::FragmentShader(string filename) : ShaderFile(filename) {
     printErrors();
 }
 
+GLuint FragmentShader::createShader() {
+    return glCreateShader(GL_FRAGMENT_SHADER);
+}
+
 GLuint FragmentShader::loadShader(string filename){
-    // Create the fragment shader
-    GLuint shader = glCreateShader(GL_FRAGMENT_SHADER);
+    GLuint shader = createShader();
 
     string contents = getFileContents(filename);
     const char* contents_as_cstr = contents.c_str();
