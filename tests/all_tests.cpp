@@ -8,9 +8,76 @@
 #include "Mouse.hpp"
 
 ///////////////////////////////
+// Camera Tests
+///////////////////////////////
+class CameraTest : public ::testing::Test {
+protected:
+    CameraTest() : viewport(1600, 900) {
+
+    }
+
+    Viewport viewport;
+};
+
+TEST_F(CameraTest, moveByGlobalTest) {
+
+}
+
+TEST_F(CameraTest, moveByLocalTest) {
+
+}
+
+TEST_F(CameraTest, rotateByLocalTest) {
+
+}
+
+TEST_F(CameraTest, getViewMatrixTest) {
+
+}
+
+TEST_F(CameraTest, getProjectionMatrixTest) {
+
+}
+
+///////////////////////////////
+// Drawable Tests
+///////////////////////////////
+class DrawableTest : public ::testing::Test {
+protected:
+    DrawableTest() {
+
+    }
+};
+
+TEST_F(DrawableTest, drawTest) {
+
+}
+
+///////////////////////////////
+// Mesh Tests
+///////////////////////////////
+class MeshTest : public ::testing::Test {
+protected:
+    MeshTest() {
+
+    }
+};
+
+TEST_F(MeshTest, drawTest) {
+
+}
+
+TEST_F(MeshTest, prepareToBeDrawnTest) {
+
+}
+
+TEST_F(MeshTest, linkToShaderTest) {
+
+}
+
+///////////////////////////////
 // Mouse Tests
 ///////////////////////////////
-
 class MouseTest : public ::testing::Test {
 protected:
     MouseTest() {
@@ -53,132 +120,6 @@ TEST_F(MouseTest, setPositionGlobalTest) {
 }
 
 TEST_F(MouseTest, setPositionInWindowTest) {
-
-}
-
-///////////////////////////////
-// Window Tests
-///////////////////////////////
-
-class WindowTest : public ::testing::Test {
-protected:
-    WindowTest() : viewport(1600, 900), window(viewport, false) {
-
-    }
-    Viewport viewport;
-    Window window;
-};
-
-TEST_F(WindowTest, displayTest) {
-
-}
-
-TEST_F(WindowTest, closeTest) {
-
-}
-
-TEST_F(WindowTest, clearBuffersTest) {
-
-}
-
-TEST_F(WindowTest, setFullscreenTest) {
-
-}
-
-TEST_F(WindowTest, setVsyncTest) {
-
-}
-
-TEST_F(WindowTest, requestCloseTest) {
-    window.requestClose();
-    EXPECT_EQ(window.shouldClose(), true);
-}
-
-TEST_F(WindowTest, isOpenTest) {
-    // No close request was sent, so it should not expect to close, and be open
-    EXPECT_EQ(window.isOpen(), true);
-}
-
-///////////////////////////////
-// Viewport Tests
-///////////////////////////////
-
-TEST(ViewportTest, getCenterTest) {
-    Viewport viewport(1600, 900);
-    EXPECT_EQ(viewport.getCenter(), glm::vec2(800, 450));
-
-    viewport = Viewport(1920, 1080);
-    EXPECT_EQ(viewport.getCenter(), glm::vec2(960, 540));
-}
-
-///////////////////////////////
-// Camera Tests
-///////////////////////////////
-
-class CameraTest : public ::testing::Test {
-protected:
-    CameraTest() : viewport(1600, 900) {
-
-    }
-
-    Viewport viewport;
-};
-
-TEST_F(CameraTest, moveByGlobalTest) {
-
-}
-
-TEST_F(CameraTest, moveByLocalTest) {
-
-}
-
-TEST_F(CameraTest, rotateByLocalTest) {
-
-}
-
-TEST_F(CameraTest, getViewMatrixTest) {
-
-}
-
-TEST_F(CameraTest, getProjectionMatrixTest) {
-
-}
-
-///////////////////////////////
-// Drawable Tests
-///////////////////////////////
-
-class DrawableTest : public ::testing::Test {
-protected:
-    DrawableTest() {
-
-    }
-};
-
-TEST_F(DrawableTest, drawTest) {
-
-}
-
-///////////////////////////////
-// Mesh Tests
-///////////////////////////////
-
-class MeshTest : public ::testing::Test {
-protected:
-    MeshTest() {
-
-    }
-};
-
-TEST_F(MeshTest, drawTest) {
-
-}
-
-TEST_F(MeshTest, prepareToBeDrawnTest) {
-
-}
-
-TEST_F(MeshTest, linkToShaderTest) {
 
 }
 
@@ -254,6 +195,59 @@ TEST_F(ShaderProgramTest, useTest) {
 
 TEST_F(ShaderProgramTest, getUniformLocationTest) {
 
+}
+
+///////////////////////////////
+// Viewport Tests
+///////////////////////////////
+TEST(ViewportTest, getCenterTest) {
+    Viewport viewport(1600, 900);
+    EXPECT_EQ(viewport.getCenter(), glm::vec2(800, 450));
+
+    viewport = Viewport(1920, 1080);
+    EXPECT_EQ(viewport.getCenter(), glm::vec2(960, 540));
+}
+
+///////////////////////////////
+// Window Tests
+///////////////////////////////
+class WindowTest : public ::testing::Test {
+protected:
+    WindowTest() : viewport(1600, 900), window(viewport, false) {
+
+    }
+    Viewport viewport;
+    Window window;
+};
+
+TEST_F(WindowTest, displayTest) {
+
+}
+
+TEST_F(WindowTest, closeTest) {
+
+}
+
+TEST_F(WindowTest, clearBuffersTest) {
+
+}
+
+TEST_F(WindowTest, setFullscreenTest) {
+
+}
+
+TEST_F(WindowTest, setVsyncTest) {
+
+}
+
+TEST_F(WindowTest, requestCloseTest) {
+    window.requestClose();
+    EXPECT_EQ(window.shouldClose(), true);
+}
+
+TEST_F(WindowTest, isOpenTest) {
+    // No close request was sent, so it should not expect to close, and be open
+    EXPECT_EQ(window.isOpen(), true);
 }
 
 ///////////////////////////////
