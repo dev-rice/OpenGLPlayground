@@ -22,7 +22,7 @@ public:
     void setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates);
 
     glm::vec3 getPosition();
-    glm::vec3 getRotation();
+    glm::vec3 getRotationInGlobalCoordinates();
 
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();

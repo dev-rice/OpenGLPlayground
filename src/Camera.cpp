@@ -54,7 +54,7 @@ void Camera::moveByLocal(glm::vec3 move_vector) {
 }
 
 void Camera::rotateByLocal(glm::vec3 rotation_vector) {
-    setRotationInLocalCoordinates(getRotation() + rotation_vector);
+    setRotationInLocalCoordinates(getRotationInLocalCoordinates() + rotation_vector);
 }
 
 glm::mat4 Camera::getViewMatrix(){
@@ -69,7 +69,7 @@ glm::vec3 Camera::getPosition(){
     return position;
 }
 
-glm::vec3 Camera::getRotation(){
+glm::vec3 Camera::getRotationInLocalCoordinates(){
     return rotation_in_local_coordinates;
 }
 

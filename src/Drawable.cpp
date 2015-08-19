@@ -16,7 +16,7 @@ glm::vec3 Drawable::getPosition() {
     return position;
 }
 
-glm::vec3 Drawable::getRotation() {
+glm::vec3 Drawable::getRotationInGlobalCoordinates() {
     return rotation_in_global_coordinates;
 }
 
@@ -57,7 +57,7 @@ void Drawable::moveByGlobal(glm::vec3 move_vector) {
 }
 
 void Drawable::rotateByGlobal(glm::vec3 rotation_vector) {
-    setRotationInGlobalCoordinates(getRotation() + rotation_vector);
+    setRotationInGlobalCoordinates(getRotationInGlobalCoordinates() + rotation_vector);
 }
 
 glm::mat4 Drawable::calculateModelMatrix() {
