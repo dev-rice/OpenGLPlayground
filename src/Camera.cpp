@@ -25,6 +25,9 @@ void Camera::setPosition(glm::vec3 position){
 
 void Camera::setRotationInLocalCoordinates(glm::vec3 rotation_in_local_coordinates){
     this->rotation_in_local_coordinates = rotation_in_local_coordinates;
+
+    glm::mat3 rotation_matrix = calculateRotationMatrix();
+    transformCameraAxes(rotation_matrix);
 }
 
 Viewport& Camera::getViewport() {
@@ -51,6 +54,7 @@ void Camera::moveByLocal(glm::vec3 move_vector) {
     moveXLocal(move_vector.x);
     moveYLocal(move_vector.y);
     moveZLocal(move_vector.z);
+
 }
 
 void Camera::rotateByLocal(glm::vec3 rotation_vector) {
@@ -102,15 +106,27 @@ glm::mat3 Camera::calculateRotationMatrix() {
     float cy = cos(getRotationInLocalCoordinates().y);
     float sy = sin(getRotationInLocalCoordinates().y);
 
-    glm::mat3 rotation_x = glm::mat3(  1 ,  0 ,  0 ,
-                                       0 ,  cx, -sx,
-                                       0 ,  sx,  cx  );
+    float cz = cos(getRotationInLocalCoordinates().z);
+    float sz = sin(getRotationInLocalCoordinates().z);
 
-    glm::mat3 rotation_y = glm::mat3(  cy,  0 , -sy,
-                                       0 ,  1 ,  0 ,
-                                       sy,  0 ,  cy  );
+    glm::mat3 rotation_x = glm::mat3( 1, 0 ,  0 ,
+                                      0, cx, -sx,
+                                      0, sx,  cx  );
 
-    return rotation_y * rotation_x;
+    glm::mat3 rotation_y = glm::mat3( cy, 0, -sy,
+                                      0 , 1,  0 ,
+                                      sy, 0,  cy  );
+
+    glm::mat3 rotation_z = glm::mat3( cz, -sz, 0,
+                                      sz,  cz, 0,
+                                      0 ,  0 , 1  );
+
+    glm::mat3 rotation_matrix;
+    rotation_matrix = rotation_x * rotation_matrix;
+    rotation_matrix = rotation_y * rotation_matrix;
+    rotation_matrix = rotation_z * rotation_matrix;
+
+    return rotation_matrix;
 
 }
 

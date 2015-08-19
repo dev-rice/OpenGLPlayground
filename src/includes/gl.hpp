@@ -1,4 +1,5 @@
 // Contains all the includes required to use OpenGL
+#define GLEW_STATIC
 #include <GL/glew.h>
 
 #if defined __APPLE__ && __MACH__

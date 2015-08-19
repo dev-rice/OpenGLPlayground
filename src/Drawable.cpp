@@ -73,30 +73,32 @@ glm::mat4 Drawable::calculateModelMatrix() {
 }
 
 glm::mat4 Drawable::calculateRotationMatrix() {
-   // Rotate the model about each axis.
-   float cx = cos(getRotationInGlobalCoordinates().x);
-   float sx = sin(getRotationInGlobalCoordinates().x);
+    // Rotate the model about each axis.
+    float cx = cos(getRotationInGlobalCoordinates().x);
+    float sx = sin(getRotationInGlobalCoordinates().x);
 
-   float cy = cos(getRotationInGlobalCoordinates().y);
-   float sy = sin(getRotationInGlobalCoordinates().y);
+    float cy = cos(getRotationInGlobalCoordinates().y);
+    float sy = sin(getRotationInGlobalCoordinates().y);
 
-   float cz = cos(getRotationInGlobalCoordinates().z);
-   float sz = sin(getRotationInGlobalCoordinates().z);
+    float cz = cos(getRotationInGlobalCoordinates().z);
+    float sz = sin(getRotationInGlobalCoordinates().z);
 
-   glm::mat4 rotation_z = glm::mat4( cz, -sz, 0, 0,
-                                     sz,  cz, 0, 0,
-                                     0 ,  0 , 1, 0,
-                                     0 ,  0 , 0, 1);
 
-   glm::mat4 rotation_x = glm::mat4( 1, 0 ,  0 , 0,
-                                     0, cx, -sx, 0,
-                                     0, sx,  cx, 0,
-                                     0, 0 ,  0 , 1);
 
-   glm::mat4 rotation_y = glm::mat4(  cy,  0, -sy, 0,
-                                      0 ,  1,  0 , 0,
-                                      sy,  0,  cy, 0,
-                                      0 ,  0,  0 , 1);
+    glm::mat4 rotation_x = glm::mat4( 1, 0 ,  0 , 0,
+                                      0, cx, -sx, 0,
+                                      0, sx,  cx, 0,
+                                      0, 0 ,  0 , 1);
+
+    glm::mat4 rotation_y = glm::mat4(  cy,  0, -sy, 0,
+                                       0 ,  1,  0 , 0,
+                                       sy,  0,  cy, 0,
+                                       0 ,  0,  0 , 1);
+
+    glm::mat4 rotation_z = glm::mat4( cz, -sz, 0, 0,
+                                      sz,  cz, 0, 0,
+                                      0 ,  0 , 1, 0,
+                                      0 ,  0 , 0, 1);
 
    // The convention followed is rotate around X-axis, then Y-axis, and finally Z-axis.
    glm::mat4 rotation_matrix;

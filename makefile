@@ -101,4 +101,4 @@ $(OBJDIR)/all_tests.o : $(TEST_SRC)
 	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(SRCDIR) $< -o $@
 
 all_tests: $(OBJECTS) $(OBJDIR)/all_tests.o
-	g++ -L $(LIBRARY_DIR)/ -l gtest -l gmock $(LOCAL_LIBRARIES) $(LIBRARIES) $^ -o $@
+	$(COMPILER) -L $(LIBRARY_DIR)/ -l gtest -l gmock $(LOCAL_LIBRARIES) $(LIBRARIES) $^ -o $@

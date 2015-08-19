@@ -20,12 +20,13 @@ public:
     string getErrors();
     bool hasErrors();
 
-    void printErrors();
     GLuint getGLId();
     string getFilename();
     ShaderCreator& getShaderCreator();
 
 private:
+    void printErrors();
+    
     void setGLId(GLuint id);
     string getFileContents(string filename);
     GLuint loadShader(string filename);

@@ -25,8 +25,6 @@ public:
 
     void requestClose();
 
-    void setFullscreen(bool fullscreen);
-    void setWindowed();
     void setVsync(bool);
 
     bool isFullscreen();
@@ -39,6 +37,9 @@ public:
     Viewport& getViewport();
 
 private:
+
+    void setFullscreen(bool fullscreen);
+    void setWindowed();
 
     void initializeWindow();
 

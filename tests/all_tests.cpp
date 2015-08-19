@@ -1,13 +1,18 @@
-
 #include "gtest/gtest.h"
 
 #include <iostream>
+#include <cmath>
+#include "includes/gl.hpp"
 
 #include "Viewport.hpp"
 #include "Window.hpp"
 #include "Mouse.hpp"
 #include "Camera.hpp"
 #include "OpenGLContext.hpp"
+#include "ShaderFile.hpp"
+#include "VertexShaderCreator.hpp"
+#include "FragmentShaderCreator.hpp"
+#include "ShaderProgram.hpp"
 
 ///////////////////////////////
 // Camera Tests
@@ -20,6 +25,14 @@ protected:
 
     Viewport viewport;
 };
+
+TEST_F(CameraTest, constructorTest) {
+    Camera camera(viewport, 45.0f);
+
+    EXPECT_EQ(camera.getPosition(), glm::vec3(0, 0, 0));
+    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(0, 0, 0));
+
+}
 
 TEST_F(CameraTest, moveByGlobalTest1) {
     Camera camera(viewport, 45.0f);
@@ -46,11 +59,49 @@ TEST_F(CameraTest, moveByGlobalTest2) {
 }
 
 TEST_F(CameraTest, moveByLocalTest) {
-    FAIL();
+    Camera camera(viewport, 45.0f);
+
+    camera.moveByLocal(glm::vec3(0, 0, -1));
+    glm::vec3 camera_position = camera.getPosition();
+    EXPECT_NEAR(camera_position.x, 0, 0.001);
+    EXPECT_NEAR(camera_position.y, 0, 0.001);
+    EXPECT_NEAR(camera_position.z, -1, 0.001);
+
+    camera.rotateByLocal(glm::vec3(0, -M_PI / 2.0, 0));
+    camera.moveByLocal(glm::vec3(0, 0, -1));
+    camera_position = camera.getPosition();
+    EXPECT_NEAR(camera_position.x, 1, 0.001);
+    EXPECT_NEAR(camera_position.y, 0, 0.001);
+    EXPECT_NEAR(camera_position.z, -1, 0.001);
+
+    camera.rotateByLocal(glm::vec3(-M_PI / 2.0, 0, 0));
+    camera.moveByLocal(glm::vec3(0, 1, 0));
+    camera_position = camera.getPosition();
+    EXPECT_NEAR(camera_position.x, 0, 0.001);
+    EXPECT_NEAR(camera_position.y, 0, 0.001);
+    EXPECT_NEAR(camera_position.z, -1, 0.001);
+
+    camera.rotateByLocal(glm::vec3(0, 0, M_PI));
+    camera.moveByLocal(glm::vec3(1, 0, 0));
+    camera_position = camera.getPosition();
+    EXPECT_NEAR(camera_position.x, 0, 0.001);
+    EXPECT_NEAR(camera_position.y, 0, 0.001);
+    EXPECT_NEAR(camera_position.z, 0, 0.001);
+
 }
 
 TEST_F(CameraTest, rotateByLocalTest) {
-    FAIL();
+    Camera camera(viewport, 45.0f);
+
+    camera.rotateByLocal(glm::vec3(1, 2, 0));
+    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(1, 2, 0));
+
+    camera.rotateByLocal(glm::vec3(-1, 0, 1.5));
+    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(0, 2, 1.5));
+
+    camera.rotateByLocal(glm::vec3(0, -2, -1.5));
+    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(0, 0, 0));
+
 }
 
 TEST_F(CameraTest, getViewMatrixTest) {
@@ -122,7 +173,11 @@ TEST_F(MouseTest, centerInWindowTest) {
 }
 
 TEST_F(MouseTest, setPositionInWindowTest) {
-    FAIL();
+    Viewport viewport(1600, 900);
+    Window window(viewport, false);
+
+    mouse.setPositionInWindow(window, glm::vec2(100, 100));
+    EXPECT_EQ(mouse.getPosition(), glm::vec2(100, 100));
 }
 
 ///////////////////////////////
@@ -138,38 +193,42 @@ protected:
     Window window;
 };
 
-TEST_F(OpenGLContextTest, getRendererStringTest) {
-    FAIL();
-}
-
-TEST_F(OpenGLContextTest, getVersionStringTest) {
-    FAIL();
-}
-
-TEST_F(OpenGLContextTest, getGLSLVersionStringTest) {
-    FAIL();
-}
-
 ///////////////////////////////
 // ShaderFile Tests
 ///////////////////////////////
 class ShaderFileTest : public ::testing::Test {
 protected:
-    ShaderFileTest() {
+    ShaderFileTest() : viewport(1600, 900), window(viewport, false), open_gl_context(4, 1, window) {
 
     }
+
+    Viewport viewport;
+    Window window;
+
+    OpenGLContext open_gl_context;
+
+    VertexShaderCreator vertex_shader_creator;
+    FragmentShaderCreator fragment_shader_creator;
 };
 
-TEST_F(ShaderFileTest, attachToTest) {
-    FAIL();
-}
-
-TEST_F(ShaderFileTest, getErrorsTest) {
-    FAIL();
-}
-
 TEST_F(ShaderFileTest, hasErrorsTest) {
-    FAIL();
+
+    ShaderFile vertex_shader_with_errors("tests/shaders/test_errors.vs", vertex_shader_creator);
+
+    EXPECT_EQ(vertex_shader_with_errors.hasErrors(), true);
+
+    ShaderFile fragment_shader_with_errors("tests/shaders/test_errors.fs", fragment_shader_creator);
+
+    EXPECT_EQ(fragment_shader_with_errors.hasErrors(), true);
+
+    ShaderFile vertex_shader_okay("tests/shaders/test_okay.vs", vertex_shader_creator);
+
+    EXPECT_EQ(vertex_shader_okay.hasErrors(), false);
+
+    ShaderFile fragment_shader_okay("tests/shaders/test_okay.fs", fragment_shader_creator);
+
+    EXPECT_EQ(fragment_shader_okay.hasErrors(), false);
+
 }
 
 ///////////////////////////////
@@ -177,17 +236,43 @@ TEST_F(ShaderFileTest, hasErrorsTest) {
 ///////////////////////////////
 class ShaderProgramTest : public ::testing::Test {
 protected:
-    ShaderProgramTest() {
+    ShaderProgramTest() : viewport(1600, 900), window(viewport, false), open_gl_context(4, 1, window)  {
 
     }
+
+    Viewport viewport;
+    Window window;
+
+    OpenGLContext open_gl_context;
+
+    VertexShaderCreator vertex_shader_creator;
+    FragmentShaderCreator fragment_shader_creator;
 };
 
-TEST_F(ShaderProgramTest, useTest) {
-    FAIL();
+TEST_F(ShaderProgramTest, getUniformLocationTest) {
+    ShaderFile vertex_shader("tests/shaders/test_okay.vs", vertex_shader_creator);
+    ShaderFile fragment_shader("tests/shaders/test_okay.fs", fragment_shader_creator);
+
+    ShaderProgram shader_program(vertex_shader, fragment_shader);
+
+    EXPECT_NE(shader_program.getUniformLocation("model"), -1);
+    EXPECT_NE(shader_program.getUniformLocation("view"), -1);
+    EXPECT_NE(shader_program.getUniformLocation("proj"), -1);
+
 }
 
-TEST_F(ShaderProgramTest, getUniformLocationTest) {
-    FAIL();
+TEST_F(ShaderProgramTest, getAttributeLocationTest) {
+
+    ShaderFile vertex_shader("tests/shaders/test_okay.vs", vertex_shader_creator);
+    ShaderFile fragment_shader("tests/shaders/test_okay.fs", fragment_shader_creator);
+
+    ShaderProgram shader_program(vertex_shader, fragment_shader);
+
+    EXPECT_EQ(shader_program.getAttributeLocation("position"), 1);
+    EXPECT_EQ(shader_program.getAttributeLocation("normal"), 2);
+    EXPECT_EQ(shader_program.getAttributeLocation("texture_coordinate"), 3);
+
+
 }
 
 ///////////////////////////////
@@ -220,14 +305,6 @@ protected:
     Viewport viewport;
     Window window;
 };
-
-TEST_F(WindowTest, displayTest) {
-    FAIL();
-}
-
-TEST_F(WindowTest, closeTest) {
-    FAIL();
-}
 
 TEST_F(WindowTest, clearBuffersTest) {
     FAIL();

@@ -4,7 +4,7 @@ OpenGLContext::OpenGLContext(int major, int minor, Window& window) {
     setVersion(major, minor);
     setupOpenGLContext(window);
     setDefaults();
-    printVersionInformation();
+    // printVersionInformation();
 }
 
 void OpenGLContext::setVersion(int major, int minor) {

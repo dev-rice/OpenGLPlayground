@@ -90,6 +90,13 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
         camera_movement += glm::vec3(0, -1, 0);
     }
 
+    if (keyboard[SDL_SCANCODE_Q]) {
+        camera.rotateByLocal(glm::vec3(0, 0, -0.01));
+    }
+    if (keyboard[SDL_SCANCODE_E]) {
+        camera.rotateByLocal(glm::vec3(0, 0, 0.01));
+    }
+
     if (glm::length(camera_movement) != 0){
         camera_movement = glm::normalize(camera_movement);
     }

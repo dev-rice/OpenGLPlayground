@@ -85,7 +85,7 @@ bool Window::isFullscreen() {
 
 
 Uint32 Window::getCreationFlags() {
-    Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+    Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI;
 
     if (isFullscreen()){
         flags |= SDL_WINDOW_FULLSCREEN;
@@ -116,7 +116,7 @@ void Window::initializeWindow(){
 }
 
 void Window::clearBuffers() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.05f, 0.15f, 0.2f, 1.0f);
     clearDepthBuffer();
     clearColorBuffer();
 }
