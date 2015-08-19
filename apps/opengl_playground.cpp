@@ -9,6 +9,7 @@
 #include "MeshFileParserDAE.hpp"
 #include "MeshFileParserOBJ.hpp"
 #include "ShaderFileFactory.hpp"
+#include "Texture.hpp"
 
 #include <iostream>
 #include <map>
@@ -120,16 +121,20 @@ int main(int argc, char* argv[]) {
     camera.setPosition(camera_start_position);
 
     MeshFileParserDAE mesh_file_parser("res/castle_tower.dae");
-    Mesh cube_mesh(mesh_file_parser);
+    Mesh castle_tower_mesh(mesh_file_parser);
 
-    Drawable cube1(cube_mesh, shader);
-    Drawable cube2(cube_mesh, shader);
-    cube2.setPosition(glm::vec3(1, 1, 1));
+    Texture castle_tower_diffuse("res/castle_tower_diff.png");
+
+    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_diffuse);
+    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_diffuse);
+    castle_tower2.setPosition(glm::vec3(1, 1, 1));
 
     MeshFileParserOBJ mesh_file_parser_obj("res/fence.obj");
     Mesh fence_mesh(mesh_file_parser_obj);
 
-    Drawable fence(fence_mesh, shader);
+    Texture fence_diffuse("res/fence_diff.png");
+
+    Drawable fence(fence_mesh, shader, fence_diffuse);
     fence.setPosition(glm::vec3(1, 2, 1));
 
     mouse.hide();
@@ -139,11 +144,11 @@ int main(int argc, char* argv[]) {
     while(window.isOpen()) {
         window.clearBuffers();
 
-        cube1.draw(camera);
-        cube2.draw(camera);
+        castle_tower1.draw(camera);
+        castle_tower2.draw(camera);
         fence.draw(camera);
 
-        handleInputs(mouse, window, cube_mesh, camera);
+        handleInputs(mouse, window, castle_tower_mesh, camera);
         window.display();
 
     }

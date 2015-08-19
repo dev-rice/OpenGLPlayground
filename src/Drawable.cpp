@@ -1,6 +1,8 @@
 #include "Drawable.hpp"
 
-Drawable::Drawable(Mesh& mesh, ShaderProgram& shader) : mesh(&mesh), shader(&shader) {
+Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, Texture& diffuse) : mesh(&mesh), shader(&shader) {
+
+    setDiffuse(diffuse);
 
     mesh.linkToShader(getShaderProgram());
 
@@ -32,10 +34,22 @@ ShaderProgram& Drawable::getShaderProgram() {
     return *shader;
 }
 
+void Drawable::setDiffuse(Texture& diffuse) {
+    this->diffuse = &diffuse;
+    glUniform1i(getShaderProgram().getUniformLocation("diffuse_texture"), 0);
+}
+
+Texture& Drawable::getDiffuse() {
+    return *diffuse;
+}
+
 void Drawable::draw(Camera& camera) {
     getMesh().prepareToBeDrawn();
 
     getShaderProgram().use();
+
+    glActiveTexture(GL_TEXTURE0);
+    getDiffuse().bind(GL_TEXTURE_2D);
 
     glm::mat4 model = calculateModelMatrix();
     GLint model_uniform = getShaderProgram().getUniformLocation( "model");
