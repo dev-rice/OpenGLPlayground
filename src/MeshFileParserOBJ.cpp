@@ -133,8 +133,8 @@ void MeshFileParserOBJ::loadMeshFromFile(string filename){
                 final_vertices.push_back(tempVN1);
                 final_vertices.push_back(tempVN2);
                 final_vertices.push_back(tempVN3);
-                // final_vertices.push_back(tempX2);
-                // final_vertices.push_back(tempY2);
+                final_vertices.push_back(tempX2);
+                final_vertices.push_back(tempY2);
             }
             final_faces.push_back(mappedEdgeLoops[tuple]-1);
         }

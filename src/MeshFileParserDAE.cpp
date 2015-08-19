@@ -150,8 +150,8 @@ void MeshFileParserDAE::writeFinalArrays(std::vector<Vertex>& vertices, std::vec
         // final_vertices.push_back(vertex.binormal.x);
         // final_vertices.push_back(vertex.binormal.y);
         // final_vertices.push_back(vertex.binormal.z);
-        // final_vertices.push_back(vertex.texcoord.x);
-        // final_vertices.push_back(vertex.texcoord.y);
+        final_vertices.push_back(vertex.texcoord.x);
+        final_vertices.push_back(vertex.texcoord.y);
     }
 
     // Elements are already ordered correctly.
