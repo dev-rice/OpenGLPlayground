@@ -18,6 +18,7 @@ KILL_TIME := 5s
 BUILD_SCRIPT :=
 
 LIBRARY_DIR := lib
+LOCAL_LIBRARIES := -L$(LIBRARY_DIR) -l pugixml
 
 # Test stuff
 GOOGLE_TEST_DIR := gtest-1.7.0
@@ -32,6 +33,9 @@ GOOGLE_MOCK_DIR := gmock-1.7.0
 GOOGLE_MOCK_SRC_DIR := $(GOOGLE_MOCK_DIR)/src
 GOOGLE_MOCK_INCLUDE_DIR := $(GOOGLE_MOCK_DIR)/include
 
+PUGIXML_DIR := pugi
+PUGIXML_INCLUDE_DIR := $(PUGIXML_DIR)/include
+
 APP_DIR := apps
 
 # Try to auto detect the platform to build for
@@ -44,7 +48,7 @@ else ifeq ($(PLATFORM),Linux)
 endif
 
 opengl_playground: all
-	$(COMPILER) -I$(SRCDIR) $(OBJECTS) $(LIBRARIES) $(APP_DIR)/opengl_playground.$(SRCEXT) -o opengl_playground
+	$(COMPILER) -I$(SRCDIR) -I$(PUGIXML_INCLUDE_DIR) $(OBJECTS) $(LIBRARIES) $(LOCAL_LIBRARIES) $(APP_DIR)/opengl_playground.$(SRCEXT) -o opengl_playground
 
 all: $(OBJDIR) $(SOURCES) $(OBJECTS)
 
@@ -52,7 +56,7 @@ $(OBJDIR):
 	@ mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
+	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) -I$(PUGIXML_INCLUDE_DIR) $< -o $@
 
 configure-linux:
 	@ sudo apt-get install libglew-dev libglm-dev libsdl2-dev curl nmap libjsoncpp-dev
@@ -86,6 +90,11 @@ google-mock:
 	g++ -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(GOOGLE_MOCK_DIR) -I$(GOOGLE_TEST_INCLUDE_DIR) -c $(GOOGLE_MOCK_SRC_DIR)/gmock-all.cc
 	@ ar -rv $(LIBRARY_DIR)/libgmock.a gmock-all.o
 	@ rm gmock-all.o
+
+pugixml:
+	g++ -I$(PUGIXML_INCLUDE_DIR) -c $(PUGIXML_DIR)/pugixml.cpp
+	@ ar -rv $(LIBRARY_DIR)/libpugixml.a pugixml.o
+	@ rm pugixml.o
 
 
 $(OBJDIR)/all_tests.o : $(TEST_SRC)
