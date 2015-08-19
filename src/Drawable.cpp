@@ -17,15 +17,15 @@ glm::vec3 Drawable::getPosition() {
 }
 
 glm::vec3 Drawable::getRotation() {
-    return rotation;
+    return rotation_in_global_coordinates;
 }
 
 void Drawable::setPosition(glm::vec3 position) {
     this->position = position;
 }
 
-void Drawable::setRotation(glm::vec3 rotation) {
-    this->rotation = rotation;
+void Drawable::setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates) {
+    this->rotation_in_global_coordinates = rotation_in_global_coordinates;
 }
 
 ShaderProgram& Drawable::getShaderProgram() {
@@ -57,7 +57,7 @@ void Drawable::moveByGlobal(glm::vec3 move_vector) {
 }
 
 void Drawable::rotateByGlobal(glm::vec3 rotation_vector) {
-    setRotation(getRotation() + rotation_vector);
+    setRotationInGlobalCoordinates(getRotation() + rotation_vector);
 }
 
 glm::mat4 Drawable::calculateModelMatrix() {
@@ -66,14 +66,14 @@ glm::mat4 Drawable::calculateModelMatrix() {
 
 glm::mat4 Drawable::calculateRotationMatrix() {
    // Rotate the model about each axis.
-   float cx = cos(rotation.x);
-   float sx = sin(rotation.x);
+   float cx = cos(rotation_in_global_coordinates.x);
+   float sx = sin(rotation_in_global_coordinates.x);
 
-   float cy = cos(rotation.y);
-   float sy = sin(rotation.y);
+   float cy = cos(rotation_in_global_coordinates.y);
+   float sy = sin(rotation_in_global_coordinates.y);
 
-   float cz = cos(rotation.z);
-   float sz = sin(rotation.z);
+   float cz = cos(rotation_in_global_coordinates.z);
+   float sz = sin(rotation_in_global_coordinates.z);
 
    glm::mat4 rotation_z = glm::mat4( cz, -sz, 0, 0,
                                      sz,  cz, 0, 0,

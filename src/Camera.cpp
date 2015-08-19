@@ -23,8 +23,8 @@ void Camera::setPosition(glm::vec3 position){
     this->position = position;
 }
 
-void Camera::setRotation(glm::vec3 rotation){
-    this->rotation = rotation;
+void Camera::setRotationInLocalCoordinates(glm::vec3 rotation_in_local_coordinates){
+    this->rotation_in_local_coordinates = rotation_in_local_coordinates;
 }
 
 Viewport& Camera::getViewport() {
@@ -54,7 +54,7 @@ void Camera::moveByLocal(glm::vec3 move_vector) {
 }
 
 void Camera::rotateByLocal(glm::vec3 rotation_vector) {
-    setRotation(getRotation() + rotation_vector);
+    setRotationInLocalCoordinates(getRotation() + rotation_vector);
 }
 
 glm::mat4 Camera::getViewMatrix(){
@@ -70,7 +70,7 @@ glm::vec3 Camera::getPosition(){
 }
 
 glm::vec3 Camera::getRotation(){
-    return rotation;
+    return rotation_in_local_coordinates;
 }
 
 float Camera::getFOV(){
@@ -86,11 +86,11 @@ glm::mat4 Camera::calculateViewMatrix() {
     glm::vec3 center = position - glm::vec3(0.0f, 0.0f, 1.0f);
     glm::vec3 up     = local_y;
 
-    float cx = cos(rotation.x);
-    float sx = sin(rotation.x);
+    float cx = cos(rotation_in_local_coordinates.x);
+    float sx = sin(rotation_in_local_coordinates.x);
 
-    float cy = cos(rotation.y);
-    float sy = sin(rotation.y);
+    float cy = cos(rotation_in_local_coordinates.y);
+    float sy = sin(rotation_in_local_coordinates.y);
 
     glm::mat3 rotation_x = glm::mat3(  1 ,  0 ,  0 ,
                                        0 ,  cx, -sx,

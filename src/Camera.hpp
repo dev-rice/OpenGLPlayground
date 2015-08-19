@@ -18,7 +18,7 @@ public:
     glm::mat4 getProjectionMatrix();
 
     void setPosition(glm::vec3);
-    void setRotation(glm::vec3);
+    void setRotationInLocalCoordinates(glm::vec3);
 
     Viewport& getViewport();
 
@@ -40,7 +40,7 @@ private:
     glm::mat4 calculateViewMatrix();
 
     glm::vec3 position;
-    glm::vec3 rotation;
+    glm::vec3 rotation_in_local_coordinates;
 
     glm::vec3 local_x;
     glm::vec3 local_y;

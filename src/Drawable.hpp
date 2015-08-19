@@ -19,7 +19,7 @@ public:
     void rotateByGlobal(glm::vec3 rotation_vec);
 
     void setPosition(glm::vec3 position);
-    void setRotation(glm::vec3 rotation);
+    void setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates);
 
     glm::vec3 getPosition();
     glm::vec3 getRotation();
@@ -36,7 +36,7 @@ private:
     ShaderProgram* shader;
 
     glm::vec3 position;
-    glm::vec3 rotation;
+    glm::vec3 rotation_in_global_coordinates;
 };
 
 #endif
