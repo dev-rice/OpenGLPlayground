@@ -5,11 +5,11 @@ ShaderFile ShaderFileFactory::createShaderFile(string filename) {
 }
 
 ShaderCreator& ShaderFileFactory::getCorrectCreator(string filename) {
-    string last_three_chars = lastCharacters(filename, 3);
+    string file_extension = lastCharacters(filename, 3);
 
-    if (last_three_chars == ".vs") {
+    if (file_extension == ".vs") {
         return vertex_shader_creator;
-    } else if (last_three_chars == ".fs") {
+    } else if (file_extension == ".fs") {
         return fragment_shader_creator;
     }
 }
