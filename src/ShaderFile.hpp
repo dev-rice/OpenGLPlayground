@@ -26,12 +26,12 @@ public:
     ShaderCreator& getShaderCreator();
 
 private:
-    GLuint shader_id;
-    string filename;
     void setGLId(GLuint id);
     string getFileContents(string filename);
     GLuint loadShader(string filename);
 
+    GLuint shader_id;
+    string filename;
     ShaderCreator* shader_creator;
 };
 

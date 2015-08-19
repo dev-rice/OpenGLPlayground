@@ -6,11 +6,9 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "Drawable.hpp"
-#include "VertexShaderCreator.hpp"
-#include "FragmentShaderCreator.hpp"
 #include "MeshFileParserDAE.hpp"
 #include "MeshFileParserOBJ.hpp"
-
+#include "ShaderFileFactory.hpp"
 
 #include <iostream>
 #include <map>
@@ -107,12 +105,12 @@ int main(int argc, char* argv[]) {
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
 
-
     VertexShaderCreator vertex_shader_creator;
     FragmentShaderCreator fragment_shader_creator;
 
-    ShaderFile vertex_shader("shaders/temp.vs", vertex_shader_creator);
-    ShaderFile fragment_shader("shaders/temp.fs", fragment_shader_creator);
+    ShaderFileFactory shader_file_factory;
+    ShaderFile vertex_shader = shader_file_factory.createShaderFile("shaders/temp.vs");
+    ShaderFile fragment_shader = shader_file_factory.createShaderFile("shaders/temp.fs");
     ShaderProgram shader(vertex_shader, fragment_shader);
 
     float field_of_view = 45.0f;
