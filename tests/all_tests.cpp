@@ -159,28 +159,6 @@ protected:
     Window window;
 };
 
-TEST_F(OpenGLContextTest, enableDepthTestTest) {
-    OpenGLContext opengl_context(4, 1, window);
-
-    MockGL mock_gl;
-    #undef glEnable
-    #define glEnable mock_gl.Enable
-
-    EXPECT_CALL(mock_gl, Enable(testing::_)).Times(1);
-    glEnable(GL_DEPTH_TEST);
-    opengl_context.enableDepthTest();
-
-
-}
-
-TEST_F(OpenGLContextTest, enableBackfaceCullingTest) {
-    FAIL();
-}
-
-TEST_F(OpenGLContextTest, setupAlphaBlendingTest) {
-    FAIL();
-}
-
 TEST_F(OpenGLContextTest, getRendererStringTest) {
     FAIL();
 }
