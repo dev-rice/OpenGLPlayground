@@ -90,13 +90,6 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
         camera_movement += glm::vec3(0, -1, 0);
     }
 
-    if (keyboard[SDL_SCANCODE_Q]) {
-        camera.rotateByLocal(glm::vec3(0, 0, -0.01));
-    }
-    if (keyboard[SDL_SCANCODE_E]) {
-        camera.rotateByLocal(glm::vec3(0, 0, 0.01));
-    }
-
     if (glm::length(camera_movement) != 0){
         camera_movement = glm::normalize(camera_movement);
     }
@@ -111,7 +104,7 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
 int main(int argc, char* argv[]) {
 
     Viewport viewport(1600, 900);
-    Window window(viewport, false);
+    Window window(viewport, falsem);
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
 
