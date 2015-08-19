@@ -1,6 +1,5 @@
 
 #include "gtest/gtest.h"
-#include "gl_mocks.hpp"
 
 #include <iostream>
 
