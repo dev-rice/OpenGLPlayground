@@ -78,14 +78,25 @@ float Camera::getFOV(){
 }
 
 glm::mat4 Camera::calculateViewMatrix() {
-    // Original vectors
-    // eye      <x, y, z>
-    // center   <x, y, z> - <0, 0, 1>
-    // up       <0, 1, 0>
-    glm::vec3 eye    = position;
-    glm::vec3 center = position - glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::vec3 up     = local_y;
 
+    glm::mat3 rotation_matrix = calculateRotationMatrix();
+
+    glm::vec3 look_direction = rotation_matrix * glm::vec3(0.0f, 0.0f, 1.0f);
+
+    transformCameraAxes(rotation_matrix);
+
+    return lookAt(look_direction);
+
+}
+
+glm::mat4 Camera::lookAt(glm::vec3 look_direction) {
+    glm::vec3 eye = position;
+    glm::vec3 up = local_y;
+
+    return glm::lookAt(eye, eye - look_direction, up);
+}
+
+glm::mat3 Camera::calculateRotationMatrix() {
     float cx = cos(getRotationInLocalCoordinates().x);
     float sx = sin(getRotationInLocalCoordinates().x);
 
@@ -100,17 +111,15 @@ glm::mat4 Camera::calculateViewMatrix() {
                                        0 ,  1 ,  0 ,
                                        sy,  0 ,  cy  );
 
-    glm::mat3 rotation_matrix = rotation_y * rotation_x;
+    return rotation_y * rotation_x;
 
-    // Transform the center vector
-    center = position - (rotation_matrix * glm::vec3(0.0f, 0.0f, 1.0f));
+}
 
+void Camera::transformCameraAxes(glm::mat3 rotation_matrix) {
     // Transform the camera axes
     local_x = rotation_matrix * glm::vec3(1.0f, 0.0f, 0.0f);
     local_y = rotation_matrix * glm::vec3(0.0f, 1.0f, 0.0f);
     local_z = rotation_matrix * glm::vec3(0.0f, 0.0f, 1.0f);
-
-    return glm::lookAt(eye, center, up);;
 }
 
 glm::mat4 Camera::calculateProjectionMatrix(){
