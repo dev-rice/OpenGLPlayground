@@ -41,15 +41,14 @@ private:
     glm::mat3 calculateRotationMatrix();
     void transformCameraAxes(glm::mat3 rotation_matrix);
 
+    glm::mat4 lookAt(glm::vec3 look_direction);
+
     glm::vec3 position;
     glm::vec3 rotation_in_local_coordinates;
 
     glm::vec3 local_x;
     glm::vec3 local_y;
     glm::vec3 local_z;
-
-    glm::mat4 lookAt(glm::vec3 look_direction);
-
 
     // Proj matrix and intrinsic values
     float field_of_view;
