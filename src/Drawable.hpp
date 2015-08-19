@@ -7,11 +7,11 @@
 #include "Camera.hpp"
 #include "Mesh.hpp"
 #include "ShaderProgram.hpp"
-#include "Texture.hpp"
+#include "TextureManager.hpp"
 
 class Drawable {
 public:
-    Drawable(Mesh& mesh, ShaderProgram& shader, Texture& diffuse);
+    Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager);
 
     void draw(Camera& camera);
 
@@ -28,10 +28,8 @@ public:
 
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();
+    TextureManager& getTextureManager();
 private:
-
-    void setDiffuse(Texture& texture);
-    Texture& getDiffuse();
 
     glm::mat4 calculateModelMatrix();
     glm::mat4 calculateRotationMatrix();
@@ -39,7 +37,7 @@ private:
 
     Mesh* mesh;
     ShaderProgram* shader;
-    Texture* diffuse;
+    TextureManager* texture_manager;
 
     glm::vec3 position;
     glm::vec3 rotation_in_global_coordinates;

@@ -11,6 +11,7 @@
 #include "MeshFileParserDAE.hpp"
 #include "MeshFileParserOBJ.hpp"
 #include "Texture.hpp"
+#include "TextureManager.hpp"
 
 #include <iostream>
 #include <map>
@@ -124,17 +125,17 @@ int main(int argc, char* argv[]) {
     Mesh castle_tower_mesh(mesh_file_parser);
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
-
-    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_diffuse);
-    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_diffuse);
+    TextureManager castle_tower_textures(castle_tower_diffuse);
+    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures);
+    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures);
     castle_tower2.setPosition(glm::vec3(1, 1, 1));
 
     MeshFileParserOBJ mesh_file_parser_obj("res/fence.obj");
     Mesh fence_mesh(mesh_file_parser_obj);
 
     Texture fence_diffuse("res/fence_diff.png");
-
-    Drawable fence(fence_mesh, shader, fence_diffuse);
+    TextureManager fence_textures(fence_diffuse);
+    Drawable fence(fence_mesh, shader, fence_textures);
     fence.setPosition(glm::vec3(1, 2, 1));
 
     mouse.hide();
