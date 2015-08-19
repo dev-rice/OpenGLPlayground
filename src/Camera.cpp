@@ -78,7 +78,6 @@ float Camera::getFOV(){
 }
 
 glm::mat4 Camera::calculateViewMatrix() {
-
     glm::mat3 rotation_matrix = calculateRotationMatrix();
 
     glm::vec3 look_direction = rotation_matrix * glm::vec3(0.0f, 0.0f, 1.0f);
