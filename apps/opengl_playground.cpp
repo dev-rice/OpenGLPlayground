@@ -6,9 +6,10 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "Drawable.hpp"
+#include "VertexShaderCreator.hpp"
+#include "FragmentShaderCreator.hpp"
 #include "MeshFileParserDAE.hpp"
 #include "MeshFileParserOBJ.hpp"
-#include "ShaderFileFactory.hpp"
 #include "Texture.hpp"
 
 #include <iostream>
@@ -109,9 +110,8 @@ int main(int argc, char* argv[]) {
     VertexShaderCreator vertex_shader_creator;
     FragmentShaderCreator fragment_shader_creator;
 
-    ShaderFileFactory shader_file_factory;
-    ShaderFile vertex_shader = shader_file_factory.createShaderFile("shaders/temp.vs");
-    ShaderFile fragment_shader = shader_file_factory.createShaderFile("shaders/temp.fs");
+    ShaderFile vertex_shader("shaders/temp.vs", vertex_shader_creator);
+    ShaderFile fragment_shader("shaders/temp.fs", fragment_shader_creator);
     ShaderProgram shader(vertex_shader, fragment_shader);
 
     float field_of_view = 45.0f;
