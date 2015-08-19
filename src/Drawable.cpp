@@ -66,14 +66,14 @@ glm::mat4 Drawable::calculateModelMatrix() {
 
 glm::mat4 Drawable::calculateRotationMatrix() {
    // Rotate the model about each axis.
-   float cx = cos(rotation_in_global_coordinates.x);
-   float sx = sin(rotation_in_global_coordinates.x);
+   float cx = cos(getRotationInGlobalCoordinates().x);
+   float sx = sin(getRotationInGlobalCoordinates().x);
 
-   float cy = cos(rotation_in_global_coordinates.y);
-   float sy = sin(rotation_in_global_coordinates.y);
+   float cy = cos(getRotationInGlobalCoordinates().y);
+   float sy = sin(getRotationInGlobalCoordinates().y);
 
-   float cz = cos(rotation_in_global_coordinates.z);
-   float sz = sin(rotation_in_global_coordinates.z);
+   float cz = cos(getRotationInGlobalCoordinates().z);
+   float sz = sin(getRotationInGlobalCoordinates().z);
 
    glm::mat4 rotation_z = glm::mat4( cz, -sz, 0, 0,
                                      sz,  cz, 0, 0,

@@ -86,11 +86,11 @@ glm::mat4 Camera::calculateViewMatrix() {
     glm::vec3 center = position - glm::vec3(0.0f, 0.0f, 1.0f);
     glm::vec3 up     = local_y;
 
-    float cx = cos(rotation_in_local_coordinates.x);
-    float sx = sin(rotation_in_local_coordinates.x);
+    float cx = cos(getRotationInLocalCoordinates().x);
+    float sx = sin(getRotationInLocalCoordinates().x);
 
-    float cy = cos(rotation_in_local_coordinates.y);
-    float sy = sin(rotation_in_local_coordinates.y);
+    float cy = cos(getRotationInLocalCoordinates().y);
+    float sy = sin(getRotationInLocalCoordinates().y);
 
     glm::mat3 rotation_x = glm::mat3(  1 ,  0 ,  0 ,
                                        0 ,  cx, -sx,
