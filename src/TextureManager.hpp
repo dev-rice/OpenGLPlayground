@@ -11,7 +11,7 @@ public:
     TextureManager(Texture& diffuse);
 
     void setTextureLocationsInShader(ShaderProgram& shader_program);
-    void activate();
+    void useTextures();
 
     Texture& getDiffuse();
 

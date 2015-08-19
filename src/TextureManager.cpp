@@ -10,7 +10,7 @@ void TextureManager::setTextureLocationsInShader(ShaderProgram& shader_program) 
 
 }
 
-void TextureManager::activate() {
+void TextureManager::useTextures() {
     glActiveTexture(GL_TEXTURE0);
     getDiffuse().bind(GL_TEXTURE_2D);
 }

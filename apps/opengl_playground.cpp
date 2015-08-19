@@ -127,8 +127,11 @@ int main(int argc, char* argv[]) {
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures);
+    castle_tower1.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
+
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures);
-    castle_tower2.setPosition(glm::vec3(1, 1, 1));
+    castle_tower2.setPosition(glm::vec3(-4, 0, 1));
+    castle_tower2.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
 
     MeshFileParserOBJ mesh_file_parser_obj("res/fence.obj");
     Mesh fence_mesh(mesh_file_parser_obj);
@@ -136,7 +139,7 @@ int main(int argc, char* argv[]) {
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
     Drawable fence(fence_mesh, shader, fence_textures);
-    fence.setPosition(glm::vec3(1, 2, 1));
+    fence.setPosition(glm::vec3(2, 0, 1));
 
     mouse.hide();
     mouse.centerInWindow(window);
@@ -148,6 +151,8 @@ int main(int argc, char* argv[]) {
         castle_tower1.draw(camera);
         castle_tower2.draw(camera);
         fence.draw(camera);
+
+        castle_tower1.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
         handleInputs(mouse, window, castle_tower_mesh, camera);
         window.display();

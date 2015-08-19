@@ -43,7 +43,7 @@ void Drawable::draw(Camera& camera) {
 
     getShaderProgram().use();
 
-    getTextureManager().activate();
+    getTextureManager().useTextures();
 
     glm::mat4 model = calculateModelMatrix();
     GLint model_uniform = getShaderProgram().getUniformLocation("model");
