@@ -39,10 +39,6 @@ glm::vec2 Mouse::getPosition() {
     return glm::vec2(x, y);
 }
 
-void Mouse::setPositionGlobal(glm::vec2 position) {
-    // SDL_WarpMouseGlobal(position.x, position.y);
-}
-
 void Mouse::setPositionInWindow(Window& window, glm::vec2 position){
     SDL_WarpMouseInWindow(window.getSDLWindow(), position.x, position.y);
 }

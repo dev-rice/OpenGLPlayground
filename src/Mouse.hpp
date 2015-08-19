@@ -15,7 +15,6 @@ public:
 
     void centerInWindow(Window& window);
 
-    void setPositionGlobal(glm::vec2 position);
     void setPositionInWindow(Window& window, glm::vec2 position);
 
     bool isHidden();

@@ -71,10 +71,6 @@ protected:
     }
 };
 
-TEST_F(DrawableTest, drawTest) {
-    FAIL();
-}
-
 ///////////////////////////////
 // Mesh Tests
 ///////////////////////////////
@@ -84,18 +80,6 @@ protected:
 
     }
 };
-
-TEST_F(MeshTest, drawTest) {
-    FAIL();
-}
-
-TEST_F(MeshTest, prepareToBeDrawnTest) {
-    FAIL();
-}
-
-TEST_F(MeshTest, linkToShaderTest) {
-    FAIL();
-}
 
 ///////////////////////////////
 // Mouse Tests
@@ -135,10 +119,6 @@ TEST_F(MouseTest, centerInWindowTest) {
 
     mouse.centerInWindow(window);
     EXPECT_EQ(mouse.getPosition(), viewport.getCenter());
-}
-
-TEST_F(MouseTest, setPositionGlobalTest) {
-    FAIL();
 }
 
 TEST_F(MouseTest, setPositionInWindowTest) {
