@@ -16,8 +16,16 @@ glm::vec3 Drawable::getPosition() {
     return position;
 }
 
+glm::vec3 Drawable::getRotation() {
+    return rotation;
+}
+
 void Drawable::setPosition(glm::vec3 position) {
     this->position = position;
+}
+
+void Drawable::setRotation(glm::vec3 rotation) {
+    this->rotation = rotation;
 }
 
 ShaderProgram& Drawable::getShaderProgram() {
@@ -29,7 +37,7 @@ void Drawable::draw(Camera& camera) {
 
     getShaderProgram().use();
 
-    glm::mat4 model = glm::translate(glm::mat4(), getPosition());
+    glm::mat4 model = calculateModelMatrix();
     GLint model_uniform = getShaderProgram().getUniformLocation( "model");
     glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -42,4 +50,55 @@ void Drawable::draw(Camera& camera) {
     glUniformMatrix4fv(proj_uniform, 1, GL_FALSE, glm::value_ptr(proj));
 
     getMesh().draw();
+}
+
+void Drawable::moveByGlobal(glm::vec3 move_vector) {
+    setPosition(getPosition() + move_vector);
+}
+
+void Drawable::rotateByGlobal(glm::vec3 rotation_vector) {
+    setRotation(getRotation() + rotation_vector);
+}
+
+glm::mat4 Drawable::calculateModelMatrix() {
+    return calculateTranslationMatrix() * calculateRotationMatrix();
+}
+
+glm::mat4 Drawable::calculateRotationMatrix() {
+   // Rotate the model about each axis.
+   float cx = cos(rotation.x);
+   float sx = sin(rotation.x);
+
+   float cy = cos(rotation.y);
+   float sy = sin(rotation.y);
+
+   float cz = cos(rotation.z);
+   float sz = sin(rotation.z);
+
+   glm::mat4 rotation_z = glm::mat4( cz, -sz, 0, 0,
+                                     sz,  cz, 0, 0,
+                                     0 ,  0 , 1, 0,
+                                     0 ,  0 , 0, 1);
+
+   glm::mat4 rotation_x = glm::mat4( 1, 0 ,  0 , 0,
+                                     0, cx, -sx, 0,
+                                     0, sx,  cx, 0,
+                                     0, 0 ,  0 , 1);
+
+   glm::mat4 rotation_y = glm::mat4(  cy,  0, -sy, 0,
+                                      0 ,  1,  0 , 0,
+                                      sy,  0,  cy, 0,
+                                      0 ,  0,  0 , 1);
+
+   // The convention followed is rotate around X-axis, then Y-axis, and finally Z-axis.
+   glm::mat4 rotation_matrix;
+   rotation_matrix = rotation_x * rotation_matrix;
+   rotation_matrix = rotation_y * rotation_matrix;
+   rotation_matrix = rotation_z * rotation_matrix;
+
+   return rotation_matrix;
+}
+
+glm::mat4 Drawable::calculateTranslationMatrix() {
+    return glm::translate(glm::mat4(), position);
 }

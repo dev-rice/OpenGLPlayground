@@ -14,17 +14,29 @@ public:
 
     void draw(Camera& camera);
 
+    void moveByGlobal(glm::vec3 move_vector);
+
+    void rotateByGlobal(glm::vec3 rotation_vec);
+
     void setPosition(glm::vec3 position);
+    void setRotation(glm::vec3 rotation);
+
+    glm::vec3 getPosition();
+    glm::vec3 getRotation();
 
     Mesh& getMesh();
-    glm::vec3 getPosition();
     ShaderProgram& getShaderProgram();
 private:
+
+    glm::mat4 calculateModelMatrix();
+    glm::mat4 calculateRotationMatrix();
+    glm::mat4 calculateTranslationMatrix();
 
     Mesh* mesh;
     ShaderProgram* shader;
 
     glm::vec3 position;
+    glm::vec3 rotation;
 };
 
 #endif
