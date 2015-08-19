@@ -25,6 +25,10 @@ GLint ShaderProgram::getUniformLocation(string uniform_name) {
     return glGetUniformLocation(getGLId(), uniform_name.c_str());
 }
 
+GLint ShaderProgram::getAttributeLocation(string attribute_name) {
+    return glGetAttribLocation(getGLId(), attribute_name.c_str());
+}
+
 void ShaderProgram::combineShaderPrograms(ShaderFile& vertex_shader, ShaderFile& fragment_shader) {
 
     vertex_shader.attachTo(gl_shader_id);

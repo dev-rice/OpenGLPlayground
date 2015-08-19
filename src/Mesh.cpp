@@ -55,15 +55,15 @@ void Mesh::createEBO() {
 
 void Mesh::linkToShader(ShaderProgram& shaderProgram) {
     // Specify the layout of the vertex data
-    GLint position_attribute = glGetAttribLocation(shaderProgram.getGLId(), "position");
+    GLint position_attribute = shaderProgram.getAttributeLocation("position");
     glEnableVertexAttribArray(position_attribute);
     glVertexAttribPointer(position_attribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
 
-    GLint normal_attribute = glGetAttribLocation(shaderProgram.getGLId(), "normal");
+    GLint normal_attribute = shaderProgram.getAttributeLocation("normal");
     glEnableVertexAttribArray(normal_attribute);
     glVertexAttribPointer(normal_attribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
-    GLint texture_attribute = glGetAttribLocation(shaderProgram.getGLId(), "texture_coordinate");
+    GLint texture_attribute = shaderProgram.getAttributeLocation("texture_coordinate");
     glEnableVertexAttribArray(texture_attribute);
     glVertexAttribPointer(texture_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
 }

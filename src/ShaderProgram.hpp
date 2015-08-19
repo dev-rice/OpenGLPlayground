@@ -18,6 +18,7 @@ public:
 
     void use();
     GLint getUniformLocation(string uniform_name);
+    GLint getAttributeLocation(string attribute_name);
 
     GLuint getGLId();
 
