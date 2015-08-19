@@ -1,5 +1,6 @@
 
 #include "gtest/gtest.h"
+#include "gl_mocks.hpp"
 
 #include <iostream>
 
@@ -7,6 +8,7 @@
 #include "Window.hpp"
 #include "Mouse.hpp"
 #include "Camera.hpp"
+#include "OpenGLContext.hpp"
 
 ///////////////////////////////
 // Camera Tests
@@ -149,13 +151,26 @@ TEST_F(MouseTest, setPositionInWindowTest) {
 ///////////////////////////////
 class OpenGLContextTest : public ::testing::Test {
 protected:
-    OpenGLContextTest() {
+    OpenGLContextTest() : viewport(1600, 900), window(viewport, false) {
 
     }
+
+    Viewport viewport;
+    Window window;
 };
 
 TEST_F(OpenGLContextTest, enableDepthTestTest) {
-    FAIL();
+    OpenGLContext opengl_context(4, 1, window);
+
+    MockGL mock_gl;
+    #undef glEnable
+    #define glEnable mock_gl.Enable
+
+    EXPECT_CALL(mock_gl, Enable(testing::_)).Times(1);
+    glEnable(GL_DEPTH_TEST);
+    opengl_context.enableDepthTest();
+
+
 }
 
 TEST_F(OpenGLContextTest, enableBackfaceCullingTest) {

@@ -17,15 +17,20 @@ KILL_TIME := 5s
 # BUILD_SCRIPT := ./tools/buildcount_timeout.sh $(TIMEOUT_SCRIPT) $(KILL_TIME)
 BUILD_SCRIPT :=
 
+LIBRARY_DIR := lib
+
 # Test stuff
 GOOGLE_TEST_DIR := gtest-1.7.0
 GOOGLE_TEST_SRC_DIR := $(GOOGLE_TEST_DIR)/src
 GOOGLE_TEST_INCLUDE_DIR := $(GOOGLE_TEST_DIR)/include
-GOOGLE_TEST_MAKE_DIR := $(GOOGLE_TEST_DIR)/make
-LIBRARY_DIR := lib
+
 TEST_SRC_DIR := tests
 TEST_EXECUTABLE := test_executable
 TEST_SRC := $(TEST_SRC_DIR)/all_tests.cpp
+
+GOOGLE_MOCK_DIR := gmock-1.7.0
+GOOGLE_MOCK_SRC_DIR := $(GOOGLE_MOCK_DIR)/src
+GOOGLE_MOCK_INCLUDE_DIR := $(GOOGLE_MOCK_DIR)/include
 
 APP_DIR := apps
 
@@ -44,7 +49,7 @@ opengl_playground: all
 all: $(OBJDIR) $(SOURCES) $(OBJECTS)
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	@ mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) $< -o $@
@@ -67,17 +72,24 @@ clean:
 	rm -f $(OBJDIR)/*.o
 	rm *.o
 
-dependencies: google-test
+dependencies: $(LIBRARY_DIR) google-test google-mock
+
+$(LIBRARY_DIR):
+	@ mkdir -p $(LIBRARY_DIR)
 
 google-test:
-	@ mkdir -p lib
 	g++ -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_TEST_DIR) -c $(GOOGLE_TEST_SRC_DIR)/gtest-all.cc
 	@ ar -rv $(LIBRARY_DIR)/libgtest.a gtest-all.o
 	@ rm gtest-all.o
 
+google-mock:
+	g++ -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(GOOGLE_MOCK_DIR) -I$(GOOGLE_TEST_INCLUDE_DIR) -c $(GOOGLE_MOCK_SRC_DIR)/gmock-all.cc
+	@ ar -rv $(LIBRARY_DIR)/libgmock.a gmock-all.o
+	@ rm gmock-all.o
+
 
 $(OBJDIR)/all_tests.o : $(TEST_SRC)
-	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_INCLUDE_DIR) -I$(SRCDIR) $< -o $@
+	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(SRCDIR) $< -o $@
 
 all_tests: $(OBJECTS) $(OBJDIR)/all_tests.o
-	g++ -L $(LIBRARY_DIR)/ -l gtest $(LIBRARIES) $^ -o $@
+	g++ -L $(LIBRARY_DIR)/ -l gtest -l gmock $(LIBRARIES) $^ -o $@
