@@ -3,31 +3,31 @@
 
 class Unit {
 public:
-    Unit(float max_health);
+    Unit(double max_health);
 
-    void takeDamage(float damage_amount);
-    void healFor(float heal_amount);
+    void takeDamage(double damage_amount);
+    void healFor(double heal_amount);
 
     void die();
     bool isDead();
 
-    void attack(Unit& target, float damage_amount);
-    void heal(Unit& target, float heal_amount);
+    void attack(Unit& target, double damage_amount);
+    void heal(Unit& target, double heal_amount);
 
-    float getHealth();
-    float getMaxHealth();
+    double getHealth();
+    double getMaxHealth();
 
-    void setHealth(float health);
-    void setMaxHealth(float max_health);
+    void setHealth(double health);
+    void setMaxHealth(double max_health);
 
 private:
 
-    void changeHealthBy(float amount);
-    bool isKillingBlow(float damage_amount);
-    bool wouldBeOverFullHealth(float heal_amount);
+    void changeHealthBy(double amount);
+    bool isKillingBlow(double damage_amount);
+    bool wouldBeOverFullHealth(double heal_amount);
 
-    float max_health;
-    float health;
+    double max_health;
+    double health;
 };
 
 #endif

@@ -1,10 +1,10 @@
 #include "Unit.hpp"
 
-Unit::Unit(float max_health) : max_health(max_health), health(max_health) {
+Unit::Unit(double max_health) : max_health(max_health), health(max_health) {
 
 }
 
-void Unit::takeDamage(float damage_amount) {
+void Unit::takeDamage(double damage_amount) {
     if (isKillingBlow(damage_amount)) {
         die();
     } else {
@@ -12,7 +12,7 @@ void Unit::takeDamage(float damage_amount) {
     }
 }
 
-void Unit::healFor(float heal_amount) {
+void Unit::healFor(double heal_amount) {
     if (wouldBeOverFullHealth(heal_amount)) {
         setHealth(getMaxHealth());
     } else {
@@ -20,24 +20,24 @@ void Unit::healFor(float heal_amount) {
     }
 }
 
-bool Unit::isKillingBlow(float damage_amount) {
+bool Unit::isKillingBlow(double damage_amount) {
     return ((getHealth() - damage_amount) < 0);
 }
 
-bool Unit::wouldBeOverFullHealth(float heal_amount) {
+bool Unit::wouldBeOverFullHealth(double heal_amount) {
     return ((getHealth() + heal_amount) > max_health);
 }
 
-void Unit::changeHealthBy(float amount) {
+void Unit::changeHealthBy(double amount) {
     setHealth(getHealth() + amount);
 
 }
 
-void Unit::attack(Unit& target, float damage_amount) {
+void Unit::attack(Unit& target, double damage_amount) {
     target.takeDamage(damage_amount);
 }
 
-void Unit::heal(Unit& target, float heal_amount) {
+void Unit::heal(Unit& target, double heal_amount) {
     target.healFor(heal_amount);
 }
 
@@ -49,18 +49,18 @@ bool Unit::isDead() {
     return health <= 0;
 }
 
-float Unit::getHealth() {
+double Unit::getHealth() {
     return health;
 }
 
-float Unit::getMaxHealth() {
+double Unit::getMaxHealth() {
     return max_health;
 }
 
-void Unit::setHealth(float health) {
+void Unit::setHealth(double health) {
     this->health = health;
 }
 
-void Unit::setMaxHealth(float max_health) {
+void Unit::setMaxHealth(double max_health) {
     this->max_health = max_health;
 }
