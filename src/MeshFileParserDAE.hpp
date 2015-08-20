@@ -21,13 +21,14 @@ using namespace std;
 
 class MeshFileParserDAE : public MeshFileParser {
 public:
-    MeshFileParserDAE(string filename);
+    MeshFileParserDAE();
 
     std::vector<GLfloat> getVertexArray();
     std::vector<GLuint> getFaceArray();
 
+    void loadMeshFromFile(string filename);
+
 private:
-    void loadMeshFromDAE(string filename);
     void writeFinalArrays(std::vector<Vertex>&, std::vector<GLuint>&);
     void calculateTangentsAndBinormals(std::vector<Vertex>&, std::vector<GLuint>&);
     bool getVerticesAndElements(pugi::xml_node, std::vector<Vertex>&, std::vector<GLuint>&);

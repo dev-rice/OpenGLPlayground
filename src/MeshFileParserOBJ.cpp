@@ -5,8 +5,8 @@
 #include "MeshFileParserOBJ.hpp"
 
 
-MeshFileParserOBJ::MeshFileParserOBJ(string filename){
-    loadMeshFromFile(filename);
+MeshFileParserOBJ::MeshFileParserOBJ(){
+
 }
 
 std::vector<GLfloat> MeshFileParserOBJ::getVertexArray(){

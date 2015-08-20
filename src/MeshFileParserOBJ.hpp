@@ -13,14 +13,14 @@ using namespace std;
 class MeshFileParserOBJ : public MeshFileParser {
 public:
 
-    MeshFileParserOBJ(string filename);
+    MeshFileParserOBJ();
 
     std::vector<GLfloat> getVertexArray();
     std::vector<GLuint> getFaceArray();
 
+    void loadMeshFromFile(string filename);
 private:
 
-    void loadMeshFromFile(string filename);
 
 };
 

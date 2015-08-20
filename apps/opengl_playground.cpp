@@ -42,7 +42,7 @@ void rotateCameraFromMouse(Camera& camera, Mouse& mouse, Window& window) {
     mouse.centerInWindow(window);
 }
 
-void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
+void handleInputs(Mouse& mouse, Window& window, Camera& camera) {
     // Misleading argument and function name combination. The input handling does not draw from the mouse or window at all, it simply does things with them
 
     // Key repeat delay input
@@ -62,8 +62,6 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
             mouse.toggleVisibility();
         } else if (key == 'c') {
             mouse.centerInWindow(window);
-        } else if (key == 'h') {
-            mesh.toggleVisibility();
         }
 
     }
@@ -123,8 +121,8 @@ int main(int argc, char* argv[]) {
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
 
-    MeshFileParserDAE mesh_file_parser("res/castle_tower.dae");
-    Mesh castle_tower_mesh(mesh_file_parser);
+    MeshFileParserDAE mesh_file_parser;
+    Mesh castle_tower_mesh("res/castle_tower.dae", mesh_file_parser);
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
@@ -135,8 +133,8 @@ int main(int argc, char* argv[]) {
     castle_tower2.setPosition(glm::vec3(-4, 0, 1));
     castle_tower2.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
 
-    MeshFileParserOBJ mesh_file_parser_obj("res/fence.obj");
-    Mesh fence_mesh(mesh_file_parser_obj);
+    MeshFileParserOBJ mesh_file_parser_obj;
+    Mesh fence_mesh("res/fence.obj", mesh_file_parser_obj);
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
@@ -156,7 +154,7 @@ int main(int argc, char* argv[]) {
 
         castle_tower1.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
-        handleInputs(mouse, window, castle_tower_mesh, camera);
+        handleInputs(mouse, window, camera);
         window.display();
 
     }

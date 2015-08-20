@@ -1,11 +1,23 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(MeshFileParser& mesh_file_parser) : mesh_file_parser(&mesh_file_parser) {
+Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser) {
 
+    mesh_file_parser.loadMeshFromFile(filename);
+
+    setMeshStatsFromParser(mesh_file_parser);
+    sendMeshDataToOpenGL(mesh_file_parser);
+
+    mesh_file_parser.clearMeshData();
+}
+
+void Mesh::sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser) {
     createVAO();
-    createVBO();
-    createEBO();
+    createVBO(mesh_file_parser.getVertexArray());
+    createEBO(mesh_file_parser.getFaceArray());
+}
 
+void Mesh::setMeshStatsFromParser(MeshFileParser& mesh_file_parser) {
+    setNumberOfFaces(mesh_file_parser.getNumberOfFaces());
 }
 
 void Mesh::createVAO() {
@@ -21,32 +33,20 @@ void Mesh::bindVAO() {
     glBindVertexArray(vao);
 }
 
-void Mesh::createVBO() {
+void Mesh::createVBO(vector<GLfloat>& vertices) {
     // Create a Vertex Buffer Object and copy the vertex data to it
     GLuint vbo;
     glGenBuffers(1, &vbo);
-
-    vector<GLfloat> vertices = getVertices();
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
 }
 
-vector<GLfloat> Mesh::getVertices() {
-    return getMeshFileParser().getVertexArray();
-}
-
-vector<GLuint> Mesh::getElements() {
-    return getMeshFileParser().getFaceArray();
-}
-
-void Mesh::createEBO() {
+void Mesh::createEBO(vector<GLuint>& elements) {
     // Create an element array
     GLuint ebo;
     glGenBuffers(1, &ebo);
-
-    vector<GLuint> elements = getElements();
 
     // Create Element Buffer Object
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -69,39 +69,17 @@ void Mesh::linkToShader(ShaderProgram& shaderProgram) {
 }
 
 void Mesh::draw() {
-    if (!isHidden()) {
-        drawAllElements();
-    }
+    drawAllElements();
 }
 
 void Mesh::drawAllElements() {
-    glDrawElements(GL_TRIANGLES, getNumElements(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, getNumberOfFaces(), GL_UNSIGNED_INT, 0);
 }
 
-int Mesh::getNumElements() {
-    return getElements().size();
+int Mesh::getNumberOfFaces() {
+    return number_of_faces;
 }
 
-void Mesh::show() {
-    is_hidden = false;
-}
-
-void Mesh::hide() {
-    is_hidden = true;
-}
-
-bool Mesh::isHidden() {
-    return is_hidden;
-}
-
-void Mesh::toggleVisibility() {
-    if (isHidden()) {
-        show();
-    } else {
-        hide();
-    }
-}
-
-MeshFileParser& Mesh::getMeshFileParser() {
-    return *mesh_file_parser;
+void Mesh::setNumberOfFaces(int number_of_faces) {
+    this->number_of_faces = number_of_faces;
 }

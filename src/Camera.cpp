@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-Camera::Camera(Viewport& viewport, float field_of_view, float near_clip, float far_clip) : field_of_view(field_of_view), viewport(&viewport), near_clip(near_clip), far_clip(far_clip) {
+Camera::Camera(Viewport& viewport, float field_of_view, float near_clip, float far_clip) : viewport(&viewport), field_of_view(field_of_view), near_clip(near_clip), far_clip(far_clip) {
 
     setLocalAxes();
     setIntrinsicParameters();

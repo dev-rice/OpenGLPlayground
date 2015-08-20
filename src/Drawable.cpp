@@ -39,6 +39,10 @@ TextureManager& Drawable::getTextureManager() {
 }
 
 void Drawable::draw(Camera& camera) {
+    if (isHidden()){
+        return;
+    }
+    
     getMesh().prepareToBeDrawn();
 
     getShaderProgram().use();
@@ -111,4 +115,24 @@ glm::mat4 Drawable::calculateRotationMatrix() {
 
 glm::mat4 Drawable::calculateTranslationMatrix() {
     return glm::translate(glm::mat4(), position);
+}
+
+void Drawable::show() {
+    is_hidden = false;
+}
+
+void Drawable::hide() {
+    is_hidden = true;
+}
+
+bool Drawable::isHidden() {
+    return is_hidden;
+}
+
+void Drawable::toggleVisibility() {
+    if (isHidden()) {
+        show();
+    } else {
+        hide();
+    }
 }
