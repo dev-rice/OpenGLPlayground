@@ -13,6 +13,7 @@
 #include "Texture.hpp"
 #include "TextureManager.hpp"
 #include "ShaderProgramFactory.hpp"
+#include "MeshFactory.hpp"
 
 #include <iostream>
 #include <map>
@@ -121,8 +122,8 @@ int main(int argc, char* argv[]) {
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
 
-    MeshFileParserDAE mesh_file_parser;
-    Mesh castle_tower_mesh("res/castle_tower.dae", mesh_file_parser);
+    MeshFactory mesh_factory;
+    Mesh castle_tower_mesh = mesh_factory.createMesh("res/castle_tower.dae");
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
@@ -133,8 +134,7 @@ int main(int argc, char* argv[]) {
     castle_tower2.setPosition(glm::vec3(-4, 0, 1));
     castle_tower2.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
 
-    MeshFileParserOBJ mesh_file_parser_obj;
-    Mesh fence_mesh("res/fence.obj", mesh_file_parser_obj);
+    Mesh fence_mesh = mesh_factory.createMesh("res/fence.obj");
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
