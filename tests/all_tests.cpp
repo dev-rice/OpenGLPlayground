@@ -350,6 +350,19 @@ TEST_F(UnitTest, attackTest) {
     EXPECT_EQ(jimmy.getHealth(), 50);
 }
 
+TEST_F(UnitTest, healTest) {
+    Unit uther(180);
+    Unit tychus(200);
+
+    tychus.takeDamage(90);
+    uther.heal(tychus, 40);
+    EXPECT_EQ(tychus.getHealth(), 150);
+
+    uther.heal(tychus, 100);
+    EXPECT_EQ(tychus.getHealth(), 200);
+
+}
+
 ///////////////////////////////
 // Viewport Tests
 ///////////////////////////////

@@ -37,6 +37,10 @@ void Unit::attack(Unit& target, float damage_amount) {
     target.takeDamage(damage_amount);
 }
 
+void Unit::heal(Unit& target, float heal_amount) {
+    target.healFor(heal_amount);
+}
+
 void Unit::die() {
     setHealth(0);
 }

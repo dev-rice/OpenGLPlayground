@@ -12,6 +12,7 @@ public:
     bool isDead();
 
     void attack(Unit& target, float damage_amount);
+    void heal(Unit& target, float heal_amount);
 
     float getHealth();
     float getMaxHealth();
@@ -25,8 +26,8 @@ private:
     bool isKillingBlow(float damage_amount);
     bool wouldBeOverFullHealth(float heal_amount);
 
-    float health;
     float max_health;
+    float health;
 };
 
 #endif
