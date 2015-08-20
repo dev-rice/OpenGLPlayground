@@ -13,6 +13,7 @@
 #include "VertexShaderCreator.hpp"
 #include "FragmentShaderCreator.hpp"
 #include "ShaderProgram.hpp"
+#include "Unit.hpp"
 
 ///////////////////////////////
 // Camera Tests
@@ -277,6 +278,76 @@ TEST_F(ShaderProgramTest, getAttributeLocationTest) {
     EXPECT_EQ(shader_program.getAttributeLocation("normal"), 2);
     EXPECT_EQ(shader_program.getAttributeLocation("texture_coordinate"), 3);
 
+}
+
+///////////////////////////////
+// Unit Tests (lol)
+///////////////////////////////
+class UnitTest : public ::testing::Test {
+protected:
+    UnitTest() {
+
+    }
+};
+
+TEST_F(UnitTest, constructorTest) {
+    Unit jimmy(200);
+
+    EXPECT_EQ(jimmy.getHealth(), 200);
+    EXPECT_EQ(jimmy.getMaxHealth(), 200);
+}
+
+TEST_F(UnitTest, takeDamageTest) {
+    Unit jimmy(100);
+
+    jimmy.takeDamage(24);
+    EXPECT_EQ(jimmy.getHealth(), 76);
+
+    jimmy.takeDamage(100);
+    EXPECT_EQ(jimmy.getHealth(), 0);
+}
+
+TEST_F(UnitTest, healForTest) {
+    Unit jimmy(100);
+
+    jimmy.takeDamage(82);
+    jimmy.healFor(12);
+    EXPECT_EQ(jimmy.getHealth(), 30);
+
+    jimmy.healFor(500);
+    EXPECT_EQ(jimmy.getHealth(), 100);
+
+}
+
+TEST_F(UnitTest, dieTest) {
+    Unit jimmy(100);
+    jimmy.die();
+
+    EXPECT_EQ(jimmy.getHealth(), 0);
+}
+
+TEST_F(UnitTest, isDeadTest) {
+    Unit jimmy(100);
+
+    EXPECT_EQ(jimmy.isDead(), false);
+
+    jimmy.takeDamage(120);
+    // :(
+    EXPECT_EQ(jimmy.isDead(), true);
+
+    Unit already_dead(-2000);
+    EXPECT_EQ(already_dead.isDead(), true);
+}
+
+TEST_F(UnitTest, attackTest) {
+    Unit jimmy(200);
+    Unit zeratul(50);
+
+    jimmy.attack(zeratul, 20);
+    EXPECT_EQ(zeratul.getHealth(), 30);
+
+    zeratul.attack(jimmy, 150);
+    EXPECT_EQ(jimmy.getHealth(), 50);
 }
 
 ///////////////////////////////
