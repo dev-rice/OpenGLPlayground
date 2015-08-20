@@ -10,18 +10,10 @@ MeshFileParserOBJ::MeshFileParserOBJ(string filename){
 }
 
 std::vector<GLfloat> MeshFileParserOBJ::getVertexArray(){
-    GLfloat* vertices = new GLfloat[final_vertices.size()];
-    for (int i = 0; i < final_vertices.size(); ++i){
-        vertices[i] = final_vertices[i];
-    }
     return final_vertices;
 }
 
 std::vector<GLuint> MeshFileParserOBJ::getFaceArray(){
-    GLuint* faces = new GLuint[final_faces.size()];
-    for (int i = 0; i < final_faces.size(); ++i){
-        faces[i] = final_faces[i];
-    }
     return final_faces;
 }
 

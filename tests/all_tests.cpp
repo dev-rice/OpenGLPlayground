@@ -108,7 +108,7 @@ TEST_F(CameraTest, getProjectionMatrixTest) {
     float field_of_view = 45.0f;
     float near_clip = 0.1f;
     float far_clip = 500.0f;
-    Camera camera(viewport, 45.0f, near_clip, far_clip);
+    Camera camera(viewport, field_of_view, near_clip, far_clip);
 
     EXPECT_EQ(camera.getProjectionMatrix(), glm::perspective(field_of_view, viewport.getAspectRatio(), near_clip, far_clip));
 
@@ -276,7 +276,6 @@ TEST_F(ShaderProgramTest, getAttributeLocationTest) {
     EXPECT_EQ(shader_program.getAttributeLocation("position"), 1);
     EXPECT_EQ(shader_program.getAttributeLocation("normal"), 2);
     EXPECT_EQ(shader_program.getAttributeLocation("texture_coordinate"), 3);
-
 
 }
 
