@@ -1,8 +1,7 @@
 #include "MeshFileParserDAE.hpp"
 
-MeshFileParserDAE::MeshFileParserDAE(string filename){
+MeshFileParserDAE::MeshFileParserDAE(){
     flat_shading = true;
-    loadMeshFromDAE(filename);
 }
 
 std::vector<GLuint> getIntsFromString(std::string input, char delim){
@@ -21,14 +20,6 @@ std::vector<GLuint> getIntsFromString(std::string input, char delim){
     }
 
     return result;
-}
-
-std::vector<GLfloat> MeshFileParserDAE::getVertexArray() {
-    return final_vertices;
-}
-
-std::vector<GLuint> MeshFileParserDAE::getFaceArray() {
-    return final_faces;
 }
 
 std::vector<glm::vec3> breakStringIntoVec3s(std::string input){
@@ -100,7 +91,7 @@ bool isAllThrees(std::string input){
     return result;
 }
 
-void MeshFileParserDAE::loadMeshFromDAE(string filename){
+void MeshFileParserDAE::loadMeshFromFile(string filename){
     // float start_time = GameClock::getInstance()->getCurrentTime();
     this->filename = filename;
 

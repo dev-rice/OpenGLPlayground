@@ -62,14 +62,16 @@ private:
     glm::vec3 local_y;
     glm::vec3 local_z;
 
+    Viewport* viewport;
+
     // Proj matrix and intrinsic values
     float field_of_view;
     float near_clip;
     float far_clip;
+
     glm::mat4 proj_matrix;
     glm::mat4 view_matrix;
 
-    Viewport* viewport;
 };
 
 #endif

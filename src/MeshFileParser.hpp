@@ -13,8 +13,12 @@ class MeshFileParser {
 public:
     MeshFileParser() {;}
 
-    virtual std::vector<GLfloat> getVertexArray() = 0;
-    virtual std::vector<GLuint>  getFaceArray() = 0;
+    std::vector<GLfloat>& getVertexArray();
+    std::vector<GLuint>& getFaceArray();
+    int getNumberOfFaces();
+    void clearMeshData();
+
+    virtual void loadMeshFromFile(string filename) = 0;
 
 protected:
     std::vector<GLfloat> final_vertices;

@@ -25,6 +25,10 @@ public:
     glm::vec3 getPosition();
     glm::vec3 getRotationInGlobalCoordinates();
 
+    void show();
+    void hide();
+    void toggleVisibility();
+    bool isHidden();
 
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();
@@ -38,6 +42,8 @@ private:
     Mesh* mesh;
     ShaderProgram* shader;
     TextureManager* texture_manager;
+
+    bool is_hidden;
 
     glm::vec3 position;
     glm::vec3 rotation_in_global_coordinates;

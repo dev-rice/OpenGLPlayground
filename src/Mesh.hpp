@@ -14,34 +14,27 @@ using namespace std;
 
 class Mesh {
 public:
-    Mesh(MeshFileParser& mesh_file_parser);
+    Mesh(string filename, MeshFileParser& mesh_file_parser);
 
     void draw();
     void prepareToBeDrawn();
     void linkToShader(ShaderProgram& shader_program);
 
-    void show();
-    void hide();
-    void toggleVisibility();
-    bool isHidden();
-
-    MeshFileParser& getMeshFileParser();
-
 private:
     void bindVAO();
     void createVAO();
-    void createVBO();
-    void createEBO();
-    vector<GLfloat> getVertices();
-    vector<GLuint> getElements();
-    int getNumElements();
+    void createVBO(vector<GLfloat>& vertices);
+    void createEBO(vector<GLuint>& elements);
+    void sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser);
+    void setMeshStatsFromParser(MeshFileParser& mesh_file_parser);
+
+    void setNumberOfFaces(int number_of_faces);
+    int getNumberOfFaces();
 
     void drawAllElements();
 
-    bool is_hidden;
-
     GLuint vao;
-    MeshFileParser* mesh_file_parser;
+    int number_of_faces;
 };
 
 #endif
