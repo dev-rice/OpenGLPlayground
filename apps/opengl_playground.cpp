@@ -6,14 +6,11 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "Drawable.hpp"
-#include "VertexShaderCreator.hpp"
-#include "FragmentShaderCreator.hpp"
-#include "MeshFileParserDAE.hpp"
-#include "MeshFileParserOBJ.hpp"
 #include "Texture.hpp"
 #include "TextureManager.hpp"
 #include "ShaderProgramFactory.hpp"
 #include "MeshFactory.hpp"
+#include "MouseCameraController.hpp"
 
 #include <iostream>
 #include <map>
@@ -30,17 +27,6 @@ char getKeyboardInputCharacter(SDL_Event& event) {
     }
 
     return key;
-}
-
-void rotateCameraFromMouse(Camera& camera, Mouse& mouse, Window& window) {
-    glm::vec2 difference = mouse.getPosition() - window.getViewport().getCenter();
-
-    difference = difference * 0.001f;
-
-    glm::vec3 rotation_vec(difference.y, -difference.x, 0);
-    camera.rotateByLocal(rotation_vec);
-
-    mouse.centerInWindow(window);
 }
 
 void handleInputs(Mouse& mouse, Window& window, Camera& camera) {
@@ -96,9 +82,6 @@ void handleInputs(Mouse& mouse, Window& window, Camera& camera) {
     camera_movement = camera_movement * 0.1f;
     camera.moveByLocal(camera_movement);
 
-    // Handle mouse rotation
-    rotateCameraFromMouse(camera, mouse, window);
-
 }
 
 int main(int argc, char* argv[]) {
@@ -141,8 +124,7 @@ int main(int argc, char* argv[]) {
     Drawable fence(fence_mesh, shader, fence_textures);
     fence.setPosition(glm::vec3(2, 0, 1));
 
-    mouse.hide();
-    mouse.centerInWindow(window);
+    MouseCameraController mouse_camera_controller(mouse, camera, window);
 
     // Display loop
     while(window.isOpen()) {
@@ -155,6 +137,7 @@ int main(int argc, char* argv[]) {
         castle_tower1.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
         handleInputs(mouse, window, camera);
+        mouse_camera_controller.update();
         window.display();
 
     }
