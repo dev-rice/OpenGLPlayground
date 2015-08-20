@@ -1,17 +1,15 @@
 #include "MouseCameraController.hpp"
 
-MouseCameraController::MouseCameraController(Mouse& mouse, Camera& camera, Window& window) : mouse(&mouse), camera(&camera), window(&window) {
+MouseCameraController::MouseCameraController(Mouse& mouse, Camera& camera, Window& window, float sensitivity) : mouse(&mouse), camera(&camera), window(&window), sensitivity(sensitivity) {
 
     mouse.hide();
     resetToBasePosition();
-
 
 }
 
 void MouseCameraController::update() {
 
     glm::vec2 change_in_position = getChangeFromLastPosition();
-    change_in_position = change_in_position * 0.001f;
 
     glm::vec3 rotation_vector = calculateRotationVectorFromChange(change_in_position);
     getCamera().rotateByLocal(rotation_vector);
@@ -21,7 +19,8 @@ void MouseCameraController::update() {
 
 glm::vec3 MouseCameraController::calculateRotationVectorFromChange(glm::vec2 change_in_position) {
 
-    return glm::vec3(change_in_position.y, -change_in_position.x, 0);
+    glm::vec3 rotation_vector(change_in_position.y, -change_in_position.x, 0);
+    return rotation_vector * getSensitivity();
 }
 
 void MouseCameraController::setLastPosition(glm::vec2 last_position) {
@@ -53,4 +52,8 @@ Camera& MouseCameraController::getCamera() {
 
 Window& MouseCameraController::getWindow() {
     return *window;
+}
+
+float MouseCameraController::getSensitivity() {
+    return sensitivity;
 }

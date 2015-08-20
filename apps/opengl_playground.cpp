@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
     Drawable fence(fence_mesh, shader, fence_textures);
     fence.setPosition(glm::vec3(2, 0, 1));
 
-    MouseCameraController mouse_camera_controller(mouse, camera, window);
+    MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
 
     // Display loop
     while(window.isOpen()) {

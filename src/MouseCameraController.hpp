@@ -13,7 +13,7 @@ using namespace std;
 
 class MouseCameraController {
 public:
-    MouseCameraController(Mouse& mouse, Camera& camera, Window& window);
+    MouseCameraController(Mouse& mouse, Camera& camera, Window& window, float sensitivity);
 
     void update();
 
@@ -29,11 +29,13 @@ private:
     Camera& getCamera();
     Mouse& getMouse();
     Window& getWindow();
+    float getSensitivity();
 
     Mouse* mouse;
     Camera* camera;
     Window* window;
 
+    float sensitivity;
     glm::vec2 last_position;
 
 };
