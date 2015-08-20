@@ -12,6 +12,7 @@
 #include "MeshFileParserOBJ.hpp"
 #include "Texture.hpp"
 #include "TextureManager.hpp"
+#include "ShaderProgramFactory.hpp"
 
 #include <iostream>
 #include <map>
@@ -111,9 +112,8 @@ int main(int argc, char* argv[]) {
     VertexShaderCreator vertex_shader_creator;
     FragmentShaderCreator fragment_shader_creator;
 
-    ShaderFile vertex_shader("shaders/temp.vs", vertex_shader_creator);
-    ShaderFile fragment_shader("shaders/temp.fs", fragment_shader_creator);
-    ShaderProgram shader(vertex_shader, fragment_shader);
+    ShaderProgramFactory shader_program_factory;
+    ShaderProgram shader = shader_program_factory.createShaderProgram("shaders/temp.vs", "shaders/temp.fs");
 
     float field_of_view = 45.0f;
     float near_clip = 0.1f;
