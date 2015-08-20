@@ -1,13 +1,17 @@
 #ifndef Camera_h
 #define Camera_h
 
+#include <iostream>
+
 #include "includes/glm.hpp"
 
 #include "Window.hpp"
 
+using namespace std;
+
 class Camera {
 public:
-    Camera(Viewport& viewport, float field_of_view);
+    Camera(Viewport& viewport, float field_of_view, float near_clip, float far_clip);
 
     void moveByGlobal(glm::vec3 move_vector);
     void moveByLocal(glm::vec3 move_vector);
@@ -22,7 +26,15 @@ public:
 
     Viewport& getViewport();
 
-    float getFOV();
+    void printEverything();
+
+    void setNearClip(float near_clip);
+    void setFarClip(float far_clip);
+
+    float getNearClip();
+    float getFarClip();
+
+    float getFieldOfView();
     glm::vec3 getPosition();
     glm::vec3 getRotationInLocalCoordinates();
 
@@ -52,7 +64,6 @@ private:
 
     // Proj matrix and intrinsic values
     float field_of_view;
-    float aspect_ratio;
     float near_clip;
     float far_clip;
     glm::mat4 proj_matrix;

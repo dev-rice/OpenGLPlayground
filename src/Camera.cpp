@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-Camera::Camera(Viewport& viewport, float field_of_view) : field_of_view(field_of_view), viewport(&viewport){
+Camera::Camera(Viewport& viewport, float field_of_view, float near_clip, float far_clip) : field_of_view(field_of_view), viewport(&viewport), near_clip(near_clip), far_clip(far_clip) {
 
     setLocalAxes();
     setIntrinsicParameters();
@@ -14,7 +14,6 @@ void Camera::setLocalAxes() {
 }
 
 void Camera::setIntrinsicParameters() {
-    aspect_ratio = getViewport().getAspectRatio();
     near_clip = 0.1f;
     far_clip = 500.0f;
 }
@@ -54,7 +53,6 @@ void Camera::moveByLocal(glm::vec3 move_vector) {
     moveXLocal(move_vector.x);
     moveYLocal(move_vector.y);
     moveZLocal(move_vector.z);
-
 }
 
 void Camera::rotateByLocal(glm::vec3 rotation_vector) {
@@ -77,7 +75,7 @@ glm::vec3 Camera::getRotationInLocalCoordinates(){
     return rotation_in_local_coordinates;
 }
 
-float Camera::getFOV(){
+float Camera::getFieldOfView(){
     return field_of_view;
 }
 
@@ -139,5 +137,21 @@ void Camera::transformCameraAxes(glm::mat3 rotation_matrix) {
 
 glm::mat4 Camera::calculateProjectionMatrix(){
     // Use all of the intrinsic values to create the projection matrix
-    return glm::perspective(field_of_view, aspect_ratio, near_clip, far_clip);
+    return glm::perspective(getFieldOfView(), getViewport().getAspectRatio(), getNearClip(), getFarClip());
+}
+
+void Camera::setNearClip(float near_clip) {
+    this->near_clip = near_clip;
+}
+
+void Camera::setFarClip(float far_clip) {
+    this->far_clip = far_clip;
+}
+
+float Camera::getNearClip() {
+    return near_clip;
+}
+
+float Camera::getFarClip() {
+    return far_clip;
 }

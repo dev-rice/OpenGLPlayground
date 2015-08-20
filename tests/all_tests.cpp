@@ -27,7 +27,7 @@ protected:
 };
 
 TEST_F(CameraTest, constructorTest) {
-    Camera camera(viewport, 45.0f);
+    Camera camera(viewport, 45.0f, 0.1, 500.0f);
 
     EXPECT_EQ(camera.getPosition(), glm::vec3(0, 0, 0));
     EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(0, 0, 0));
@@ -35,7 +35,7 @@ TEST_F(CameraTest, constructorTest) {
 }
 
 TEST_F(CameraTest, moveByGlobalTest1) {
-    Camera camera(viewport, 45.0f);
+    Camera camera(viewport, 45.0f, 0.1, 500.0f);
 
     glm::vec3 start_position = glm::vec3(0, 0, 0);
     camera.setPosition(start_position);
@@ -47,7 +47,7 @@ TEST_F(CameraTest, moveByGlobalTest1) {
 }
 
 TEST_F(CameraTest, moveByGlobalTest2) {
-    Camera camera(viewport, 45.0f);
+    Camera camera(viewport, 45.0f, 0.1, 500.0f);
 
     glm::vec3 start_position = glm::vec3(10, -50, 32);
     camera.setPosition(start_position);
@@ -59,7 +59,7 @@ TEST_F(CameraTest, moveByGlobalTest2) {
 }
 
 TEST_F(CameraTest, moveByLocalTest) {
-    Camera camera(viewport, 45.0f);
+    Camera camera(viewport, 45.0f, 0.1, 500.0f);
 
     camera.moveByLocal(glm::vec3(0, 0, -1));
     glm::vec3 camera_position = camera.getPosition();
@@ -91,7 +91,7 @@ TEST_F(CameraTest, moveByLocalTest) {
 }
 
 TEST_F(CameraTest, rotateByLocalTest) {
-    Camera camera(viewport, 45.0f);
+    Camera camera(viewport, 45.0f, 0.1, 500.0f);
 
     camera.rotateByLocal(glm::vec3(1, 2, 0));
     EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(1, 2, 0));
@@ -104,12 +104,14 @@ TEST_F(CameraTest, rotateByLocalTest) {
 
 }
 
-TEST_F(CameraTest, getViewMatrixTest) {
-    FAIL();
-}
-
 TEST_F(CameraTest, getProjectionMatrixTest) {
-    FAIL();
+    float field_of_view = 45.0f;
+    float near_clip = 0.1f;
+    float far_clip = 500.0f;
+    Camera camera(viewport, 45.0f, near_clip, far_clip);
+
+    EXPECT_EQ(camera.getProjectionMatrix(), glm::perspective(field_of_view, viewport.getAspectRatio(), near_clip, far_clip));
+
 }
 
 ///////////////////////////////
@@ -140,21 +142,22 @@ protected:
     MouseTest() {
 
     }
-
-    Mouse mouse;
 };
 
 TEST_F(MouseTest, hideTest) {
+    Mouse mouse;
     mouse.hide();
     EXPECT_EQ(mouse.isHidden(), true);
 }
 
 TEST_F(MouseTest, showTest) {
+    Mouse mouse;
     mouse.show();
     EXPECT_EQ(mouse.isHidden(), false);
 }
 
 TEST_F(MouseTest, toggleVisibilityTest) {
+    Mouse mouse;
     mouse.hide();
     mouse.toggleVisibility();
     EXPECT_EQ(mouse.isHidden(), false);
@@ -168,6 +171,7 @@ TEST_F(MouseTest, centerInWindowTest) {
     Viewport viewport(1600, 900);
     Window window(viewport, false);
 
+    Mouse mouse;
     mouse.centerInWindow(window);
     EXPECT_EQ(mouse.getPosition(), viewport.getCenter());
 }
@@ -176,6 +180,7 @@ TEST_F(MouseTest, setPositionInWindowTest) {
     Viewport viewport(1600, 900);
     Window window(viewport, false);
 
+    Mouse mouse;
     mouse.setPositionInWindow(window, glm::vec2(100, 100));
     EXPECT_EQ(mouse.getPosition(), glm::vec2(100, 100));
 }
@@ -305,18 +310,6 @@ protected:
     Viewport viewport;
     Window window;
 };
-
-TEST_F(WindowTest, clearBuffersTest) {
-    FAIL();
-}
-
-TEST_F(WindowTest, setFullscreenTest) {
-    FAIL();
-}
-
-TEST_F(WindowTest, setVsyncTest) {
-    FAIL();
-}
 
 TEST_F(WindowTest, requestCloseTest) {
     window.requestClose();

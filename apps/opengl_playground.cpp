@@ -104,7 +104,7 @@ void handleInputs(Mouse& mouse, Window& window, Mesh& mesh, Camera& camera) {
 int main(int argc, char* argv[]) {
 
     Viewport viewport(1600, 900);
-    Window window(viewport, falsem);
+    Window window(viewport, false);
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
 
@@ -116,7 +116,9 @@ int main(int argc, char* argv[]) {
     ShaderProgram shader(vertex_shader, fragment_shader);
 
     float field_of_view = 45.0f;
-    Camera camera(viewport, field_of_view);
+    float near_clip = 0.1f;
+    float far_clip = 500.0f;
+    Camera camera(viewport, field_of_view, near_clip, far_clip);
 
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
