@@ -139,9 +139,9 @@ int main(int argc, char* argv[]) {
         castle_tower2.draw(camera);
         fence.draw(camera);
 
-        // flat_mesh.prepareToBeDrawn();
-        // flat_shader.use();
-        // flat_mesh.draw();
+        flat_mesh.prepareToBeDrawn();
+        flat_shader.use();
+        flat_mesh.draw();
 
         castle_tower1.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
