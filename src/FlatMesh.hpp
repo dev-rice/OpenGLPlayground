@@ -5,6 +5,7 @@
 
 #include <vector>
 
+#include "VertexAttribute.hpp"
 #include "ShaderProgram.hpp"
 
 class FlatMesh {
@@ -27,11 +28,17 @@ protected:
     void setNumberOfElements(int number_of_elements);
     int getNumberOfElements();
 
+    int getVertexWidth();
+    void specifyVertexAttribute(GLint attribute_location, int attribute_width, int offset, int vertex_width);
+
     void drawAllElements();
 
     GLuint vao;
     GLuint vbo;
     int number_of_elements;
+
+    VertexAttribute position;
+    VertexAttribute texture_coordinates;
 
 };
 

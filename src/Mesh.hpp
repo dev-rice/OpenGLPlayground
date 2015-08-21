@@ -9,6 +9,7 @@
 
 #include "ShaderProgram.hpp"
 #include "MeshFileParser.hpp"
+#include "VertexAttribute.hpp"
 
 using namespace std;
 
@@ -33,10 +34,17 @@ private:
     void setNumberOfElements(int number_of_elements);
     int getNumberOfElements();
 
+    int getVertexWidth();
+    void specifyVertexAttribute(GLint attribute_location, int attribute_width, int offset, int vertex_width);
+
     void drawAllElements();
 
     GLuint vao;
     int number_of_elements;
+
+    VertexAttribute position;
+    VertexAttribute normal;
+    VertexAttribute texture_coordinates;
 };
 
 #endif

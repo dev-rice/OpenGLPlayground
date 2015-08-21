@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser) {
+Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser) :  position("position", 3, 0), normal("normal", 3, 3), texture_coordinates("texture_coordinates", 2, 6) {
 
     mesh_file_parser.loadMeshFromFile(filename);
 
@@ -52,19 +52,14 @@ void Mesh::createEBO(vector<GLuint>& elements) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(GLuint), elements.data(), GL_STATIC_DRAW);
 }
 
-void Mesh::linkToShader(ShaderProgram& shaderProgram) {
-    // Specify the layout of the vertex data
-    GLint position_attribute = shaderProgram.getAttributeLocation("position");
-    glEnableVertexAttribArray(position_attribute);
-    glVertexAttribPointer(position_attribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
+void Mesh::linkToShader(ShaderProgram& shader_program) {
+    position.attachToShader(shader_program, getVertexWidth());
+    normal.attachToShader(shader_program, getVertexWidth());
+    texture_coordinates.attachToShader(shader_program, getVertexWidth());
+}
 
-    GLint normal_attribute = shaderProgram.getAttributeLocation("normal");
-    glEnableVertexAttribArray(normal_attribute);
-    glVertexAttribPointer(normal_attribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
-
-    GLint texture_attribute = shaderProgram.getAttributeLocation("texture_coordinates");
-    glEnableVertexAttribArray(texture_attribute);
-    glVertexAttribPointer(texture_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
+int Mesh::getVertexWidth() {
+    return 8;
 }
 
 void Mesh::draw() {
