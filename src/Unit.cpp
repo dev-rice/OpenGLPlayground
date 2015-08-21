@@ -34,11 +34,23 @@ void Unit::changeHealthBy(double amount) {
 }
 
 void Unit::attack(Unit& target, double damage_amount) {
-    target.takeDamage(damage_amount);
+    if (canAttack()) {
+        target.takeDamage(damage_amount);
+    }
 }
 
 void Unit::heal(Unit& target, double heal_amount) {
-    target.healFor(heal_amount);
+    if (canHeal()) {
+        target.healFor(heal_amount);
+    }
+}
+
+bool Unit::canAttack() {
+    return true;
+}
+
+bool Unit::canHeal() {
+    return true;
 }
 
 void Unit::die() {

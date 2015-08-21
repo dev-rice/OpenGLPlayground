@@ -17,6 +17,9 @@ public:
     double getHealth();
     double getMaxHealth();
 
+    bool canAttack();
+    bool canHeal();
+
     void setHealth(double health);
     void setMaxHealth(double max_health);
 
