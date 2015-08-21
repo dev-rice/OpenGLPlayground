@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(vector<VertexAttribute>& vertex_attributes) : vertex_attributes(&vertex_attributes) {
+Mesh::Mesh(VertexSpecification& vertex_specification) : vertex_specification(&vertex_specification) {
 
     std::vector<GLfloat> vertices = {
              -1.0f,  1.0f,  0.0f, 1.0f,
@@ -22,7 +22,7 @@ Mesh::Mesh(vector<VertexAttribute>& vertex_attributes) : vertex_attributes(&vert
 
 }
 
-Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser, vector<VertexAttribute>& vertex_attributes) :  vertex_attributes(&vertex_attributes) {
+Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser, VertexSpecification& vertex_specification) :  vertex_specification(&vertex_specification) {
 
     mesh_file_parser.loadMeshFromFile(filename);
 
@@ -75,21 +75,11 @@ void Mesh::createEBO(vector<GLuint>& elements) {
 }
 
 void Mesh::linkToShader(ShaderProgram& shader_program) {
-    for (VertexAttribute& vertex_attribute : getVertexAttributes()) {
-        vertex_attribute.attachToShader(shader_program, getVertexWidth());
-    }
+    getVertexSpecification().attachToShader(shader_program);
 }
 
-int Mesh::getVertexWidth() {
-    int width = 0;
-    for (VertexAttribute& vertex_attribute : getVertexAttributes()) {
-        width += vertex_attribute.getWidth();
-    }
-    return width;
-}
-
-vector<VertexAttribute>& Mesh::getVertexAttributes() {
-    return *vertex_attributes;
+VertexSpecification& Mesh::getVertexSpecification() {
+    return *vertex_specification;
 }
 
 void Mesh::draw() {

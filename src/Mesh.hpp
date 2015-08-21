@@ -2,21 +2,20 @@
 #define Mesh_h
 
 #include <iostream>
-#include <vector>
 
 #include "includes/gl.hpp"
 #include "includes/glm.hpp"
 
 #include "ShaderProgram.hpp"
 #include "MeshFileParser.hpp"
-#include "VertexAttribute.hpp"
+#include "VertexSpecification.hpp"
 
 using namespace std;
 
 class Mesh {
 public:
-    Mesh(vector<VertexAttribute>& vertex_attributes);
-    Mesh(string filename, MeshFileParser& mesh_file_parser, vector<VertexAttribute>& vertex_attributes);
+    Mesh(VertexSpecification& vertex_specification);
+    Mesh(string filename, MeshFileParser& mesh_file_parser, VertexSpecification& vertex_specification);
 
     void draw();
     void prepareToBeDrawn();
@@ -35,17 +34,14 @@ private:
     void setNumberOfElements(int number_of_elements);
     int getNumberOfElements();
 
-    int getVertexWidth();
-    void specifyVertexAttribute(GLint attribute_location, int attribute_width, int offset, int vertex_width);
-
     void drawAllElements();
 
-    vector<VertexAttribute>& getVertexAttributes();
+    VertexSpecification& getVertexSpecification();
 
     GLuint vao;
     int number_of_elements;
 
-    vector<VertexAttribute>* vertex_attributes;
+    VertexSpecification* vertex_specification;
 };
 
 #endif

@@ -108,15 +108,15 @@ int main(int argc, char* argv[]) {
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
 
-    vector<VertexAttribute> vertex_attributes = {
-        VertexAttribute("position", 3, 0),
-        VertexAttribute("normal", 3, 3),
-        VertexAttribute("texture_coordinates", 2, 6) };
-
     MeshFileParserDAE mesh_file_parser_dae;
     MeshFileParserOBJ mesh_file_parser_obj;
 
-    Mesh castle_tower_mesh("res/castle_tower.dae", mesh_file_parser_dae, vertex_attributes);
+    VertexSpecification vertex_specification;
+    vertex_specification.addAttribute(VertexAttribute("position", 3, 0));
+    vertex_specification.addAttribute(VertexAttribute("normal", 3, 3));
+    vertex_specification.addAttribute(VertexAttribute("texture_coordinates", 2, 6));
+
+    Mesh castle_tower_mesh("res/castle_tower.dae", mesh_file_parser_dae, vertex_specification);
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
@@ -127,7 +127,7 @@ int main(int argc, char* argv[]) {
     castle_tower2.setPosition(glm::vec3(-4, 0, 1));
     castle_tower2.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
 
-    Mesh fence_mesh("res/fence.obj", mesh_file_parser_obj, vertex_attributes);
+    Mesh fence_mesh("res/fence.obj", mesh_file_parser_obj, vertex_specification);
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
@@ -138,11 +138,11 @@ int main(int argc, char* argv[]) {
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
 
-    vector<VertexAttribute> flat_vertex_attributes = {
-        VertexAttribute("position", 2, 0),
-        VertexAttribute("texture_coordinates", 2, 2) };
+    VertexSpecification flat_mesh_vertex_specification;
+    flat_mesh_vertex_specification.addAttribute(VertexAttribute("position", 2, 0));
+    flat_mesh_vertex_specification.addAttribute(VertexAttribute("texture_coordinates", 2, 2));
 
-    Mesh flat_mesh(flat_vertex_attributes);
+    Mesh flat_mesh(flat_mesh_vertex_specification);
     flat_mesh.linkToShader(flat_shader);
 
     // Display loop
