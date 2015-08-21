@@ -12,7 +12,6 @@
 #include "MouseCameraController.hpp"
 #include "MeshFileParserDAE.hpp"
 #include "MeshFileParserOBJ.hpp"
-#include "FlatMesh.hpp"
 #include "VertexAttribute.hpp"
 
 #include <vector>
@@ -143,7 +142,7 @@ int main(int argc, char* argv[]) {
         VertexAttribute("position", 2, 0),
         VertexAttribute("texture_coordinates", 2, 2) };
 
-    FlatMesh flat_mesh(flat_vertex_attributes);
+    Mesh flat_mesh(flat_vertex_attributes);
     flat_mesh.linkToShader(flat_shader);
 
     // Display loop

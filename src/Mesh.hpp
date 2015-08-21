@@ -15,6 +15,7 @@ using namespace std;
 
 class Mesh {
 public:
+    Mesh(vector<VertexAttribute>& vertex_attributes);
     Mesh(string filename, MeshFileParser& mesh_file_parser, vector<VertexAttribute>& vertex_attributes);
 
     void draw();

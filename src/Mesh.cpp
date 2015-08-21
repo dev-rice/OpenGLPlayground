@@ -1,5 +1,27 @@
 #include "Mesh.hpp"
 
+Mesh::Mesh(vector<VertexAttribute>& vertex_attributes) : vertex_attributes(&vertex_attributes) {
+
+    std::vector<GLfloat> vertices = {
+             -1.0f,  1.0f,  0.0f, 1.0f,
+             -1.0f, -1.0f,  0.0f, 0.0f,
+              1.0f,  1.0f,  1.0f, 1.0f,
+              1.0f, -1.0f,  1.0f, 0.0f,
+
+    };
+
+    std::vector<GLuint> elements = {
+            0, 1, 2,
+            1, 3, 2,
+    };
+    setNumberOfElements(elements.size());
+
+    createVAO();
+    createVBO(vertices);
+    createEBO(elements);
+
+}
+
 Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser, vector<VertexAttribute>& vertex_attributes) :  vertex_attributes(&vertex_attributes) {
 
     mesh_file_parser.loadMeshFromFile(filename);
