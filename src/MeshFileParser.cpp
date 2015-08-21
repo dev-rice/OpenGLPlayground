@@ -8,7 +8,7 @@ std::vector<GLuint>& MeshFileParser::getFaceArray() {
     return final_faces;
 }
 
-int MeshFileParser::getNumberOfFaces() {
+int MeshFileParser::getNumberOfElements() {
     return getFaceArray().size();
 }
 

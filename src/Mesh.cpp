@@ -17,7 +17,7 @@ void Mesh::sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser) {
 }
 
 void Mesh::setMeshStatsFromParser(MeshFileParser& mesh_file_parser) {
-    setNumberOfFaces(mesh_file_parser.getNumberOfFaces());
+    setNumberOfElements(mesh_file_parser.getNumberOfElements());
 }
 
 void Mesh::createVAO() {
@@ -34,7 +34,6 @@ void Mesh::bindVAO() {
 }
 
 void Mesh::createVBO(vector<GLfloat>& vertices) {
-    // Create a Vertex Buffer Object and copy the vertex data to it
     GLuint vbo;
     glGenBuffers(1, &vbo);
 
@@ -63,7 +62,7 @@ void Mesh::linkToShader(ShaderProgram& shaderProgram) {
     glEnableVertexAttribArray(normal_attribute);
     glVertexAttribPointer(normal_attribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
-    GLint texture_attribute = shaderProgram.getAttributeLocation("texture_coordinate");
+    GLint texture_attribute = shaderProgram.getAttributeLocation("texture_coordinates");
     glEnableVertexAttribArray(texture_attribute);
     glVertexAttribPointer(texture_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
 }
@@ -73,13 +72,13 @@ void Mesh::draw() {
 }
 
 void Mesh::drawAllElements() {
-    glDrawElements(GL_TRIANGLES, getNumberOfFaces(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, getNumberOfElements(), GL_UNSIGNED_INT, 0);
 }
 
-int Mesh::getNumberOfFaces() {
+int Mesh::getNumberOfElements() {
     return number_of_faces;
 }
 
-void Mesh::setNumberOfFaces(int number_of_faces) {
+void Mesh::setNumberOfElements(int number_of_faces) {
     this->number_of_faces = number_of_faces;
 }

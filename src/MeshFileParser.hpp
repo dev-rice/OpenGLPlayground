@@ -15,7 +15,7 @@ public:
 
     std::vector<GLfloat>& getVertexArray();
     std::vector<GLuint>& getFaceArray();
-    int getNumberOfFaces();
+    int getNumberOfElements();
     void clearMeshData();
 
     virtual void loadMeshFromFile(string filename) = 0;

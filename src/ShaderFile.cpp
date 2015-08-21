@@ -3,6 +3,7 @@
 ShaderFile::ShaderFile(string filename, ShaderCreator& shader_creator) : filename(filename), shader_creator(&shader_creator) {
 
     setGLId(loadShader(filename));
+    printErrors();
 }
 
 ShaderFile::~ShaderFile() {

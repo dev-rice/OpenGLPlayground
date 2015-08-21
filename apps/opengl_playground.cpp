@@ -11,6 +11,7 @@
 #include "ShaderProgramFactory.hpp"
 #include "MeshFactory.hpp"
 #include "MouseCameraController.hpp"
+#include "FlatMesh.hpp"
 
 #include <iostream>
 #include <map>
@@ -125,6 +126,10 @@ int main(int argc, char* argv[]) {
     fence.setPosition(glm::vec3(2, 0, 1));
 
     MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
+
+    ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
+    FlatMesh flat_mesh;
+    flat_mesh.linkToShader(flat_shader);
 
     // Display loop
     while(window.isOpen()) {

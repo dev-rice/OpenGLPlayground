@@ -28,8 +28,8 @@ private:
     void sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser);
     void setMeshStatsFromParser(MeshFileParser& mesh_file_parser);
 
-    void setNumberOfFaces(int number_of_faces);
-    int getNumberOfFaces();
+    void setNumberOfElements(int number_of_faces);
+    int getNumberOfElements();
 
     void drawAllElements();
 
