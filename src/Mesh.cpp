@@ -75,10 +75,14 @@ void Mesh::drawAllElements() {
     glDrawElements(GL_TRIANGLES, getNumberOfElements(), GL_UNSIGNED_INT, 0);
 }
 
-int Mesh::getNumberOfElements() {
-    return number_of_faces;
+int Mesh::getNumberOfTriangles() {
+    return number_of_elements / 3;
 }
 
-void Mesh::setNumberOfElements(int number_of_faces) {
-    this->number_of_faces = number_of_faces;
+int Mesh::getNumberOfElements() {
+    return number_of_elements;
+}
+
+void Mesh::setNumberOfElements(int number_of_elements) {
+    this->number_of_elements = number_of_elements;
 }

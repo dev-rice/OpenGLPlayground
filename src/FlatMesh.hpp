@@ -16,19 +16,21 @@ public:
     void drawOutline();
     void linkToShader(ShaderProgram);
 
+    int getNumberOfTriangles();
+
 protected:
     void bindVAO();
     void createVAO();
     void createVBO(vector<GLfloat>& vertices);
     void createEBO(vector<GLuint>& elements);
 
-    void setNumberOfElements(int number_of_faces);
+    void setNumberOfElements(int number_of_elements);
     int getNumberOfElements();
 
     void drawAllElements();
 
     GLuint vao;
-    int number_of_faces;
+    int number_of_elements;
 
 };
 

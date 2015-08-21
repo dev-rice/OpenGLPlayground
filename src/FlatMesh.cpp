@@ -80,10 +80,14 @@ void FlatMesh::linkToShader(ShaderProgram shader){
 
 }
 
-int FlatMesh::getNumberOfElements() {
-    return number_of_faces;
+int FlatMesh::getNumberOfTriangles() {
+    return number_of_elements / 3;
 }
 
-void FlatMesh::setNumberOfElements(int number_of_faces) {
-    this->number_of_faces = number_of_faces;
+int FlatMesh::getNumberOfElements() {
+    return number_of_elements;
+}
+
+void FlatMesh::setNumberOfElements(int number_of_elements) {
+    this->number_of_elements = number_of_elements;
 }

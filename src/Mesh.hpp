@@ -20,6 +20,8 @@ public:
     void prepareToBeDrawn();
     void linkToShader(ShaderProgram& shader_program);
 
+    int getNumberOfTriangles();
+
 private:
     void bindVAO();
     void createVAO();
@@ -28,13 +30,13 @@ private:
     void sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser);
     void setMeshStatsFromParser(MeshFileParser& mesh_file_parser);
 
-    void setNumberOfElements(int number_of_faces);
+    void setNumberOfElements(int number_of_elements);
     int getNumberOfElements();
 
     void drawAllElements();
 
     GLuint vao;
-    int number_of_faces;
+    int number_of_elements;
 };
 
 #endif
