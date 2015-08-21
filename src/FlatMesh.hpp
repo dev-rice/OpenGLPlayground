@@ -7,6 +7,8 @@
 
 #include "ShaderProgram.hpp"
 
+using namespace std;
+
 class FlatMesh {
 public:
     FlatMesh();

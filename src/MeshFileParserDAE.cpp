@@ -107,7 +107,7 @@ void MeshFileParserDAE::loadMeshFromFile(string filename){
     pugi::xml_node geometry_node = mesh_list_node.first_child();
 
     // Create the vectors that will hold vertex and face data
-    std::vector<Vertex> vertices;
+    std::vector<MeshVertex> vertices;
     std::vector<GLuint> elements;
     bool successful = getVerticesAndElements(geometry_node, vertices, elements);
 
@@ -123,12 +123,12 @@ void MeshFileParserDAE::loadMeshFromFile(string filename){
     }
 }
 
-void MeshFileParserDAE::writeFinalArrays(std::vector<Vertex>& vertices, std::vector<GLuint>& elements){
+void MeshFileParserDAE::writeFinalArrays(std::vector<MeshVertex>& vertices, std::vector<GLuint>& elements){
     final_vertices.clear();
     final_faces.clear();
 
     for (int i = 0; i < vertices.size(); ++i){
-        Vertex vertex = vertices[i];
+        MeshVertex vertex = vertices[i];
         final_vertices.push_back(vertex.position.x);
         final_vertices.push_back(vertex.position.y);
         final_vertices.push_back(vertex.position.z);
@@ -150,7 +150,7 @@ void MeshFileParserDAE::writeFinalArrays(std::vector<Vertex>& vertices, std::vec
     final_faces = elements;
 }
 
-void MeshFileParserDAE::calculateTangentsAndBinormals(std::vector<Vertex>& vertices, std::vector<GLuint>& elements) {
+void MeshFileParserDAE::calculateTangentsAndBinormals(std::vector<MeshVertex>& vertices, std::vector<GLuint>& elements) {
     // For every face declaration calculate the
     // face tangents and binormals.
 
@@ -238,7 +238,7 @@ void MeshFileParserDAE::calculateTangentsAndBinormals(std::vector<Vertex>& verti
     }
 }
 
-bool MeshFileParserDAE::getVerticesAndElements(pugi::xml_node geometry_node, std::vector<Vertex>& vertices, std::vector<GLuint>& elements){
+bool MeshFileParserDAE::getVerticesAndElements(pugi::xml_node geometry_node, std::vector<MeshVertex>& vertices, std::vector<GLuint>& elements){
     bool success = true;
 
     vertices.clear();
@@ -323,7 +323,7 @@ bool MeshFileParserDAE::getVerticesAndElements(pugi::xml_node geometry_node, std
             int position_index = faces[i];
             int normal_index = faces[i + 1];
             int texcoord_index = faces[i + 2];
-            Vertex vertex;
+            MeshVertex vertex;
             vertex.position = positions[position_index];
             vertex.normal = normals[normal_index];
 
@@ -336,7 +336,7 @@ bool MeshFileParserDAE::getVerticesAndElements(pugi::xml_node geometry_node, std
             elements.push_back(vertex_index);
 
 
-            std::vector<Vertex>::iterator it = std::find(unique_vertices.begin(),
+            std::vector<MeshVertex>::iterator it = std::find(unique_vertices.begin(),
                 unique_vertices.end(), vertex);
             bool is_unique = (it == unique_vertices.end());
             if (is_unique){

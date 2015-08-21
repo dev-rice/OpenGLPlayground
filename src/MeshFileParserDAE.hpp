@@ -15,7 +15,7 @@
 #include <map>
 
 #include "pugixml.hpp" // PUGI xml library
-#include "vertex.hpp"
+#include "MeshVertex.hpp"
 
 using namespace std;
 
@@ -29,11 +29,11 @@ public:
     void loadMeshFromFile(string filename);
 
 private:
-    void writeFinalArrays(std::vector<Vertex>&, std::vector<GLuint>&);
-    void calculateTangentsAndBinormals(std::vector<Vertex>&, std::vector<GLuint>&);
-    bool getVerticesAndElements(pugi::xml_node, std::vector<Vertex>&, std::vector<GLuint>&);
+    void writeFinalArrays(std::vector<MeshVertex>&, std::vector<GLuint>&);
+    void calculateTangentsAndBinormals(std::vector<MeshVertex>&, std::vector<GLuint>&);
+    bool getVerticesAndElements(pugi::xml_node, std::vector<MeshVertex>&, std::vector<GLuint>&);
 
-    std::vector<Vertex> unique_vertices;
+    std::vector<MeshVertex> unique_vertices;
     std::map<int, int> vertex_to_unique;
 
     string filename;

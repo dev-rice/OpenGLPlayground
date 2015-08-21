@@ -14,6 +14,8 @@
 #include "FragmentShaderCreator.hpp"
 #include "ShaderProgram.hpp"
 #include "Unit.hpp"
+#include "VertexAttribute.hpp"
+#include "Vertex.hpp"
 
 ///////////////////////////////
 // Camera Tests
@@ -276,7 +278,7 @@ TEST_F(ShaderProgramTest, getAttributeLocationTest) {
 
     EXPECT_EQ(shader_program.getAttributeLocation("position"), 1);
     EXPECT_EQ(shader_program.getAttributeLocation("normal"), 2);
-    EXPECT_EQ(shader_program.getAttributeLocation("texture_coordinate"), 3);
+    EXPECT_EQ(shader_program.getAttributeLocation("texture_coordinates"), 3);
 
 }
 
@@ -381,6 +383,62 @@ TEST(ViewportTest, getAspectRatioTest) {
     viewport = Viewport(800, 600);
     EXPECT_NEAR(viewport.getAspectRatio(), 1.333, 0.01);
 }
+
+///////////////////////////////
+// VertexAttribute Tests
+///////////////////////////////
+class VertexAttributeTest : public ::testing::Test {
+protected:
+    VertexAttributeTest() {
+
+    }
+};
+
+TEST_F(VertexAttributeTest, getWidthTest) {
+    VertexAttribute position("position", {0.0, 1.0, 0.2});
+    EXPECT_EQ(position.getWidth(), 3);
+}
+
+///////////////////////////////
+// Vertex Tests
+///////////////////////////////
+class VertexTest : public ::testing::Test {
+protected:
+    VertexTest() {
+
+    }
+};
+
+TEST_F(VertexTest, constructorTest) {
+    VertexAttribute position("position", {0, 1, 2});
+    VertexAttribute normal("normal", {1, 1, 3});
+    VertexAttribute texture_coordinates("texture_coordinates", {0.5, 0.1});
+
+    Vertex vertex({position, normal, texture_coordinates});
+
+}
+
+TEST_F(VertexTest, flattenTest) {
+    VertexAttribute position("position", {0, 1, 2});
+    VertexAttribute normal("normal", {1, 1, 3});
+    VertexAttribute texture_coordinates("texture_coordinates", {0.5, 0.1});
+
+    Vertex vertex({position, normal, texture_coordinates});
+
+    vector<float> expected_vertex_vector = {0, 1, 2, 1, 1, 3, 0.5, 0.1};
+    EXPECT_EQ(vertex.flatten(), expected_vertex_vector);
+}
+
+TEST_F(VertexTest, getWidthTest) {
+    VertexAttribute position("position", {0, 1, 2});
+    VertexAttribute normal("normal", {1, 1, 3});
+    VertexAttribute texture_coordinates("texture_coordinates", {0.5, 0.1});
+
+    Vertex vertex({position, normal, texture_coordinates});
+
+    EXPECT_EQ(vertex.getWidth(), 8);
+}
+
 
 ///////////////////////////////
 // Window Tests
