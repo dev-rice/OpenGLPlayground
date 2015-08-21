@@ -48,7 +48,7 @@ else ifeq ($(PLATFORM),Linux)
 endif
 
 opengl_playground: all
-	$(COMPILER) -I$(SRCDIR) -I$(PUGIXML_INCLUDE_DIR) $(OBJECTS) $(LIBRARIES) $(LOCAL_LIBRARIES) $(APP_DIR)/opengl_playground.$(SRCEXT) -o opengl_playground
+	$(COMPILER) -std=c++11 -I$(SRCDIR) -I$(PUGIXML_INCLUDE_DIR) $(OBJECTS) $(LIBRARIES) $(LOCAL_LIBRARIES) $(APP_DIR)/opengl_playground.$(SRCEXT) -o opengl_playground
 
 all: $(OBJDIR) $(SOURCES) $(OBJECTS)
 

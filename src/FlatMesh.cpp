@@ -1,6 +1,6 @@
 #include "FlatMesh.hpp"
 
-FlatMesh::FlatMesh() : position("position", 2, 0), texture_coordinates("texture_coordinates", 2, 2) {
+FlatMesh::FlatMesh(vector<VertexAttribute>& vertex_attributes) : vertex_attributes(&vertex_attributes) {
 
     std::vector<GLfloat> vertices = {
              -1.0f,  1.0f,  0.0f, 1.0f,
@@ -52,13 +52,22 @@ void FlatMesh::createEBO(vector<GLuint>& elements) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(GLuint), elements.data(), GL_STATIC_DRAW);
 }
 
-void FlatMesh::linkToShader(ShaderProgram& shader){
-    position.attachToShader(shader, getVertexWidth());
-    texture_coordinates.attachToShader(shader, getVertexWidth());
+void FlatMesh::linkToShader(ShaderProgram& shader_program){
+    for (VertexAttribute& vertex_attribute : getVertexAttributes()) {
+        vertex_attribute.attachToShader(shader_program, getVertexWidth());
+    }
 }
 
 int FlatMesh::getVertexWidth() {
-    return 4;
+    int width = 0;
+    for (VertexAttribute& vertex_attribute : getVertexAttributes()) {
+        width += vertex_attribute.getWidth();
+    }
+    return width;
+}
+
+vector<VertexAttribute>& FlatMesh::getVertexAttributes() {
+    return *vertex_attributes;
 }
 
 void FlatMesh::draw(){

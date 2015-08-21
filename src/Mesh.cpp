@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser) :  position("position", 3, 0), normal("normal", 3, 3), texture_coordinates("texture_coordinates", 2, 6) {
+Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser, vector<VertexAttribute>& vertex_attributes) :  vertex_attributes(&vertex_attributes) {
 
     mesh_file_parser.loadMeshFromFile(filename);
 
@@ -53,13 +53,21 @@ void Mesh::createEBO(vector<GLuint>& elements) {
 }
 
 void Mesh::linkToShader(ShaderProgram& shader_program) {
-    position.attachToShader(shader_program, getVertexWidth());
-    normal.attachToShader(shader_program, getVertexWidth());
-    texture_coordinates.attachToShader(shader_program, getVertexWidth());
+    for (VertexAttribute& vertex_attribute : getVertexAttributes()) {
+        vertex_attribute.attachToShader(shader_program, getVertexWidth());
+    }
 }
 
 int Mesh::getVertexWidth() {
-    return 8;
+    int width = 0;
+    for (VertexAttribute& vertex_attribute : getVertexAttributes()) {
+        width += vertex_attribute.getWidth();
+    }
+    return width;
+}
+
+vector<VertexAttribute>& Mesh::getVertexAttributes() {
+    return *vertex_attributes;
 }
 
 void Mesh::draw() {

@@ -10,7 +10,7 @@
 
 class FlatMesh {
 public:
-    FlatMesh();
+    FlatMesh(vector<VertexAttribute>& vertex_attributes);
 
     void draw();
     void prepareToBeDrawn();
@@ -33,12 +33,14 @@ protected:
 
     void drawAllElements();
 
+    vector<VertexAttribute>& getVertexAttributes();
+
     GLuint vao;
     GLuint vbo;
     int number_of_elements;
 
-    VertexAttribute position;
-    VertexAttribute texture_coordinates;
+    vector<VertexAttribute>* vertex_attributes;
+
 
 };
 

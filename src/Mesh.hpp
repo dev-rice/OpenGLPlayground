@@ -15,7 +15,7 @@ using namespace std;
 
 class Mesh {
 public:
-    Mesh(string filename, MeshFileParser& mesh_file_parser);
+    Mesh(string filename, MeshFileParser& mesh_file_parser, vector<VertexAttribute>& vertex_attributes);
 
     void draw();
     void prepareToBeDrawn();
@@ -39,12 +39,12 @@ private:
 
     void drawAllElements();
 
+    vector<VertexAttribute>& getVertexAttributes();
+
     GLuint vao;
     int number_of_elements;
 
-    VertexAttribute position;
-    VertexAttribute normal;
-    VertexAttribute texture_coordinates;
+    vector<VertexAttribute>* vertex_attributes;
 };
 
 #endif

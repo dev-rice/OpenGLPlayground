@@ -9,10 +9,13 @@
 #include "Texture.hpp"
 #include "TextureManager.hpp"
 #include "ShaderProgramFactory.hpp"
-#include "MeshFactory.hpp"
 #include "MouseCameraController.hpp"
+#include "MeshFileParserDAE.hpp"
+#include "MeshFileParserOBJ.hpp"
 #include "FlatMesh.hpp"
+#include "VertexAttribute.hpp"
 
+#include <vector>
 #include <iostream>
 #include <map>
 #include <cstdio>
@@ -106,8 +109,15 @@ int main(int argc, char* argv[]) {
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
 
-    MeshFactory mesh_factory;
-    Mesh castle_tower_mesh = mesh_factory.createMesh("res/castle_tower.dae");
+    vector<VertexAttribute> vertex_attributes = {
+        VertexAttribute("position", 3, 0),
+        VertexAttribute("normal", 3, 3),
+        VertexAttribute("texture_coordinates", 2, 6) };
+
+    MeshFileParserDAE mesh_file_parser_dae;
+    MeshFileParserOBJ mesh_file_parser_obj;
+
+    Mesh castle_tower_mesh("res/castle_tower.dae", mesh_file_parser_dae, vertex_attributes);
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
@@ -118,7 +128,7 @@ int main(int argc, char* argv[]) {
     castle_tower2.setPosition(glm::vec3(-4, 0, 1));
     castle_tower2.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
 
-    Mesh fence_mesh = mesh_factory.createMesh("res/fence.obj");
+    Mesh fence_mesh("res/fence.obj", mesh_file_parser_obj, vertex_attributes);
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
@@ -128,7 +138,12 @@ int main(int argc, char* argv[]) {
     MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
-    FlatMesh flat_mesh;
+
+    vector<VertexAttribute> flat_vertex_attributes = {
+        VertexAttribute("position", 2, 0),
+        VertexAttribute("texture_coordinates", 2, 2) };
+
+    FlatMesh flat_mesh(flat_vertex_attributes);
     flat_mesh.linkToShader(flat_shader);
 
     // Display loop
