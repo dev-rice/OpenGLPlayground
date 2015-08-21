@@ -51,18 +51,6 @@ void FlatMesh::createEBO(vector<GLuint>& elements) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(GLuint), elements.data(), GL_STATIC_DRAW);
 }
 
-void FlatMesh::draw(){
-    drawAllElements();
-}
-
-void FlatMesh::drawAllElements() {
-    glDrawElements(GL_TRIANGLES, getNumberOfElements(), GL_UNSIGNED_INT, 0);
-}
-
-void FlatMesh::drawOutline(){
-    glDrawArrays(GL_LINE_LOOP, 0, 6);
-}
-
 void FlatMesh::linkToShader(ShaderProgram& shader){
     glBindVertexArray(vao);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -77,6 +65,18 @@ void FlatMesh::linkToShader(ShaderProgram& shader){
     glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE,
                            4*sizeof(float), (void*)(2*sizeof(float)));
 
+}
+
+void FlatMesh::draw(){
+    drawAllElements();
+}
+
+void FlatMesh::drawAllElements() {
+    glDrawElements(GL_TRIANGLES, getNumberOfElements(), GL_UNSIGNED_INT, 0);
+}
+
+void FlatMesh::drawOutline(){
+    glDrawArrays(GL_LINE_LOOP, 0, 6);
 }
 
 int FlatMesh::getNumberOfTriangles() {
