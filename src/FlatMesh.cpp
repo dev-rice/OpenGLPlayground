@@ -10,8 +10,8 @@ FlatMesh::FlatMesh(){
     };
 
     std::vector<GLuint> elements = {
-            0, 2, 1,
-            1, 2, 3,
+            0, 1, 2,
+            1, 3, 2,
     };
     setNumberOfElements(elements.size());
 
@@ -35,7 +35,6 @@ void FlatMesh::bindVAO(){
 }
 
 void FlatMesh::createVBO(vector<GLfloat>& vertices) {
-    GLuint vbo;
     glGenBuffers(1, &vbo);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -64,9 +63,9 @@ void FlatMesh::drawOutline(){
     glDrawArrays(GL_LINE_LOOP, 0, 6);
 }
 
-void FlatMesh::linkToShader(ShaderProgram shader){
-    // glBindVertexArray(vao);
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
+void FlatMesh::linkToShader(ShaderProgram& shader){
+    glBindVertexArray(vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     GLint posAttrib = shader.getAttributeLocation("position");
     glEnableVertexAttribArray(posAttrib);

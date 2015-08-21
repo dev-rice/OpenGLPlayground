@@ -14,7 +14,7 @@ public:
     void draw();
     void prepareToBeDrawn();
     void drawOutline();
-    void linkToShader(ShaderProgram);
+    void linkToShader(ShaderProgram& shader_program);
 
     int getNumberOfTriangles();
 
@@ -30,6 +30,7 @@ protected:
     void drawAllElements();
 
     GLuint vao;
+    GLuint vbo;
     int number_of_elements;
 
 };
