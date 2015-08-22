@@ -116,7 +116,7 @@ void Window::initializeWindow(){
 }
 
 void Window::clearBuffers() {
-    glClearColor(0.05f, 0.15f, 0.2f, 1.0f);
+    glClearColor(0, 0, 0, 1);
     clearDepthBuffer();
     clearColorBuffer();
 }

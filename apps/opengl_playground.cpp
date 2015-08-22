@@ -14,6 +14,7 @@
 #include "MeshFileParserOBJ.hpp"
 #include "VertexAttribute.hpp"
 #include "MeshData.hpp"
+#include "FlatDrawable.hpp"
 
 #include <vector>
 #include <iostream>
@@ -96,9 +97,6 @@ int main(int argc, char* argv[]) {
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
 
-    VertexShaderCreator vertex_shader_creator;
-    FragmentShaderCreator fragment_shader_creator;
-
     ShaderProgramFactory shader_program_factory;
     ShaderProgram shader = shader_program_factory.createShaderProgram("shaders/temp.vs", "shaders/temp.fs");
 
@@ -130,7 +128,6 @@ int main(int argc, char* argv[]) {
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures);
     castle_tower2.setPosition(glm::vec3(-4, 0, 1));
     castle_tower2.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
-
 
     mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
     MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());
@@ -164,8 +161,10 @@ int main(int argc, char* argv[]) {
 
     MeshData flat_mesh_data(vertices, elements);
     Mesh flat_mesh(flat_mesh_data, flat_mesh_vertex_specification);
-    flat_mesh.linkToShader(flat_shader);
-
+    FlatDrawable test_box(flat_mesh, flat_shader);
+    test_box.setWidth(0.3);
+    test_box.setHeight(0.4);
+    test_box.setPositionOfCenter(glm::vec2(-0.5, 0.5));
     // Display loop
     while(window.isOpen()) {
         window.clearBuffers();
@@ -174,9 +173,7 @@ int main(int argc, char* argv[]) {
         castle_tower2.draw(camera);
         fence.draw(camera);
 
-        flat_mesh.prepareToBeDrawn();
-        flat_shader.use();
-        flat_mesh.draw();
+        test_box.draw();
 
         castle_tower1.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
