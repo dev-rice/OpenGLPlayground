@@ -165,9 +165,9 @@ int main(int argc, char* argv[]) {
 
     FlatDrawable test_box(flat_mesh, flat_shader);
     UserInterfaceElement ui_element(viewport, test_box);
-    ui_element.setWidthInPixels(800);
-    ui_element.setHeightInPixels(450);
-    ui_element.setCenterInPixels(glm::vec2(400, 225));
+    ui_element.setWidthInPixels(1600);
+    ui_element.setHeightInPixels(100);
+    ui_element.setCenterInPixels(glm::vec2(800, 50));
 
 
     // Display loop
