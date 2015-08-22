@@ -2,7 +2,7 @@
 
 Mesh::Mesh(MeshData& mesh_data, VertexSpecification& vertex_specification) : vertex_specification(&vertex_specification) {
     sendMeshDataToOpenGL(mesh_data);
-    setNumberOfElements(mesh_data.getElements().size());
+    setMeshStatsFromMeshData(mesh_data);
 }
 
 void Mesh::sendMeshDataToOpenGL(MeshData& mesh_data) {
@@ -11,14 +11,8 @@ void Mesh::sendMeshDataToOpenGL(MeshData& mesh_data) {
     createEBO(mesh_data.getElements());
 }
 
-void Mesh::sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser) {
-    createVAO();
-    createVBO(mesh_file_parser.getVertexArray());
-    createEBO(mesh_file_parser.getFaceArray());
-}
-
-void Mesh::setMeshStatsFromParser(MeshFileParser& mesh_file_parser) {
-    setNumberOfElements(mesh_file_parser.getNumberOfElements());
+void Mesh::setMeshStatsFromMeshData(MeshData& mesh_data) {
+    setNumberOfElements(mesh_data.getElements().size());
 }
 
 void Mesh::createVAO() {
@@ -70,7 +64,7 @@ void Mesh::drawAllElements() {
 }
 
 int Mesh::getNumberOfTriangles() {
-    return number_of_elements / 3;
+    return getNumberOfElements() / 3;
 }
 
 int Mesh::getNumberOfElements() {

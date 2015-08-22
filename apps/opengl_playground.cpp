@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <iostream>
+#include <cmath>
 #include <map>
 #include <cstdio>
 
@@ -124,11 +125,11 @@ int main(int argc, char* argv[]) {
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures);
-    castle_tower1.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
+    castle_tower1.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
 
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures);
     castle_tower2.setPosition(glm::vec3(-4, 0, 1));
-    castle_tower2.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
+    castle_tower2.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
 
 
     mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
@@ -147,7 +148,6 @@ int main(int argc, char* argv[]) {
     VertexSpecification flat_mesh_vertex_specification;
     flat_mesh_vertex_specification.addAttribute(VertexAttribute("position", 2, 0));
     flat_mesh_vertex_specification.addAttribute(VertexAttribute("texture_coordinates", 2, 2));
-
 
     vector<GLfloat> vertices = {
              -1.0f,  1.0f,  0.0f, 1.0f,

@@ -28,9 +28,9 @@ private:
     void createVAO();
     void createVBO(vector<GLfloat>& vertices);
     void createEBO(vector<GLuint>& elements);
-    void sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser);
+
     void sendMeshDataToOpenGL(MeshData& mesh_data);
-    void setMeshStatsFromParser(MeshFileParser& mesh_file_parser);
+    void setMeshStatsFromMeshData(MeshData& mesh_data);
 
     void setNumberOfElements(int number_of_elements);
     int getNumberOfElements();
@@ -41,7 +41,6 @@ private:
 
     GLuint vao;
     int number_of_elements;
-
     VertexSpecification* vertex_specification;
 };
 
