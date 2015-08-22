@@ -2,8 +2,8 @@
 
 FlatDrawable::FlatDrawable(Mesh& mesh, ShaderProgram& shader_program) : mesh(&mesh), shader_program(&shader_program) {
 
-    setWidth(1);
-    setHeight(1);
+    setWidth(2);
+    setHeight(2);
     setPositionOfCenter(glm::vec2(0, 0));
 
     getMesh().linkToShader(getShaderProgram());
@@ -15,8 +15,8 @@ void FlatDrawable::draw() {
     getShaderProgram().use();
 
     glm::mat3 transformation = glm::mat3(
-                   getWidth() , 0          , getPositionOfCenter().x,
-                   0          , getHeight(), getPositionOfCenter().y,
+                   getWidth() / 2.0 , 0          , getPositionOfCenter().x,
+                   0          , getHeight() / 2.0, getPositionOfCenter().y,
                    0          , 0          , 1);
 
     GLint transformation_location = getShaderProgram().getUniformLocation("transformation");

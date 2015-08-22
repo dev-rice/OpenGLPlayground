@@ -15,6 +15,7 @@
 #include "VertexAttribute.hpp"
 #include "MeshData.hpp"
 #include "FlatDrawable.hpp"
+#include "UserInterfaceElement.hpp"
 
 #include <vector>
 #include <iostream>
@@ -161,10 +162,14 @@ int main(int argc, char* argv[]) {
 
     MeshData flat_mesh_data(vertices, elements);
     Mesh flat_mesh(flat_mesh_data, flat_mesh_vertex_specification);
+
     FlatDrawable test_box(flat_mesh, flat_shader);
-    test_box.setWidth(0.3);
-    test_box.setHeight(0.4);
-    test_box.setPositionOfCenter(glm::vec2(-0.5, 0.5));
+    UserInterfaceElement ui_element(viewport, test_box);
+    ui_element.setWidthInPixels(800);
+    ui_element.setHeightInPixels(450);
+    ui_element.setCenterInPixels(glm::vec2(400, 225));
+
+
     // Display loop
     while(window.isOpen()) {
         window.clearBuffers();
@@ -173,7 +178,7 @@ int main(int argc, char* argv[]) {
         castle_tower2.draw(camera);
         fence.draw(camera);
 
-        test_box.draw();
+        ui_element.draw();
 
         castle_tower1.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
