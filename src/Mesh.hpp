@@ -9,13 +9,13 @@
 #include "ShaderProgram.hpp"
 #include "MeshFileParser.hpp"
 #include "VertexSpecification.hpp"
+#include "MeshData.hpp"
 
 using namespace std;
 
 class Mesh {
 public:
-    Mesh(VertexSpecification& vertex_specification);
-    Mesh(string filename, MeshFileParser& mesh_file_parser, VertexSpecification& vertex_specification);
+    Mesh(MeshData& mesh_data, VertexSpecification& vertex_specification);
 
     void draw();
     void prepareToBeDrawn();
@@ -29,6 +29,7 @@ private:
     void createVBO(vector<GLfloat>& vertices);
     void createEBO(vector<GLuint>& elements);
     void sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser);
+    void sendMeshDataToOpenGL(MeshData& mesh_data);
     void setMeshStatsFromParser(MeshFileParser& mesh_file_parser);
 
     void setNumberOfElements(int number_of_elements);

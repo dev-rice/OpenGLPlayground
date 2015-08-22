@@ -9,14 +9,6 @@ MeshFileParserOBJ::MeshFileParserOBJ(){
 
 }
 
-std::vector<GLfloat> MeshFileParserOBJ::getVertexArray(){
-    return final_vertices;
-}
-
-std::vector<GLuint> MeshFileParserOBJ::getFaceArray(){
-    return final_faces;
-}
-
 void MeshFileParserOBJ::loadMeshFromFile(string filename){
     const char* fileName = filename.c_str();
 

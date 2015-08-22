@@ -1,35 +1,14 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(VertexSpecification& vertex_specification) : vertex_specification(&vertex_specification) {
-
-    std::vector<GLfloat> vertices = {
-             -1.0f,  1.0f,  0.0f, 1.0f,
-             -1.0f, -1.0f,  0.0f, 0.0f,
-              1.0f,  1.0f,  1.0f, 1.0f,
-              1.0f, -1.0f,  1.0f, 0.0f,
-
-    };
-
-    std::vector<GLuint> elements = {
-            0, 1, 2,
-            1, 3, 2,
-    };
-    setNumberOfElements(elements.size());
-
-    createVAO();
-    createVBO(vertices);
-    createEBO(elements);
-
+Mesh::Mesh(MeshData& mesh_data, VertexSpecification& vertex_specification) : vertex_specification(&vertex_specification) {
+    sendMeshDataToOpenGL(mesh_data);
+    setNumberOfElements(mesh_data.getElements().size());
 }
 
-Mesh::Mesh(string filename, MeshFileParser& mesh_file_parser, VertexSpecification& vertex_specification) :  vertex_specification(&vertex_specification) {
-
-    mesh_file_parser.loadMeshFromFile(filename);
-
-    setMeshStatsFromParser(mesh_file_parser);
-    sendMeshDataToOpenGL(mesh_file_parser);
-
-    mesh_file_parser.clearMeshData();
+void Mesh::sendMeshDataToOpenGL(MeshData& mesh_data) {
+    createVAO();
+    createVBO(mesh_data.getVertices());
+    createEBO(mesh_data.getElements());
 }
 
 void Mesh::sendMeshDataToOpenGL(MeshFileParser& mesh_file_parser) {

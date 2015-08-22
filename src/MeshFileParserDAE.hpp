@@ -23,9 +23,6 @@ class MeshFileParserDAE : public MeshFileParser {
 public:
     MeshFileParserDAE();
 
-    std::vector<GLfloat> getVertexArray();
-    std::vector<GLuint> getFaceArray();
-
     void loadMeshFromFile(string filename);
 
 private:

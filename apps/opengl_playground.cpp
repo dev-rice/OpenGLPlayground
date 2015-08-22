@@ -13,6 +13,7 @@
 #include "MeshFileParserDAE.hpp"
 #include "MeshFileParserOBJ.hpp"
 #include "VertexAttribute.hpp"
+#include "MeshData.hpp"
 
 #include <vector>
 #include <iostream>
@@ -116,7 +117,9 @@ int main(int argc, char* argv[]) {
     vertex_specification.addAttribute(VertexAttribute("normal", 3, 3));
     vertex_specification.addAttribute(VertexAttribute("texture_coordinates", 2, 6));
 
-    Mesh castle_tower_mesh("res/castle_tower.dae", mesh_file_parser_dae, vertex_specification);
+    mesh_file_parser_dae.loadMeshFromFile("res/castle_tower.dae");
+    MeshData castle_tower_mesh_data(mesh_file_parser_dae.getVertexArray(), mesh_file_parser_dae.getFaceArray());
+    Mesh castle_tower_mesh(castle_tower_mesh_data, vertex_specification);
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
@@ -127,7 +130,10 @@ int main(int argc, char* argv[]) {
     castle_tower2.setPosition(glm::vec3(-4, 0, 1));
     castle_tower2.setRotationInGlobalCoordinates(glm::vec3(3.1415927 / 2.0, 0, 0));
 
-    Mesh fence_mesh("res/fence.obj", mesh_file_parser_obj, vertex_specification);
+
+    mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
+    MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());
+    Mesh fence_mesh(fence_mesh_data, vertex_specification);
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
@@ -142,7 +148,22 @@ int main(int argc, char* argv[]) {
     flat_mesh_vertex_specification.addAttribute(VertexAttribute("position", 2, 0));
     flat_mesh_vertex_specification.addAttribute(VertexAttribute("texture_coordinates", 2, 2));
 
-    Mesh flat_mesh(flat_mesh_vertex_specification);
+
+    vector<GLfloat> vertices = {
+             -1.0f,  1.0f,  0.0f, 1.0f,
+             -1.0f, -1.0f,  0.0f, 0.0f,
+              1.0f,  1.0f,  1.0f, 1.0f,
+              1.0f, -1.0f,  1.0f, 0.0f,
+
+    };
+
+    vector<GLuint> elements = {
+            0, 1, 2,
+            1, 3, 2,
+    };
+
+    MeshData flat_mesh_data(vertices, elements);
+    Mesh flat_mesh(flat_mesh_data, flat_mesh_vertex_specification);
     flat_mesh.linkToShader(flat_shader);
 
     // Display loop
