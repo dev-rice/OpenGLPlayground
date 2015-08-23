@@ -3,24 +3,9 @@
 Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager, Transform3D& transform_3D) : mesh(&mesh), shader(&shader), texture_manager(&texture_manager), transform_3D(&transform_3D) {
 
     getTextureManager().setTextureLocationsInShader(getShaderProgram());
-    mesh.linkToShader(getShaderProgram());
+    getMesh().linkToShader(getShaderProgram());
+    show();
 
-}
-
-Mesh& Drawable::getMesh() {
-    return *mesh;
-}
-
-ShaderProgram& Drawable::getShaderProgram() {
-    return *shader;
-}
-
-TextureManager& Drawable::getTextureManager() {
-    return *texture_manager;
-}
-
-Transform3D& Drawable::getTransform3D() {
-    return *transform_3D;
 }
 
 void Drawable::draw(Camera& camera) {
@@ -29,7 +14,6 @@ void Drawable::draw(Camera& camera) {
     }
 
     getMesh().prepareToBeDrawn();
-
     getShaderProgram().use();
 
     getTextureManager().useTextures();
@@ -67,4 +51,20 @@ void Drawable::toggleVisibility() {
     } else {
         hide();
     }
+}
+
+Mesh& Drawable::getMesh() {
+    return *mesh;
+}
+
+ShaderProgram& Drawable::getShaderProgram() {
+    return *shader;
+}
+
+TextureManager& Drawable::getTextureManager() {
+    return *texture_manager;
+}
+
+Transform3D& Drawable::getTransform3D() {
+    return *transform_3D;
 }

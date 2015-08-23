@@ -31,6 +31,7 @@ private:
     ShaderProgram* shader;
     TextureManager* texture_manager;
     Transform3D* transform_3D;
+
     bool is_hidden;
 
 };
