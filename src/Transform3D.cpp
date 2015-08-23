@@ -3,6 +3,7 @@
 Transform3D::Transform3D() {
     setPosition(glm::vec3(0, 0, 0));
     setRotationInGlobalCoordinates(glm::vec3(0, 0, 0));
+    setScale(glm::vec3(1, 1, 1));
 }
 
 glm::vec3 Transform3D::getPosition() {
@@ -13,12 +14,20 @@ glm::vec3 Transform3D::getRotationInGlobalCoordinates() {
     return rotation_in_global_coordinates;
 }
 
+glm::vec3 Transform3D::getScale() {
+    return scale;
+}
+
 void Transform3D::setPosition(glm::vec3 position) {
     this->position = position;
 }
 
 void Transform3D::setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates) {
     this->rotation_in_global_coordinates = rotation_in_global_coordinates;
+}
+
+void Transform3D::setScale(glm::vec3 scale) {
+    this->scale = scale;
 }
 
 void Transform3D::moveByGlobal(glm::vec3 move_vector) {
@@ -30,7 +39,7 @@ void Transform3D::rotateByGlobal(glm::vec3 rotation_vector) {
 }
 
 glm::mat4 Transform3D::getModelMatrix() {
-    return getTranslationMatrix() * getRotationMatrix();
+    return getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
 }
 
 glm::mat4 Transform3D::getRotationMatrix() {
@@ -39,6 +48,10 @@ glm::mat4 Transform3D::getRotationMatrix() {
 
 glm::mat4 Transform3D::getTranslationMatrix() {
     return calculateTranslationMatrix();
+}
+
+glm::mat4 Transform3D::getScaleMatrix() {
+    return calculateScaleMatrix();
 }
 
 glm::mat4 Transform3D::calculateModelMatrix() {
@@ -84,4 +97,8 @@ glm::mat4 Transform3D::calculateRotationMatrix() {
 
 glm::mat4 Transform3D::calculateTranslationMatrix() {
     return glm::translate(glm::mat4(), position);
+}
+
+glm::mat4 Transform3D::calculateScaleMatrix() {
+    return glm::scale(scale);
 }
