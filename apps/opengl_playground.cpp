@@ -167,12 +167,12 @@ int main(int argc, char* argv[]) {
     MeshData flat_mesh_data(vertices, elements);
     Mesh flat_mesh(flat_mesh_data, flat_mesh_vertex_specification);
 
-    FlatDrawable test_box(flat_mesh, flat_shader);
+    Transform2D text_box_transform;
+    FlatDrawable test_box(flat_mesh, flat_shader, text_box_transform);
     UserInterfaceElement ui_element(viewport, test_box);
     ui_element.setWidthInPixels(1600);
     ui_element.setHeightInPixels(100);
     ui_element.setCenterInPixels(glm::vec2(800, 50));
-
 
     // Display loop
     while(window.isOpen()) {

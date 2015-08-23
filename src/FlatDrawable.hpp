@@ -3,30 +3,23 @@
 
 #include "Mesh.hpp"
 #include "ShaderProgram.hpp"
+#include "Transform2D.hpp"
 
 class FlatDrawable {
 public:
-    FlatDrawable(Mesh& mesh, ShaderProgram& shader_program);
+    FlatDrawable(Mesh& mesh, ShaderProgram& shader_program, Transform2D& transform_2D);
 
     void draw();
 
-    void setWidth(float width);
-    void setHeight(float height);
-    void setPositionOfCenter(glm::vec2 position_of_center);
-
-    float getWidth();
-    float getHeight();
-    glm::vec2 getPositionOfCenter();
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();
+    Transform2D& getTransform2D();
 
 private:
 
-    float width;
-    float height;
-    glm::vec2 position_of_center;
     Mesh* mesh;
     ShaderProgram* shader_program;
+    Transform2D* transform_2D;
 
 };
 

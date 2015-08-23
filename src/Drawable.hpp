@@ -26,6 +26,7 @@ public:
     Transform3D& getTransform3D();
 
 private:
+
     Mesh* mesh;
     ShaderProgram* shader;
     TextureManager* texture_manager;
