@@ -16,6 +16,7 @@
 #include "MeshData.hpp"
 #include "FlatDrawable.hpp"
 #include "UserInterfaceElement.hpp"
+#include "Transform3D.hpp"
 
 #include <vector>
 #include <iostream>
@@ -123,12 +124,14 @@ int main(int argc, char* argv[]) {
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
-    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures);
-    castle_tower1.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
+    Transform3D castle_tower1_transform;
+    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures, castle_tower1_transform);
+    castle_tower1_transform.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
 
-    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures);
-    castle_tower2.setPosition(glm::vec3(-4, 0, 1));
-    castle_tower2.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
+    Transform3D castle_tower2_transform;
+    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures, castle_tower2_transform);
+    castle_tower2_transform.setPosition(glm::vec3(-4, 0, 1));
+    castle_tower2_transform.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
 
     mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
     MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());
@@ -136,8 +139,9 @@ int main(int argc, char* argv[]) {
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
-    Drawable fence(fence_mesh, shader, fence_textures);
-    fence.setPosition(glm::vec3(2, 0, 1));
+    Transform3D fence_transform;
+    Drawable fence(fence_mesh, shader, fence_textures, fence_transform);
+    fence_transform.setPosition(glm::vec3(2, 0, 1));
 
     MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
 
@@ -180,7 +184,7 @@ int main(int argc, char* argv[]) {
 
         ui_element.draw();
 
-        castle_tower1.rotateByGlobal(glm::vec3(0, 0.01, 0));
+        castle_tower1_transform.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
         handleInputs(mouse, window, camera);
         mouse_camera_controller.update();

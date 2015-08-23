@@ -2,28 +2,18 @@
 #define Drawable_h
 
 #include "includes/gl.hpp"
-#include "includes/glm.hpp"
 
 #include "Camera.hpp"
 #include "Mesh.hpp"
 #include "ShaderProgram.hpp"
 #include "TextureManager.hpp"
+#include "Transform3D.hpp"
 
 class Drawable {
 public:
-    Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager);
+    Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager, Transform3D& transform_3D);
 
     void draw(Camera& camera);
-
-    void moveByGlobal(glm::vec3 move_vector);
-
-    void rotateByGlobal(glm::vec3 rotation_vec);
-
-    void setPosition(glm::vec3 position);
-    void setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates);
-
-    glm::vec3 getPosition();
-    glm::vec3 getRotationInGlobalCoordinates();
 
     void show();
     void hide();
@@ -33,20 +23,15 @@ public:
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();
     TextureManager& getTextureManager();
+    Transform3D& getTransform3D();
+
 private:
-
-    glm::mat4 calculateModelMatrix();
-    glm::mat4 calculateRotationMatrix();
-    glm::mat4 calculateTranslationMatrix();
-
     Mesh* mesh;
     ShaderProgram* shader;
     TextureManager* texture_manager;
-
+    Transform3D* transform_3D;
     bool is_hidden;
 
-    glm::vec3 position;
-    glm::vec3 rotation_in_global_coordinates;
 };
 
 #endif
