@@ -20,7 +20,7 @@ void Camera::moveByLocal(glm::vec3 move_vector) {
 }
 
 void Camera::rotateByLocal(glm::vec3 rotation_vector) {
-    getTransform3D().rotateByGlobal(rotation_vector);
+    getTransform3D().rotateByLocal(rotation_vector);
 }
 
 Viewport& Camera::getViewport() {

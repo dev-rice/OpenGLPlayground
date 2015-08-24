@@ -44,7 +44,12 @@ void Transform3D::moveByGlobal(glm::vec3 move_vector) {
 }
 
 void Transform3D::rotateByGlobal(glm::vec3 rotation_vector) {
-    setRotationInGlobalCoordinates(getRotationInGlobalCoordinates() + rotation_vector);
+    // setRotationInGlobalCoordinates(getRotationInGlobalCoordinates() + rotation_vector);
+
+    rotateAxisAngle(glm::vec3(1, 0, 0), rotation_vector.x);
+    rotateAxisAngle(glm::vec3(0, 1, 0), rotation_vector.y);
+    rotateAxisAngle(glm::vec3(0, 0, 1), rotation_vector.z);
+
 }
 
 void Transform3D::transformLocalAxes(glm::mat4 rotation_matrix) {
@@ -77,8 +82,10 @@ void Transform3D::moveZLocal(float move_amount){
     moveByGlobal(move_amount * local_z);
 }
 
-void Transform3D::rotateByLocal(glm::vec3 rotation_vec) {
-
+void Transform3D::rotateByLocal(glm::vec3 rotation_vector) {
+    rotateAxisAngle(local_x, rotation_vector.x);
+    rotateAxisAngle(local_y, rotation_vector.y);
+    rotateAxisAngle(local_z, rotation_vector.z);
 }
 
 glm::mat4 Transform3D::getModelMatrix() {
@@ -86,7 +93,7 @@ glm::mat4 Transform3D::getModelMatrix() {
 }
 
 glm::mat4 Transform3D::getRotationMatrix() {
-    return calculateRotationMatrix();
+    return rotation_matrix;
 }
 
 glm::mat4 Transform3D::getTranslationMatrix() {
@@ -95,10 +102,6 @@ glm::mat4 Transform3D::getTranslationMatrix() {
 
 glm::mat4 Transform3D::getScaleMatrix() {
     return calculateScaleMatrix();
-}
-
-glm::mat4 Transform3D::calculateModelMatrix() {
-    return calculateTranslationMatrix() * calculateRotationMatrix();
 }
 
 glm::mat4 Transform3D::calculateRotationMatrix() {
@@ -134,6 +137,11 @@ glm::mat4 Transform3D::calculateRotationMatrix() {
    rotation_matrix = rotation_z * rotation_matrix;
 
    return rotation_matrix;
+}
+
+void Transform3D::rotateAxisAngle(glm::vec3 axis, float angle){
+    glm::quat quaternion =  glm::angleAxis(angle, axis);
+    rotation_matrix = rotation_matrix * glm::toMat4(quaternion);
 }
 
 glm::mat4 Transform3D::calculateTranslationMatrix() {

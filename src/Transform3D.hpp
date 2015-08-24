@@ -31,11 +31,12 @@ private:
     void setLocalAxes();
     void transformLocalAxes(glm::mat4 rotation_matrix);
 
+    void rotateAxisAngle(glm::vec3 axis, float angle);
+
     void moveXLocal(float);
     void moveYLocal(float);
     void moveZLocal(float);
 
-    glm::mat4 calculateModelMatrix();
     glm::mat4 calculateRotationMatrix();
     glm::mat4 calculateTranslationMatrix();
     glm::mat4 calculateScaleMatrix();
@@ -47,6 +48,8 @@ private:
     glm::vec3 position;
     glm::vec3 rotation_in_global_coordinates;
     glm::vec3 scale;
+
+    glm::mat4 rotation_matrix;
 
 };
 
