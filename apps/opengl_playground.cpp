@@ -105,12 +105,13 @@ int main(int argc, char* argv[]) {
     float field_of_view = 45.0f;
     float near_clip = 0.1f;
     float far_clip = 500.0f;
-    Camera camera(viewport, field_of_view, near_clip, far_clip);
+    Transform3D camera_transform;
+    Camera camera(viewport, camera_transform, field_of_view, near_clip, far_clip);
 
     MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
 
     glm::vec3 camera_start_position(-1, 2, 6);
-    camera.setPosition(camera_start_position);
+    camera_transform.setPosition(camera_start_position);
 
     MeshFileParserDAE mesh_file_parser_dae;
     MeshFileParserOBJ mesh_file_parser_obj;
