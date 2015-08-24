@@ -14,14 +14,11 @@ public:
     void moveByLocal(glm::vec3 move_vector);
     void rotateByLocal(glm::vec3 rotation_vec);
 
-    glm::mat4 getModelMatrix();
-    glm::mat4 getInverseModelMatrix();
-    glm::mat4 getRotationMatrix();
-    glm::mat4 getTranslationMatrix();
-    glm::mat4 getScaleMatrix();
-
     void setPosition(glm::vec3 position);
     void setScale(glm::vec3 scale);
+
+    glm::mat4 getModelMatrix();
+    glm::mat4 getInverseModelMatrix();
 
     glm::vec3 getPosition();
     glm::vec3 getScale();
@@ -38,6 +35,10 @@ private:
 
     void setRotationMatrix(glm::mat4 rotation_matrix);
     void rotateByMatrix(glm::mat4 rotation_matrix);
+
+    glm::mat4 getRotationMatrix();
+    glm::mat4 getTranslationMatrix();
+    glm::mat4 getScaleMatrix();
 
     glm::mat4 calculateRotationMatrix();
     glm::mat4 calculateTranslationMatrix();
