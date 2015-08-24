@@ -2,7 +2,6 @@
 
 Transform3D::Transform3D() {
     setPosition(glm::vec3(0, 0, 0));
-    setRotationInGlobalCoordinates(glm::vec3(0, 0, 0));
     setScale(glm::vec3(1, 1, 1));
 
     setLocalAxes();
@@ -30,11 +29,6 @@ void Transform3D::setPosition(glm::vec3 position) {
     this->position = position;
 }
 
-void Transform3D::setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates) {
-    this->rotation_in_global_coordinates = rotation_in_global_coordinates;
-    transformLocalAxes(getRotationMatrix());
-}
-
 void Transform3D::setScale(glm::vec3 scale) {
     this->scale = scale;
 }
@@ -49,6 +43,8 @@ void Transform3D::rotateByGlobal(glm::vec3 rotation_vector) {
     rotateAxisAngle(glm::vec3(1, 0, 0), rotation_vector.x);
     rotateAxisAngle(glm::vec3(0, 1, 0), rotation_vector.y);
     rotateAxisAngle(glm::vec3(0, 0, 1), rotation_vector.z);
+
+    transformLocalAxes(rotation_matrix);
 
 }
 
@@ -86,6 +82,9 @@ void Transform3D::rotateByLocal(glm::vec3 rotation_vector) {
     rotateAxisAngle(local_x, rotation_vector.x);
     rotateAxisAngle(local_y, rotation_vector.y);
     rotateAxisAngle(local_z, rotation_vector.z);
+
+    transformLocalAxes(getRotationMatrix());
+
 }
 
 glm::mat4 Transform3D::getModelMatrix() {
@@ -104,44 +103,9 @@ glm::mat4 Transform3D::getScaleMatrix() {
     return calculateScaleMatrix();
 }
 
-glm::mat4 Transform3D::calculateRotationMatrix() {
-    // Rotate the model about each axis.
-    float cx = cos(getRotationInGlobalCoordinates().x);
-    float sx = sin(getRotationInGlobalCoordinates().x);
-
-    float cy = cos(getRotationInGlobalCoordinates().y);
-    float sy = sin(getRotationInGlobalCoordinates().y);
-
-    float cz = cos(getRotationInGlobalCoordinates().z);
-    float sz = sin(getRotationInGlobalCoordinates().z);
-
-    glm::mat4 rotation_x = glm::mat4( 1, 0 ,  0 , 0,
-                                      0, cx, -sx, 0,
-                                      0, sx,  cx, 0,
-                                      0, 0 ,  0 , 1);
-
-    glm::mat4 rotation_y = glm::mat4(  cy,  0, -sy, 0,
-                                       0 ,  1,  0 , 0,
-                                       sy,  0,  cy, 0,
-                                       0 ,  0,  0 , 1);
-
-    glm::mat4 rotation_z = glm::mat4( cz, -sz, 0, 0,
-                                      sz,  cz, 0, 0,
-                                      0 ,  0 , 1, 0,
-                                      0 ,  0 , 0, 1);
-
-   // The convention followed is rotate around X-axis, then Y-axis, and finally Z-axis.
-   glm::mat4 rotation_matrix;
-   rotation_matrix = rotation_x * rotation_matrix;
-   rotation_matrix = rotation_y * rotation_matrix;
-   rotation_matrix = rotation_z * rotation_matrix;
-
-   return rotation_matrix;
-}
-
 void Transform3D::rotateAxisAngle(glm::vec3 axis, float angle){
     glm::quat quaternion =  glm::angleAxis(angle, axis);
-    rotation_matrix = rotation_matrix * glm::toMat4(quaternion);
+    rotation_matrix = glm::toMat4(quaternion) * rotation_matrix;
 }
 
 glm::mat4 Transform3D::calculateTranslationMatrix() {

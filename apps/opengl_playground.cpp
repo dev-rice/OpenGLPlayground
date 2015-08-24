@@ -37,7 +37,7 @@ char getKeyboardInputCharacter(SDL_Event& event) {
     return key;
 }
 
-void handleInputs(Mouse& mouse, Window& window, Camera& camera) {
+void handleInputs(Mouse& mouse, Window& window, Transform3D& fence_transform, Camera& camera) {
     // Misleading argument and function name combination. The input handling does not draw from the mouse or window at all, it simply does things with them
 
     // Key repeat delay input
@@ -82,6 +82,44 @@ void handleInputs(Mouse& mouse, Window& window, Camera& camera) {
     }
     if (keyboard[SDL_SCANCODE_LSHIFT]) {
         camera_movement += glm::vec3(0, -1, 0);
+    }
+
+    if (keyboard[SDL_SCANCODE_F]) {
+        fence_transform.rotateByLocal(glm::vec3(0, 0.01, 0));
+    }
+    if (keyboard[SDL_SCANCODE_H]) {
+        fence_transform.rotateByLocal(glm::vec3(0, -0.01, 0));
+    }
+    if (keyboard[SDL_SCANCODE_R]) {
+        fence_transform.rotateByLocal(glm::vec3(0, 0, 0.01));
+    }
+    if (keyboard[SDL_SCANCODE_Y]) {
+        fence_transform.rotateByLocal(glm::vec3(0, 0, -0.01));
+    }
+    if (keyboard[SDL_SCANCODE_T]) {
+        fence_transform.rotateByLocal(glm::vec3(0.01, 0, 0));
+    }
+    if (keyboard[SDL_SCANCODE_B]) {
+        fence_transform.rotateByLocal(glm::vec3(-0.01, 0, 0));
+    }
+
+    if (keyboard[SDL_SCANCODE_J]) {
+        fence_transform.rotateByGlobal(glm::vec3(0, 0.01, 0));
+    }
+    if (keyboard[SDL_SCANCODE_L]) {
+        fence_transform.rotateByGlobal(glm::vec3(0, -0.01, 0));
+    }
+    if (keyboard[SDL_SCANCODE_U]) {
+        fence_transform.rotateByGlobal(glm::vec3(0, 0, 0.01));
+    }
+    if (keyboard[SDL_SCANCODE_O]) {
+        fence_transform.rotateByGlobal(glm::vec3(0, 0, -0.01));
+    }
+    if (keyboard[SDL_SCANCODE_I]) {
+        fence_transform.rotateByGlobal(glm::vec3(0.01, 0, 0));
+    }
+    if (keyboard[SDL_SCANCODE_COMMA]) {
+        fence_transform.rotateByGlobal(glm::vec3(-0.01, 0, 0));
     }
 
     if (glm::length(camera_movement) != 0){
@@ -129,12 +167,13 @@ int main(int argc, char* argv[]) {
     TextureManager castle_tower_textures(castle_tower_diffuse);
     Transform3D castle_tower1_transform;
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures, castle_tower1_transform);
-    castle_tower1_transform.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
+    castle_tower1_transform.rotateByGlobal(glm::vec3(M_PI / 2.0, 0, 0));
+
 
     Transform3D castle_tower2_transform;
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures, castle_tower2_transform);
     castle_tower2_transform.setPosition(glm::vec3(-4, 0, 1));
-    castle_tower2_transform.setRotationInGlobalCoordinates(glm::vec3(M_PI / 2.0, 0, 0));
+    castle_tower2_transform.rotateByGlobal(glm::vec3(M_PI / 2.0, 0, 0));
 
     mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
     MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());
@@ -187,7 +226,7 @@ int main(int argc, char* argv[]) {
 
         castle_tower1_transform.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
-        handleInputs(mouse, window, camera);
+        handleInputs(mouse, window, fence_transform, camera);
         mouse_camera_controller.update();
         window.display();
 
