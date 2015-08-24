@@ -24,95 +24,20 @@
 class CameraTest : public ::testing::Test {
 protected:
     CameraTest() : viewport(1600, 900) {
-
+        field_of_view = 45.0f;
+        near_clip = 0.1f;
+        far_clip = 500.0f;
     }
 
+    float field_of_view;
+    float near_clip;
+    float far_clip;
     Viewport viewport;
+    Transform3D camera_transform;
 };
 
-TEST_F(CameraTest, constructorTest) {
-    Camera camera(viewport, 45.0f, 0.1, 500.0f);
-
-    EXPECT_EQ(camera.getPosition(), glm::vec3(0, 0, 0));
-    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(0, 0, 0));
-
-}
-
-TEST_F(CameraTest, moveByGlobalTest1) {
-    Camera camera(viewport, 45.0f, 0.1, 500.0f);
-
-    glm::vec3 start_position = glm::vec3(0, 0, 0);
-    camera.setPosition(start_position);
-
-    glm::vec3 move_amount = glm::vec3(1, 0, 52);
-    camera.moveByGlobal(move_amount);
-
-    EXPECT_EQ(camera.getPosition(), start_position + move_amount);
-}
-
-TEST_F(CameraTest, moveByGlobalTest2) {
-    Camera camera(viewport, 45.0f, 0.1, 500.0f);
-
-    glm::vec3 start_position = glm::vec3(10, -50, 32);
-    camera.setPosition(start_position);
-
-    glm::vec3 move_amount = glm::vec3(-40, 0, 52);
-    camera.moveByGlobal(move_amount);
-
-    EXPECT_EQ(camera.getPosition(), start_position + move_amount);
-}
-
-TEST_F(CameraTest, moveByLocalTest) {
-    Camera camera(viewport, 45.0f, 0.1, 500.0f);
-
-    camera.moveByLocal(glm::vec3(0, 0, -1));
-    glm::vec3 camera_position = camera.getPosition();
-    EXPECT_NEAR(camera_position.x, 0, 0.001);
-    EXPECT_NEAR(camera_position.y, 0, 0.001);
-    EXPECT_NEAR(camera_position.z, -1, 0.001);
-
-    camera.rotateByLocal(glm::vec3(0, -M_PI / 2.0, 0));
-    camera.moveByLocal(glm::vec3(0, 0, -1));
-    camera_position = camera.getPosition();
-    EXPECT_NEAR(camera_position.x, 1, 0.001);
-    EXPECT_NEAR(camera_position.y, 0, 0.001);
-    EXPECT_NEAR(camera_position.z, -1, 0.001);
-
-    camera.rotateByLocal(glm::vec3(-M_PI / 2.0, 0, 0));
-    camera.moveByLocal(glm::vec3(0, 1, 0));
-    camera_position = camera.getPosition();
-    EXPECT_NEAR(camera_position.x, 0, 0.001);
-    EXPECT_NEAR(camera_position.y, 0, 0.001);
-    EXPECT_NEAR(camera_position.z, -1, 0.001);
-
-    camera.rotateByLocal(glm::vec3(0, 0, M_PI));
-    camera.moveByLocal(glm::vec3(1, 0, 0));
-    camera_position = camera.getPosition();
-    EXPECT_NEAR(camera_position.x, 0, 0.001);
-    EXPECT_NEAR(camera_position.y, 0, 0.001);
-    EXPECT_NEAR(camera_position.z, 0, 0.001);
-
-}
-
-TEST_F(CameraTest, rotateByLocalTest) {
-    Camera camera(viewport, 45.0f, 0.1, 500.0f);
-
-    camera.rotateByLocal(glm::vec3(1, 2, 0));
-    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(1, 2, 0));
-
-    camera.rotateByLocal(glm::vec3(-1, 0, 1.5));
-    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(0, 2, 1.5));
-
-    camera.rotateByLocal(glm::vec3(0, -2, -1.5));
-    EXPECT_EQ(camera.getRotationInLocalCoordinates(), glm::vec3(0, 0, 0));
-
-}
-
 TEST_F(CameraTest, getProjectionMatrixTest) {
-    float field_of_view = 45.0f;
-    float near_clip = 0.1f;
-    float far_clip = 500.0f;
-    Camera camera(viewport, field_of_view, near_clip, far_clip);
+    Camera camera(viewport, camera_transform, field_of_view, near_clip, far_clip);
 
     EXPECT_EQ(camera.getProjectionMatrix(), glm::perspective(field_of_view, viewport.getAspectRatio(), near_clip, far_clip));
 
@@ -297,7 +222,6 @@ TEST_F(Transform3DTest, constructorTest) {
     Transform3D transform_3D;
 
     EXPECT_EQ(transform_3D.getPosition(), glm::vec3(0, 0, 0));
-    EXPECT_EQ(transform_3D.getRotationInGlobalCoordinates(), glm::vec3(0, 0, 0));
     EXPECT_EQ(transform_3D.getScale(), glm::vec3(1, 1, 1));
 }
 
@@ -324,29 +248,6 @@ TEST_F(Transform3DTest, moveByGlobalTest2) {
     transform_3D.moveByGlobal(move_amount);
 
     EXPECT_EQ(transform_3D.getPosition(), glm::vec3(-30, -50, 84));
-}
-
-TEST_F(Transform3DTest, rotateByGlobalTest1) {
-    Transform3D transform_3D;
-
-    transform_3D.rotateByGlobal(glm::vec3(0, 0.212, 0));
-
-    glm::vec3 rotation_global = transform_3D.getRotationInGlobalCoordinates();
-    EXPECT_NEAR(rotation_global.x, 0, 0.001);
-    EXPECT_NEAR(rotation_global.y, 0.212, 0.001);
-    EXPECT_NEAR(rotation_global.z, 0, 0.001);
-}
-
-TEST_F(Transform3DTest, rotateByGlobalTest2) {
-    Transform3D transform_3D;
-
-    transform_3D.setRotationInGlobalCoordinates(glm::vec3(0, 0.18, -1.25));
-    transform_3D.rotateByGlobal(glm::vec3(1.2, -0.2, 2));
-
-    glm::vec3 rotation_global = transform_3D.getRotationInGlobalCoordinates();
-    EXPECT_NEAR(rotation_global.x, 1.2, 0.001);
-    EXPECT_NEAR(rotation_global.y, -0.02, 0.001);
-    EXPECT_NEAR(rotation_global.z, 0.75, 0.001);
 }
 
 TEST_F(Transform3DTest, moveByLocalTest1) {
@@ -385,7 +286,7 @@ TEST_F(Transform3DTest, moveByLocalTest2) {
     transform_3D.rotateByGlobal(glm::vec3(0, 0, -M_PI / 2.0));
     transform_3D.moveByLocal(glm::vec3(0, 1, 0));
     transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, -1, 0.001);
+    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
     EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
     EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
 
@@ -406,6 +307,37 @@ TEST_F(Transform3DTest, moveByLocalTest3) {
     EXPECT_NEAR(transform_3D_position.x, -1, 0.001);
     EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
     EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+
+}
+
+TEST_F(Transform3DTest, moveByLocalTest4) {
+    Transform3D transform;
+    transform.moveByLocal(glm::vec3(0, 0, 1));
+    glm::vec3 transform_position = transform.getPosition();
+    EXPECT_NEAR(transform_position.x, 0, 0.001);
+    EXPECT_NEAR(transform_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_position.z, 1, 0.001);
+
+    transform.rotateByLocal(glm::vec3(0, M_PI / 2.0, 0));
+    transform.moveByLocal(glm::vec3(0, 0, -1));
+    transform_position = transform.getPosition();
+    EXPECT_NEAR(transform_position.x, -1, 0.001);
+    EXPECT_NEAR(transform_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_position.z, 1, 0.001);
+
+    transform.rotateByLocal(glm::vec3(M_PI / 2.0, 0, 0));
+    transform.moveByLocal(glm::vec3(0, -1, 0));
+    transform_position = transform.getPosition();
+    EXPECT_NEAR(transform_position.x, -2, 0.001);
+    EXPECT_NEAR(transform_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_position.z, 1, 0.001);
+
+    transform.rotateByLocal(glm::vec3(0, 0, M_PI / 2.0));
+    transform.moveByLocal(glm::vec3(2, -1, 0));
+    transform_position = transform.getPosition();
+    EXPECT_NEAR(transform_position.x, 0, 0.001);
+    EXPECT_NEAR(transform_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_position.z, 0, 0.001);
 
 }
 
