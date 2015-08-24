@@ -16,6 +16,7 @@
 #include "FragmentShaderCreator.hpp"
 #include "ShaderProgram.hpp"
 #include "Unit.hpp"
+#include "Transform3D.hpp"
 
 ///////////////////////////////
 // Camera Tests
@@ -279,6 +280,104 @@ TEST_F(ShaderProgramTest, getAttributeLocationTest) {
     EXPECT_EQ(shader_program.getAttributeLocation("position"), 1);
     EXPECT_EQ(shader_program.getAttributeLocation("normal"), 2);
     EXPECT_EQ(shader_program.getAttributeLocation("texture_coordinate"), 3);
+
+}
+
+///////////////////////////////
+// Transform3D Tests
+///////////////////////////////
+class Transform3DTest : public ::testing::Test {
+protected:
+    Transform3DTest() {
+
+    }
+};
+
+TEST_F(Transform3DTest, constructorTest) {
+    Transform3D transform_3D;
+
+    EXPECT_EQ(transform_3D.getPosition(), glm::vec3(0, 0, 0));
+    EXPECT_EQ(transform_3D.getRotationInGlobalCoordinates(), glm::vec3(0, 0, 0));
+    EXPECT_EQ(transform_3D.getScale(), glm::vec3(1, 1, 1));
+}
+
+TEST_F(Transform3DTest, moveByGlobalTest1) {
+    Transform3D transform_3D;
+
+    glm::vec3 start_position = glm::vec3(0, 0, 0);
+    transform_3D.setPosition(start_position);
+
+    glm::vec3 move_amount = glm::vec3(1, 0, 52);
+    transform_3D.moveByGlobal(move_amount);
+
+    EXPECT_EQ(transform_3D.getPosition(), glm::vec3(1, 0, 52));
+
+}
+
+TEST_F(Transform3DTest, moveByGlobalTest2) {
+    Transform3D transform_3D;
+
+    glm::vec3 start_position = glm::vec3(10, -50, 32);
+    transform_3D.setPosition(start_position);
+
+    glm::vec3 move_amount = glm::vec3(-40, 0, 52);
+    transform_3D.moveByGlobal(move_amount);
+
+    EXPECT_EQ(transform_3D.getPosition(), glm::vec3(-30, -50, 84));
+}
+
+TEST_F(Transform3DTest, rotateByGlobalTest1) {
+    Transform3D transform_3D;
+
+    transform_3D.rotateByGlobal(glm::vec3(0, 0.212, 0));
+
+    glm::vec3 rotation_global = transform_3D.getRotationInGlobalCoordinates();
+    EXPECT_NEAR(rotation_global.x, 0, 0.001);
+    EXPECT_NEAR(rotation_global.y, 0.212, 0.001);
+    EXPECT_NEAR(rotation_global.z, 0, 0.001);
+}
+
+TEST_F(Transform3DTest, rotateByGlobalTest2) {
+    Transform3D transform_3D;
+
+    transform_3D.setRotationInGlobalCoordinates(glm::vec3(0, 0.18, -1.25));
+    transform_3D.rotateByGlobal(glm::vec3(1.2, -0.2, 2));
+
+    glm::vec3 rotation_global = transform_3D.getRotationInGlobalCoordinates();
+    EXPECT_NEAR(rotation_global.x, 1.2, 0.001);
+    EXPECT_NEAR(rotation_global.y, -0.02, 0.001);
+    EXPECT_NEAR(rotation_global.z, 0.75, 0.001);
+}
+
+TEST_F(Transform3DTest, moveByLocalTest) {
+    Transform3D transform_3D;
+
+    transform_3D.moveByLocal(glm::vec3(0, 0, -1));
+    glm::vec3 transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+
+    transform_3D.rotateByLocal(glm::vec3(0, -M_PI / 2.0, 0));
+    transform_3D.moveByLocal(glm::vec3(0, 0, -1));
+    transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+
+    transform_3D.rotateByLocal(glm::vec3(-M_PI / 2.0, 0, 0));
+    transform_3D.moveByLocal(glm::vec3(0, 1, 0));
+    transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+
+    transform_3D.rotateByLocal(glm::vec3(0, 0, M_PI));
+    transform_3D.moveByLocal(glm::vec3(1, 0, 0));
+    transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
 
 }
 

@@ -38,6 +38,14 @@ void Transform3D::rotateByGlobal(glm::vec3 rotation_vector) {
     setRotationInGlobalCoordinates(getRotationInGlobalCoordinates() + rotation_vector);
 }
 
+void Transform3D::moveByLocal(glm::vec3 move_vector) {
+
+}
+
+void Transform3D::rotateByLocal(glm::vec3 rotation_vec) {
+
+}
+
 glm::mat4 Transform3D::getModelMatrix() {
     return getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
 }

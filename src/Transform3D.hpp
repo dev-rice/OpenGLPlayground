@@ -11,6 +11,11 @@ public:
     void moveByGlobal(glm::vec3 move_vector);
     void rotateByGlobal(glm::vec3 rotation_vec);
 
+    void moveByLocal(glm::vec3 move_vector);
+    void rotateByLocal(glm::vec3 rotation_vec);
+
+    glm::mat4 getModelMatrix();
+
     void setPosition(glm::vec3 position);
     void setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates);
     void setScale(glm::vec3 scale);
@@ -18,8 +23,6 @@ public:
     glm::vec3 getPosition();
     glm::vec3 getRotationInGlobalCoordinates();
     glm::vec3 getScale();
-
-    glm::mat4 getModelMatrix();
 
 private:
     glm::mat4 getRotationMatrix();
