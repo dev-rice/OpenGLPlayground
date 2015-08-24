@@ -37,7 +37,7 @@ char getKeyboardInputCharacter(SDL_Event& event) {
     return key;
 }
 
-void handleInputs(Mouse& mouse, Window& window, Transform3D& fence_transform, Camera& camera) {
+void handleInputs(Mouse& mouse, Window& window, Transform3D& camera_transform) {
     // Misleading argument and function name combination. The input handling does not draw from the mouse or window at all, it simply does things with them
 
     // Key repeat delay input
@@ -84,49 +84,11 @@ void handleInputs(Mouse& mouse, Window& window, Transform3D& fence_transform, Ca
         camera_movement += glm::vec3(0, -1, 0);
     }
 
-    if (keyboard[SDL_SCANCODE_F]) {
-        fence_transform.rotateByLocal(glm::vec3(0, 0.01, 0));
-    }
-    if (keyboard[SDL_SCANCODE_H]) {
-        fence_transform.rotateByLocal(glm::vec3(0, -0.01, 0));
-    }
-    if (keyboard[SDL_SCANCODE_R]) {
-        fence_transform.rotateByLocal(glm::vec3(0, 0, 0.01));
-    }
-    if (keyboard[SDL_SCANCODE_Y]) {
-        fence_transform.rotateByLocal(glm::vec3(0, 0, -0.01));
-    }
-    if (keyboard[SDL_SCANCODE_T]) {
-        fence_transform.rotateByLocal(glm::vec3(0.01, 0, 0));
-    }
-    if (keyboard[SDL_SCANCODE_B]) {
-        fence_transform.rotateByLocal(glm::vec3(-0.01, 0, 0));
-    }
-
-    if (keyboard[SDL_SCANCODE_J]) {
-        fence_transform.rotateByGlobal(glm::vec3(0, 0.01, 0));
-    }
-    if (keyboard[SDL_SCANCODE_L]) {
-        fence_transform.rotateByGlobal(glm::vec3(0, -0.01, 0));
-    }
-    if (keyboard[SDL_SCANCODE_U]) {
-        fence_transform.rotateByGlobal(glm::vec3(0, 0, 0.01));
-    }
-    if (keyboard[SDL_SCANCODE_O]) {
-        fence_transform.rotateByGlobal(glm::vec3(0, 0, -0.01));
-    }
-    if (keyboard[SDL_SCANCODE_I]) {
-        fence_transform.rotateByGlobal(glm::vec3(0.01, 0, 0));
-    }
-    if (keyboard[SDL_SCANCODE_COMMA]) {
-        fence_transform.rotateByGlobal(glm::vec3(-0.01, 0, 0));
-    }
-
     if (glm::length(camera_movement) != 0){
         camera_movement = glm::normalize(camera_movement);
     }
     camera_movement = camera_movement * 0.1f;
-    camera.getTransform3D().moveByLocal(camera_movement);
+    camera_transform.moveByLocal(camera_movement);
 
 }
 
@@ -146,7 +108,7 @@ int main(int argc, char* argv[]) {
     Transform3D camera_transform;
     Camera camera(viewport, camera_transform, field_of_view, near_clip, far_clip);
 
-    MouseCameraController mouse_camera_controller(mouse, camera, window, 0.0005);
+    MouseCameraController mouse_camera_controller(mouse, camera_transform, window, 0.001);
 
     glm::vec3 camera_start_position(-1, 2, 6);
     camera_transform.setPosition(camera_start_position);
@@ -168,7 +130,6 @@ int main(int argc, char* argv[]) {
     Transform3D castle_tower1_transform;
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures, castle_tower1_transform);
     castle_tower1_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
-
 
     Transform3D castle_tower2_transform;
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures, castle_tower2_transform);
@@ -226,7 +187,7 @@ int main(int argc, char* argv[]) {
 
         castle_tower1_transform.rotateByGlobal(glm::vec3(0, 0.01, 0));
 
-        handleInputs(mouse, window, fence_transform, camera);
+        handleInputs(mouse, window, camera_transform);
         mouse_camera_controller.update();
         window.display();
 

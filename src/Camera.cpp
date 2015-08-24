@@ -31,13 +31,6 @@ glm::mat4 Camera::calculateViewMatrix() {
     return getTransform3D().getInverseModelMatrix();
 }
 
-glm::mat4 Camera::lookAt(glm::vec3 look_direction) {
-    glm::vec3 eye = getTransform3D().getPosition();
-    glm::vec3 up = glm::vec3(0, 1, 0);
-
-    return glm::lookAt(eye, eye - look_direction, up);
-}
-
 glm::mat4 Camera::calculateProjectionMatrix(){
     // Use all of the intrinsic values to create the projection matrix
     return glm::perspective(getFieldOfView(), getViewport().getAspectRatio(), getNearClip(), getFarClip());
