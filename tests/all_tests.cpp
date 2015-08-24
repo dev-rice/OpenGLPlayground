@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 #include "includes/gl.hpp"
+#include "includes/sdl.hpp"
+#include "includes/glm.hpp"
 
 #include "Viewport.hpp"
 #include "Window.hpp"

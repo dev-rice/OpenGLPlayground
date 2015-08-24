@@ -35,6 +35,7 @@ void Mouse::toggleVisibility() {
 
 glm::vec2 Mouse::getPosition() {
     int x, y;
+    SDL_PumpEvents();
     SDL_GetMouseState(&x, &y);
     return glm::vec2(x, y);
 }

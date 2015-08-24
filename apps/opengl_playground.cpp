@@ -107,6 +107,8 @@ int main(int argc, char* argv[]) {
     float far_clip = 500.0f;
     Camera camera(viewport, field_of_view, near_clip, far_clip);
 
+    MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
+
     glm::vec3 camera_start_position(-1, 2, 6);
     camera.setPosition(camera_start_position);
 
@@ -142,8 +144,6 @@ int main(int argc, char* argv[]) {
     Transform3D fence_transform;
     Drawable fence(fence_mesh, shader, fence_textures, fence_transform);
     fence_transform.setPosition(glm::vec3(2, 0, 1));
-
-    MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
 

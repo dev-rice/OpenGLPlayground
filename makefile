@@ -58,15 +58,13 @@ $(OBJDIR):
 $(OBJDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	$(COMPILER) $(COMPILER_FLAGS) -I$(SRCDIR) -I$(PUGIXML_INCLUDE_DIR) $< -o $@
 
-configure-linux:
-	@ sudo apt-get install libglew-dev libglm-dev libsdl2-dev curl nmap libjsoncpp-dev
-	@ wget http://www.lonesock.net/files/soil.zip
-	@ unzip soil.zip -d soil
-	@ rm soil.zip
-	@ rm soil/Simple\ OpenGL\ Image\ Library/lib/libSOIL.a
-	@ mkdir soil/Simple\ OpenGL\ Image\ Library/projects/makefile/obj
-	@ cd soil/Simple\ OpenGL\ Image\ Library/projects/makefile && make && sudo make install
-	@ rm -r soil
+
+# Unit Tests
+$(OBJDIR)/all_tests.o : $(TEST_SRC)
+	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(SRCDIR) $< -o $@
+
+all_tests: $(OBJECTS) $(OBJDIR)/all_tests.o
+	$(COMPILER) $^ $(LIBRARIES) -L $(LIBRARY_DIR)/ -l gtest -l gmock $(LOCAL_LIBRARIES) -o $@
 
 discard:
 	@ git clean -df
@@ -74,7 +72,7 @@ discard:
 
 clean:
 	rm -f $(OBJDIR)/*.o
-	rm *.o
+	rm -f *.o
 
 dependencies: $(LIBRARY_DIR) google-test google-mock pugixml
 
@@ -96,9 +94,12 @@ pugixml:
 	@ ar -rv $(LIBRARY_DIR)/libpugixml.a pugixml.o
 	@ rm pugixml.o
 
-
-$(OBJDIR)/all_tests.o : $(TEST_SRC)
-	$(COMPILER) $(COMPILER_FLAGS) -I $(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(SRCDIR) $< -o $@
-
-all_tests: $(OBJECTS) $(OBJDIR)/all_tests.o
-	$(COMPILER) -L $(LIBRARY_DIR)/ -l gtest -l gmock $(LOCAL_LIBRARIES) $(LIBRARIES) $^ -o $@
+configure-linux:
+	@ sudo apt-get install libglew-dev libglm-dev libsdl2-dev curl nmap libjsoncpp-dev
+	@ wget http://www.lonesock.net/files/soil.zip
+	@ unzip soil.zip -d soil
+	@ rm soil.zip
+	@ rm soil/Simple\ OpenGL\ Image\ Library/lib/libSOIL.a
+	@ mkdir soil/Simple\ OpenGL\ Image\ Library/projects/makefile/obj
+	@ cd soil/Simple\ OpenGL\ Image\ Library/projects/makefile && make && sudo make install
+	@ rm -r soil

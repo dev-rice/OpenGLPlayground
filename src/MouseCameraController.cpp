@@ -10,7 +10,6 @@ MouseCameraController::MouseCameraController(Mouse& mouse, Camera& camera, Windo
 void MouseCameraController::update() {
 
     glm::vec2 change_in_position = getChangeFromLastPosition();
-
     glm::vec3 rotation_vector = calculateRotationVectorFromChange(change_in_position);
     getCamera().rotateByLocal(rotation_vector);
 

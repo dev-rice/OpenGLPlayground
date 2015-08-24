@@ -4,7 +4,7 @@ Window::Window(Viewport& viewport, bool fullscreen) : viewport(&viewport), fulls
 
     setShouldClose(false);
     initializeWindow();
-
+    
 }
 
 void Window::display(){
