@@ -15,6 +15,7 @@ public:
     void rotateByLocal(glm::vec3 rotation_vec);
 
     glm::mat4 getModelMatrix();
+    glm::mat4 getInverseModelMatrix();
     glm::mat4 getRotationMatrix();
     glm::mat4 getTranslationMatrix();
     glm::mat4 getScaleMatrix();

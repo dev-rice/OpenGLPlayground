@@ -91,6 +91,10 @@ glm::mat4 Transform3D::getModelMatrix() {
     return getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
 }
 
+glm::mat4 Transform3D::getInverseModelMatrix() {
+    return glm::inverse(getModelMatrix());
+}
+
 glm::mat4 Transform3D::getRotationMatrix() {
     return rotation_matrix;
 }

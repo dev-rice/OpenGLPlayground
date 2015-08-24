@@ -126,7 +126,7 @@ void handleInputs(Mouse& mouse, Window& window, Transform3D& fence_transform, Ca
         camera_movement = glm::normalize(camera_movement);
     }
     camera_movement = camera_movement * 0.1f;
-    camera.moveByLocal(camera_movement);
+    camera.getTransform3D().moveByLocal(camera_movement);
 
 }
 
@@ -146,7 +146,7 @@ int main(int argc, char* argv[]) {
     Transform3D camera_transform;
     Camera camera(viewport, camera_transform, field_of_view, near_clip, far_clip);
 
-    MouseCameraController mouse_camera_controller(mouse, camera, window, 0.001);
+    MouseCameraController mouse_camera_controller(mouse, camera, window, 0.0005);
 
     glm::vec3 camera_start_position(-1, 2, 6);
     camera_transform.setPosition(camera_start_position);
@@ -167,13 +167,13 @@ int main(int argc, char* argv[]) {
     TextureManager castle_tower_textures(castle_tower_diffuse);
     Transform3D castle_tower1_transform;
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures, castle_tower1_transform);
-    castle_tower1_transform.rotateByGlobal(glm::vec3(M_PI / 2.0, 0, 0));
+    castle_tower1_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
 
     Transform3D castle_tower2_transform;
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures, castle_tower2_transform);
     castle_tower2_transform.setPosition(glm::vec3(-4, 0, 1));
-    castle_tower2_transform.rotateByGlobal(glm::vec3(M_PI / 2.0, 0, 0));
+    castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
     MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());

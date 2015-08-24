@@ -11,14 +11,17 @@ void MouseCameraController::update() {
 
     glm::vec2 change_in_position = getChangeFromLastPosition();
     glm::vec3 rotation_vector = calculateRotationVectorFromChange(change_in_position);
-    getCamera().rotateByLocal(rotation_vector);
+
+    getCamera().getTransform3D().rotateByLocal(glm::vec3(rotation_vector.x, 0, 0));
+    getCamera().getTransform3D().rotateByGlobal(glm::vec3(0, rotation_vector.y, 0));
+
 
     resetToBasePosition();
 }
 
 glm::vec3 MouseCameraController::calculateRotationVectorFromChange(glm::vec2 change_in_position) {
 
-    glm::vec3 rotation_vector(change_in_position.y, -change_in_position.x, 0);
+    glm::vec3 rotation_vector(-change_in_position.y, -change_in_position.x, 0);
     return rotation_vector * getSensitivity();
 }
 

@@ -11,18 +11,6 @@ void Camera::setIntrinsicParameters() {
     far_clip = 500.0f;
 }
 
-void Camera::moveByGlobal(glm::vec3 move_vector) {
-    getTransform3D().moveByGlobal(move_vector);
-}
-
-void Camera::moveByLocal(glm::vec3 move_vector) {
-    getTransform3D().moveByLocal(move_vector);
-}
-
-void Camera::rotateByLocal(glm::vec3 rotation_vector) {
-    getTransform3D().rotateByLocal(rotation_vector);
-}
-
 Viewport& Camera::getViewport() {
     return *viewport;
 }
@@ -40,13 +28,7 @@ glm::mat4 Camera::getProjectionMatrix(){
 }
 
 glm::mat4 Camera::calculateViewMatrix() {
-    glm::mat4 rotation_matrix = getTransform3D().getRotationMatrix();
-
-    glm::vec4 look_direction4 = rotation_matrix * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
-    glm::vec3 look_direction = glm::vec3(look_direction4);
-
-    return lookAt(look_direction);
-
+    return getTransform3D().getInverseModelMatrix();
 }
 
 glm::mat4 Camera::lookAt(glm::vec3 look_direction) {
