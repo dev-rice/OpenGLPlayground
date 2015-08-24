@@ -4,6 +4,14 @@ Transform3D::Transform3D() {
     setPosition(glm::vec3(0, 0, 0));
     setRotationInGlobalCoordinates(glm::vec3(0, 0, 0));
     setScale(glm::vec3(1, 1, 1));
+
+    setLocalAxes();
+}
+
+void Transform3D::setLocalAxes() {
+    local_x = glm::vec3(1.0f, 0.0f, 0.0f);
+    local_y = glm::vec3(0.0f, 1.0f, 0.0f);
+    local_z = glm::vec3(0.0f, 0.0f, 1.0f);
 }
 
 glm::vec3 Transform3D::getPosition() {
@@ -24,6 +32,7 @@ void Transform3D::setPosition(glm::vec3 position) {
 
 void Transform3D::setRotationInGlobalCoordinates(glm::vec3 rotation_in_global_coordinates) {
     this->rotation_in_global_coordinates = rotation_in_global_coordinates;
+    transformLocalAxes(getRotationMatrix());
 }
 
 void Transform3D::setScale(glm::vec3 scale) {
@@ -38,8 +47,34 @@ void Transform3D::rotateByGlobal(glm::vec3 rotation_vector) {
     setRotationInGlobalCoordinates(getRotationInGlobalCoordinates() + rotation_vector);
 }
 
-void Transform3D::moveByLocal(glm::vec3 move_vector) {
+void Transform3D::transformLocalAxes(glm::mat4 rotation_matrix) {
+    // Transform the camera axes
+    glm::vec4 local_x_4 = rotation_matrix * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+    glm::vec4 local_y_4 = rotation_matrix * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+    glm::vec4 local_z_4 = rotation_matrix * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
 
+    local_x = glm::vec3(local_x_4);
+    local_y = glm::vec3(local_y_4);
+    local_z = glm::vec3(local_z_4);
+
+}
+
+void Transform3D::moveByLocal(glm::vec3 move_vector) {
+    moveXLocal(move_vector.x);
+    moveYLocal(move_vector.y);
+    moveZLocal(move_vector.z);
+}
+
+void Transform3D::moveXLocal(float move_amount){
+    moveByGlobal(move_amount * local_x);
+}
+
+void Transform3D::moveYLocal(float move_amount){
+    moveByGlobal(move_amount * local_y);
+}
+
+void Transform3D::moveZLocal(float move_amount){
+    moveByGlobal(move_amount * local_z);
 }
 
 void Transform3D::rotateByLocal(glm::vec3 rotation_vec) {
@@ -76,8 +111,6 @@ glm::mat4 Transform3D::calculateRotationMatrix() {
 
     float cz = cos(getRotationInGlobalCoordinates().z);
     float sz = sin(getRotationInGlobalCoordinates().z);
-
-
 
     glm::mat4 rotation_x = glm::mat4( 1, 0 ,  0 , 0,
                                       0, cx, -sx, 0,

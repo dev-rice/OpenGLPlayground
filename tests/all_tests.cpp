@@ -349,7 +349,49 @@ TEST_F(Transform3DTest, rotateByGlobalTest2) {
     EXPECT_NEAR(rotation_global.z, 0.75, 0.001);
 }
 
-TEST_F(Transform3DTest, moveByLocalTest) {
+TEST_F(Transform3DTest, moveByLocalTest1) {
+    Transform3D transform_3D;
+
+    transform_3D.moveByLocal(glm::vec3(1, 0, 0));
+    glm::vec3 transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+
+    transform_3D.rotateByGlobal(glm::vec3(0, -M_PI / 2.0, 0));
+    transform_3D.moveByLocal(glm::vec3(-1, 0, 0));
+    transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+}
+
+TEST_F(Transform3DTest, moveByLocalTest2) {
+    Transform3D transform_3D;
+
+    transform_3D.moveByLocal(glm::vec3(0, 1, 0));
+    glm::vec3 transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 1, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+
+    transform_3D.rotateByGlobal(glm::vec3(0, -M_PI / 2.0, 0));
+    transform_3D.moveByLocal(glm::vec3(0, -1, 0));
+    transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+
+    transform_3D.rotateByGlobal(glm::vec3(0, 0, -M_PI / 2.0));
+    transform_3D.moveByLocal(glm::vec3(0, 1, 0));
+    transform_3D_position = transform_3D.getPosition();
+    EXPECT_NEAR(transform_3D_position.x, -1, 0.001);
+    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
+    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+
+}
+
+TEST_F(Transform3DTest, moveByLocalTest3) {
     Transform3D transform_3D;
 
     transform_3D.moveByLocal(glm::vec3(0, 0, -1));
@@ -358,26 +400,12 @@ TEST_F(Transform3DTest, moveByLocalTest) {
     EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
     EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
 
-    transform_3D.rotateByLocal(glm::vec3(0, -M_PI / 2.0, 0));
-    transform_3D.moveByLocal(glm::vec3(0, 0, -1));
+    transform_3D.rotateByGlobal(glm::vec3(0, -M_PI / 2.0, 0));
+    transform_3D.moveByLocal(glm::vec3(0, 0, 1));
     transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
+    EXPECT_NEAR(transform_3D_position.x, -1, 0.001);
     EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
     EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
-
-    transform_3D.rotateByLocal(glm::vec3(-M_PI / 2.0, 0, 0));
-    transform_3D.moveByLocal(glm::vec3(0, 1, 0));
-    transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
-
-    transform_3D.rotateByLocal(glm::vec3(0, 0, M_PI));
-    transform_3D.moveByLocal(glm::vec3(1, 0, 0));
-    transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
 
 }
 

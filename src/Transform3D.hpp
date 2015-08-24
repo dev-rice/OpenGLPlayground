@@ -25,6 +25,13 @@ public:
     glm::vec3 getScale();
 
 private:
+    void setLocalAxes();
+    void transformLocalAxes(glm::mat4 rotation_matrix);
+
+    void moveXLocal(float);
+    void moveYLocal(float);
+    void moveZLocal(float);
+
     glm::mat4 getRotationMatrix();
     glm::mat4 getTranslationMatrix();
     glm::mat4 getScaleMatrix();
@@ -33,6 +40,10 @@ private:
     glm::mat4 calculateRotationMatrix();
     glm::mat4 calculateTranslationMatrix();
     glm::mat4 calculateScaleMatrix();
+
+    glm::vec3 local_x;
+    glm::vec3 local_y;
+    glm::vec3 local_z;
 
     glm::vec3 position;
     glm::vec3 rotation_in_global_coordinates;
