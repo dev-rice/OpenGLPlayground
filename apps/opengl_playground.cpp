@@ -146,6 +146,14 @@ int main(int argc, char* argv[]) {
     ui_element.setHeightInPixels(100);
     ui_element.setCenterInPixels(glm::vec2(800, 50));
 
+    Transform3D maligron_transform;
+    Unit maligron(maliphron_transform, 1000, 20);
+
+    Transform3D yttrios_transform;
+    Unit yttrios(yttrios_transform, 1500, 20);
+
+    
+
     // Display loop
     while(window.isOpen()) {
         window.clearBuffers();

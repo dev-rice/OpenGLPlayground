@@ -16,6 +16,7 @@ Mesh MeshFactory::create3DMesh(string filename) {
     parser.loadMeshFromFile(filename);
     MeshData data(parser.getVertexArray(), parser.getFaceArray());
     Mesh mesh(data, mesh_3d_vertex_specification);
+    parser.clearMeshData();
     return mesh;
 }
 
