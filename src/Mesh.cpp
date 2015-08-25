@@ -28,18 +28,20 @@ void Mesh::bindVAO() {
     glBindVertexArray(vao);
 }
 
-void Mesh::createVBO(vector<GLfloat>& vertices) {
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-
+void Mesh::bindVBO() {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+}
+
+void Mesh::createVBO(vector<GLfloat>& vertices) {
+    glGenBuffers(1, &vbo);
+    bindVBO();
+
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
 }
 
 void Mesh::createEBO(vector<GLuint>& elements) {
     // Create an element array
-    GLuint ebo;
     glGenBuffers(1, &ebo);
 
     // Create Element Buffer Object
@@ -48,6 +50,8 @@ void Mesh::createEBO(vector<GLuint>& elements) {
 }
 
 void Mesh::linkToShader(ShaderProgram& shader_program) {
+    bindVAO();
+    bindVBO();
     getVertexSpecification().attachToShader(shader_program);
 }
 

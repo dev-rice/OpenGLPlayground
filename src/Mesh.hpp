@@ -25,6 +25,7 @@ public:
 
 private:
     void bindVAO();
+    void bindVBO();
     void createVAO();
     void createVBO(vector<GLfloat>& vertices);
     void createEBO(vector<GLuint>& elements);
@@ -40,6 +41,8 @@ private:
     VertexSpecification& getVertexSpecification();
 
     GLuint vao;
+    GLuint vbo;
+    GLuint ebo;
     int number_of_elements;
     VertexSpecification* vertex_specification;
 };

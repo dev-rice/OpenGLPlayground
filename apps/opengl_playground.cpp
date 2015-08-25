@@ -125,6 +125,10 @@ int main(int argc, char* argv[]) {
     MeshData castle_tower_mesh_data(mesh_file_parser_dae.getVertexArray(), mesh_file_parser_dae.getFaceArray());
     Mesh castle_tower_mesh(castle_tower_mesh_data, vertex_specification);
 
+    mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
+    MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());
+    Mesh fence_mesh(fence_mesh_data, vertex_specification);
+
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
     Transform3D castle_tower1_transform;
@@ -135,10 +139,6 @@ int main(int argc, char* argv[]) {
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures, castle_tower2_transform);
     castle_tower2_transform.setPosition(glm::vec3(-4, 0, 1));
     castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
-
-    mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
-    MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());
-    Mesh fence_mesh(fence_mesh_data, vertex_specification);
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
