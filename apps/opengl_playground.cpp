@@ -17,6 +17,7 @@
 #include "FlatDrawable.hpp"
 #include "UserInterfaceElement.hpp"
 #include "Transform3D.hpp"
+#include "MeshFactory.hpp"
 
 #include <vector>
 #include <iostream>
@@ -113,21 +114,9 @@ int main(int argc, char* argv[]) {
     glm::vec3 camera_start_position(-1, 2, 6);
     camera_transform.setPosition(camera_start_position);
 
-    MeshFileParserDAE mesh_file_parser_dae;
-    MeshFileParserOBJ mesh_file_parser_obj;
-
-    VertexSpecification vertex_specification;
-    vertex_specification.addAttribute(VertexAttribute("position", 3, 0));
-    vertex_specification.addAttribute(VertexAttribute("normal", 3, 3));
-    vertex_specification.addAttribute(VertexAttribute("texture_coordinates", 2, 6));
-
-    mesh_file_parser_dae.loadMeshFromFile("res/castle_tower.dae");
-    MeshData castle_tower_mesh_data(mesh_file_parser_dae.getVertexArray(), mesh_file_parser_dae.getFaceArray());
-    Mesh castle_tower_mesh(castle_tower_mesh_data, vertex_specification);
-
-    mesh_file_parser_obj.loadMeshFromFile("res/fence.obj");
-    MeshData fence_mesh_data(mesh_file_parser_obj.getVertexArray(), mesh_file_parser_obj.getFaceArray());
-    Mesh fence_mesh(fence_mesh_data, vertex_specification);
+    MeshFactory mesh_factory;
+    Mesh castle_tower_mesh = mesh_factory.create3DMesh("res/castle_tower.dae");
+    Mesh fence_mesh = mesh_factory.create3DMesh("res/fence.obj");
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
@@ -148,25 +137,7 @@ int main(int argc, char* argv[]) {
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
 
-    VertexSpecification flat_mesh_vertex_specification;
-    flat_mesh_vertex_specification.addAttribute(VertexAttribute("position", 2, 0));
-    flat_mesh_vertex_specification.addAttribute(VertexAttribute("texture_coordinates", 2, 2));
-
-    vector<GLfloat> vertices = {
-             -1.0f,  1.0f,  0.0f, 1.0f,
-             -1.0f, -1.0f,  0.0f, 0.0f,
-              1.0f,  1.0f,  1.0f, 1.0f,
-              1.0f, -1.0f,  1.0f, 0.0f,
-
-    };
-
-    vector<GLuint> elements = {
-            0, 1, 2,
-            1, 3, 2,
-    };
-
-    MeshData flat_mesh_data(vertices, elements);
-    Mesh flat_mesh(flat_mesh_data, flat_mesh_vertex_specification);
+    Mesh flat_mesh = mesh_factory.createFlatMesh();
 
     Transform2D text_box_transform;
     FlatDrawable test_box(flat_mesh, flat_shader, text_box_transform);
