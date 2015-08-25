@@ -349,17 +349,19 @@ protected:
     UnitTest() {
 
     }
+
+    Transform3D unit_transform;
 };
 
 TEST_F(UnitTest, constructorTest) {
-    Unit jimmy(200);
+    Unit jimmy(unit_transform, 200, 7);
 
     EXPECT_EQ(jimmy.getHealth(), 200);
     EXPECT_EQ(jimmy.getMaxHealth(), 200);
 }
 
 TEST_F(UnitTest, takeDamageTest) {
-    Unit jimmy(100);
+    Unit jimmy(unit_transform, 100, 7);
 
     jimmy.takeDamage(24);
     EXPECT_EQ(jimmy.getHealth(), 76);
@@ -369,7 +371,7 @@ TEST_F(UnitTest, takeDamageTest) {
 }
 
 TEST_F(UnitTest, healForTest) {
-    Unit jimmy(100);
+    Unit jimmy(unit_transform, 100, 7);
 
     jimmy.takeDamage(82);
     jimmy.healFor(12);
@@ -381,14 +383,14 @@ TEST_F(UnitTest, healForTest) {
 }
 
 TEST_F(UnitTest, dieTest) {
-    Unit jimmy(100);
+    Unit jimmy(unit_transform, 100, 7);
     jimmy.die();
 
     EXPECT_EQ(jimmy.getHealth(), 0);
 }
 
 TEST_F(UnitTest, isDeadTest) {
-    Unit jimmy(100);
+    Unit jimmy(unit_transform, 100, 7);
 
     EXPECT_EQ(jimmy.isDead(), false);
 
@@ -396,13 +398,13 @@ TEST_F(UnitTest, isDeadTest) {
     // :(
     EXPECT_EQ(jimmy.isDead(), true);
 
-    Unit already_dead(-2000);
+    Unit already_dead(unit_transform, -2000, 0);
     EXPECT_EQ(already_dead.isDead(), true);
 }
 
 TEST_F(UnitTest, attackTest) {
-    Unit jimmy(200);
-    Unit zeratul(50);
+    Unit jimmy(unit_transform, 200, 7);
+    Unit zeratul(unit_transform, 50, 1);
 
     jimmy.attack(zeratul, 20);
     EXPECT_EQ(zeratul.getHealth(), 30);
@@ -412,8 +414,8 @@ TEST_F(UnitTest, attackTest) {
 }
 
 TEST_F(UnitTest, healTest) {
-    Unit uther(180);
-    Unit tychus(200);
+    Unit uther(unit_transform, 180, 1);
+    Unit tychus(unit_transform, 200, 5);
 
     tychus.takeDamage(90);
     uther.heal(tychus, 40);
@@ -421,6 +423,31 @@ TEST_F(UnitTest, healTest) {
 
     uther.heal(tychus, 100);
     EXPECT_EQ(tychus.getHealth(), 200);
+
+}
+
+TEST_F(UnitTest, isInAttackRangeTest) {
+    Transform3D uther_transform;
+    double uther_attack_range = 1.0;
+    Unit uther(uther_transform, 180, uther_attack_range);
+    uther_transform.setPosition(glm::vec3(0, 0, 0));
+
+    Transform3D tychus_transform;
+    double tychus_attack_range = 5.0;
+    Unit tychus(tychus_transform, 200, tychus_attack_range);
+    tychus_transform.setPosition(glm::vec3(2, 0, 0));
+
+    Transform3D jimmy_transform;
+    double jimmy_attack_range = 7.0;
+    Unit jimmy(jimmy_transform, 200, jimmy_attack_range);
+    jimmy_transform.setPosition(glm::vec3(1, 0, -5));
+
+    EXPECT_EQ(uther.isInAttackRange(tychus), false);
+    EXPECT_EQ(uther.isInAttackRange(jimmy), false);
+    EXPECT_EQ(tychus.isInAttackRange(uther), true);
+    EXPECT_EQ(tychus.isInAttackRange(jimmy), false);
+    EXPECT_EQ(jimmy.isInAttackRange(uther), true);
+    EXPECT_EQ(jimmy.isInAttackRange(tychus), true);
 
 }
 

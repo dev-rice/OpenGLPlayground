@@ -17,6 +17,8 @@ public:
     void setPosition(glm::vec3 position);
     void setScale(glm::vec3 scale);
 
+    float distanceTo(Transform3D& other_transform_3D);
+
     glm::mat4 getModelMatrix();
     glm::mat4 getInverseModelMatrix();
 

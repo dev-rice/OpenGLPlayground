@@ -1,6 +1,6 @@
 #include "Unit.hpp"
 
-Unit::Unit(double max_health) : max_health(max_health), health(max_health) {
+Unit::Unit(Transform3D& transform_3D, double max_health, double attack_range) : transform_3D(&transform_3D), max_health(max_health), health(max_health), attack_range(attack_range) {
 
 }
 
@@ -45,6 +45,11 @@ void Unit::heal(Unit& target, double heal_amount) {
     }
 }
 
+bool Unit::isInAttackRange(Unit& target) {
+    float distance_to_target = getTransform3D().distanceTo(target.getTransform3D());
+    return (distance_to_target <= getAttackRange());
+}
+
 bool Unit::canAttack() {
     return true;
 }
@@ -69,10 +74,18 @@ double Unit::getMaxHealth() {
     return max_health;
 }
 
+double Unit::getAttackRange() {
+    return attack_range;
+}
+
 void Unit::setHealth(double health) {
     this->health = health;
 }
 
 void Unit::setMaxHealth(double max_health) {
     this->max_health = max_health;
+}
+
+Transform3D& Unit::getTransform3D() {
+    return *transform_3D;
 }

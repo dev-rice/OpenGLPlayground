@@ -84,6 +84,10 @@ glm::mat4 Transform3D::calculateScaleMatrix() {
     return glm::scale(scale);
 }
 
+float Transform3D::distanceTo(Transform3D& other_transform_3D) {
+    return glm::distance(getPosition(), other_transform_3D.getPosition());
+}
+
 glm::mat4 Transform3D::getModelMatrix() {
     return getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
 }
