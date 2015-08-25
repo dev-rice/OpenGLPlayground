@@ -2,13 +2,6 @@
 
 Camera::Camera(Viewport& viewport, Transform3D& transform_3D, float field_of_view, float near_clip, float far_clip) : viewport(&viewport), transform_3D(&transform_3D), field_of_view(field_of_view), near_clip(near_clip), far_clip(far_clip) {
 
-    setIntrinsicParameters();
-
-}
-
-void Camera::setIntrinsicParameters() {
-    near_clip = 0.1f;
-    far_clip = 500.0f;
 }
 
 Viewport& Camera::getViewport() {

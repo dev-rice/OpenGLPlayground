@@ -25,8 +25,8 @@ class CameraTest : public ::testing::Test {
 protected:
     CameraTest() : viewport(1600, 900) {
         field_of_view = 45.0f;
-        near_clip = 0.1f;
-        far_clip = 500.0f;
+        near_clip = 1.0f;
+        far_clip = 1000.0f;
     }
 
     float field_of_view;

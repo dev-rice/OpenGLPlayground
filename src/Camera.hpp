@@ -29,7 +29,6 @@ public:
     float getFieldOfView();
 
 private:
-    void setIntrinsicParameters();
 
     glm::mat4 calculateProjectionMatrix();
     glm::mat4 calculateViewMatrix();

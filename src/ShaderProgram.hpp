@@ -23,7 +23,7 @@ public:
     GLuint getGLId();
 
 private:
-
+    void create();
     void combineShaderPrograms(ShaderFile& vertex_shader, ShaderFile& fragment_shader);
     void bindFragmentDataLocation();
     void link();

@@ -6,11 +6,14 @@ ShaderProgram::ShaderProgram(){
 
 ShaderProgram::ShaderProgram(ShaderFile& vertex_shader, ShaderFile& fragment_shader) {
 
-    gl_shader_id = glCreateProgram();
-
+    create();
     combineShaderPrograms(vertex_shader, fragment_shader);
     bindFragmentDataLocation();
     link();
+}
+
+void ShaderProgram::create() {
+    gl_shader_id = glCreateProgram();
 }
 
 GLuint ShaderProgram::getGLId() {
