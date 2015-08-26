@@ -20,6 +20,7 @@
 #include "MeshFactory.hpp"
 #include "GameClock.hpp"
 #include "Unit.hpp"
+#include "Particle.hpp"
 
 #include <vector>
 #include <iostream>
@@ -157,28 +158,38 @@ int main(int argc, char* argv[]) {
     Transform3D yttrios_transform;
     Unit yttrios(yttrios_transform, 1500, 20);
 
-    
     ShaderProgram billboard_shader = shader_program_factory.createShaderProgram("shaders/billboard.vs", "shaders/billboard.fs");
     Mesh billboard_mesh = mesh_factory.createBillboardMesh();
     Texture particle_diffuse("res/fuzzyball.png");
     TextureManager particle_textures(particle_diffuse);
-    Transform3D particle_transform;
-    Drawable particle(billboard_mesh, billboard_shader, particle_textures, particle_transform);
+    // Transform3D particle_transform;
+    // Drawable particle_drawable(billboard_mesh, billboard_shader, particle_textures, particle_transform);
+
+    vector<Particle*> particles;
+    for (int i = 0; i < 10; ++i) {
+        Particle* new_particle = new Particle(billboard_mesh, billboard_shader, particle_textures);
+        particles.push_back(new_particle);
+    }
 
     // Display loop
     while(window.isOpen()) {
         game_loop_clock.tick();
         window.clearBuffers();
 
-
         castle_tower1.draw(camera);
         castle_tower2.draw(camera);
         fence.draw(camera);
-        particle.draw(camera);
+
+
+        for (Particle* particle : particles) {
+            (*particle).draw(camera);
+            (*particle).moveRandomDirection(game_loop_clock);
+
+        }
 
         ui_element.draw();
 
-        castle_tower1_transform.rotateByGlobal(glm::vec3(0, 0.01, 0));
+        castle_tower1_transform.rotateByGlobal(game_loop_clock.getDeltaTime() * glm::vec3(0, M_PI/4.0, 0));
 
         handleInputs(mouse, window, camera_transform);
         mouse_camera_controller.update();
