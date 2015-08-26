@@ -124,21 +124,21 @@ int main(int argc, char* argv[]) {
     Mesh fence_mesh = mesh_factory.create3DMesh("res/fence.obj");
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
-    Material castle_tower_textures(castle_tower_diffuse);
+    Material castle_tower_material(castle_tower_diffuse);
     Transform3D castle_tower1_transform;
-    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures);
+    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_material);
     castle_tower1_transform.setPosition(glm::vec3(-4, 0, 1));
     castle_tower1_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Transform3D castle_tower2_transform;
-    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures);
+    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_material);
     castle_tower2_transform.setPosition(glm::vec3(-4, 0, -5));
     castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
-    Material fence_textures(fence_diffuse);
+    Material fence_material(fence_diffuse);
     Transform3D fence_transform;
-    Drawable fence(fence_mesh, shader, fence_textures);
+    Drawable fence(fence_mesh, shader, fence_material);
     fence_transform.setPosition(glm::vec3(2, 0, 1));
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
@@ -161,13 +161,13 @@ int main(int argc, char* argv[]) {
     ShaderProgram billboard_shader = shader_program_factory.createShaderProgram("shaders/billboard.vs", "shaders/billboard.fs");
     Mesh billboard_mesh = mesh_factory.createBillboardMesh();
     Texture particle_diffuse("res/fuzzyball.png");
-    Material particle_textures(particle_diffuse);
+    Material particle_material(particle_diffuse);
     // Transform3D particle_transform;
-    // Drawable particle_drawable(billboard_mesh, billboard_shader, particle_textures, particle_transform);
+    // Drawable particle_drawable(billboard_mesh, billboard_shader, particle_material, particle_transform);
 
     vector<Particle*> particles;
     for (int i = 0; i < 10; ++i) {
-        Particle* new_particle = new Particle(billboard_mesh, billboard_shader, particle_textures);
+        Particle* new_particle = new Particle(billboard_mesh, billboard_shader, particle_material);
         particles.push_back(new_particle);
     }
 
