@@ -126,11 +126,12 @@ int main(int argc, char* argv[]) {
     TextureManager castle_tower_textures(castle_tower_diffuse);
     Transform3D castle_tower1_transform;
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures, castle_tower1_transform);
+    castle_tower1_transform.setPosition(glm::vec3(-4, 0, 1));
     castle_tower1_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Transform3D castle_tower2_transform;
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures, castle_tower2_transform);
-    castle_tower2_transform.setPosition(glm::vec3(-4, 0, 1));
+    castle_tower2_transform.setPosition(glm::vec3(-4, 0, -5));
     castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
@@ -156,14 +157,24 @@ int main(int argc, char* argv[]) {
     Transform3D yttrios_transform;
     Unit yttrios(yttrios_transform, 1500, 20);
 
+    
+    ShaderProgram billboard_shader = shader_program_factory.createShaderProgram("shaders/billboard.vs", "shaders/billboard.fs");
+    Mesh billboard_mesh = mesh_factory.createBillboardMesh();
+    Texture particle_diffuse("res/fuzzyball.png");
+    TextureManager particle_textures(particle_diffuse);
+    Transform3D particle_transform;
+    Drawable particle(billboard_mesh, billboard_shader, particle_textures, particle_transform);
+
     // Display loop
     while(window.isOpen()) {
         game_loop_clock.tick();
         window.clearBuffers();
 
+
         castle_tower1.draw(camera);
         castle_tower2.draw(camera);
         fence.draw(camera);
+        particle.draw(camera);
 
         ui_element.draw();
 

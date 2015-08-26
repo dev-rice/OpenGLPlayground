@@ -13,6 +13,7 @@ public:
     MeshFactory();
 
     Mesh create3DMesh(string filename);
+    Mesh createBillboardMesh();
     Mesh createFlatMesh();
 
 private:
@@ -23,6 +24,7 @@ private:
     MeshFileParserOBJ mesh_file_parser_obj;
     MeshFileParserDAE mesh_file_parser_dae;
     VertexSpecification mesh_3d_vertex_specification;
+    VertexSpecification billboard_mesh_vertex_specification;
     VertexSpecification flat_mesh_vertex_specification;
 };
 
