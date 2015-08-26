@@ -126,19 +126,19 @@ int main(int argc, char* argv[]) {
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     TextureManager castle_tower_textures(castle_tower_diffuse);
     Transform3D castle_tower1_transform;
-    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures, castle_tower1_transform);
+    Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures);
     castle_tower1_transform.setPosition(glm::vec3(-4, 0, 1));
     castle_tower1_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Transform3D castle_tower2_transform;
-    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures, castle_tower2_transform);
+    Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_textures);
     castle_tower2_transform.setPosition(glm::vec3(-4, 0, -5));
     castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
     TextureManager fence_textures(fence_diffuse);
     Transform3D fence_transform;
-    Drawable fence(fence_mesh, shader, fence_textures, fence_transform);
+    Drawable fence(fence_mesh, shader, fence_textures);
     fence_transform.setPosition(glm::vec3(2, 0, 1));
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
@@ -176,15 +176,14 @@ int main(int argc, char* argv[]) {
         game_loop_clock.tick();
         window.clearBuffers();
 
-        castle_tower1.draw(camera);
-        castle_tower2.draw(camera);
-        fence.draw(camera);
+        castle_tower1.draw(camera, castle_tower1_transform);
+        castle_tower2.draw(camera, castle_tower2_transform);
+        fence.draw(camera, fence_transform);
 
 
         for (Particle* particle : particles) {
             (*particle).draw(camera);
             (*particle).moveRandomDirection(game_loop_clock);
-
         }
 
         ui_element.draw();

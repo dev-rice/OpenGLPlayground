@@ -30,7 +30,6 @@ bool Unit::wouldBeOverFullHealth(double heal_amount) {
 
 void Unit::changeHealthBy(double amount) {
     setHealth(getHealth() + amount);
-
 }
 
 void Unit::attack(Unit& target, double damage_amount) {

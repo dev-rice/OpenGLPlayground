@@ -1,6 +1,6 @@
 #include "Drawable.hpp"
 
-Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager, Transform3D& transform_3D) : mesh(&mesh), shader(&shader), texture_manager(&texture_manager), transform_3D(&transform_3D) {
+Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager) : mesh(&mesh), shader(&shader), texture_manager(&texture_manager) {
 
     getTextureManager().setTextureLocationsInShader(getShaderProgram());
     getMesh().linkToShader(getShaderProgram());
@@ -8,7 +8,7 @@ Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_ma
 
 }
 
-void Drawable::draw(Camera& camera) {
+void Drawable::draw(Camera& camera, Transform3D& transform_3D) {
     if (isHidden()){
         return;
     }
@@ -18,7 +18,7 @@ void Drawable::draw(Camera& camera) {
 
     getTextureManager().useTextures();
 
-    glm::mat4 model = getTransform3D().getModelMatrix();
+    glm::mat4 model = transform_3D.getModelMatrix();
     GLint model_uniform = getShaderProgram().getUniformLocation("model");
     glUniformMatrix4fv(model_uniform, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -63,8 +63,4 @@ ShaderProgram& Drawable::getShaderProgram() {
 
 TextureManager& Drawable::getTextureManager() {
     return *texture_manager;
-}
-
-Transform3D& Drawable::getTransform3D() {
-    return *transform_3D;
 }

@@ -7,7 +7,7 @@
 //      How to make low level OpenGL calls to make itself draw correctly
 // BUT IT WORKS SO IDK WHAT'S RIGHT
 
-Particle::Particle(Mesh& mesh, ShaderProgram& shader_program, TextureManager& textures) : transform_3D(), drawable(mesh, shader_program, textures, transform_3D) {
+Particle::Particle(Mesh& mesh, ShaderProgram& shader_program, TextureManager& textures) : transform_3D(), drawable(mesh, shader_program, textures) {
 
     srand(time(NULL));
 
@@ -17,7 +17,7 @@ void Particle::draw(Camera& camera) {
     glDepthFunc(GL_LEQUAL);
     glDepthMask(GL_FALSE);
 
-    getDrawable().draw(camera);
+    getDrawable().draw(camera, transform_3D);
 
     glDepthFunc(GL_LESS);
     glDepthMask(GL_TRUE);
