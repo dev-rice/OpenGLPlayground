@@ -18,6 +18,8 @@
 #include "UserInterfaceElement.hpp"
 #include "Transform3D.hpp"
 #include "MeshFactory.hpp"
+#include "GameClock.hpp"
+#include "Unit.hpp"
 
 #include <vector>
 #include <iostream>
@@ -100,6 +102,8 @@ int main(int argc, char* argv[]) {
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
 
+    GameClock game_loop_clock;
+
     ShaderProgramFactory shader_program_factory;
     ShaderProgram shader = shader_program_factory.createShaderProgram("shaders/temp.vs", "shaders/temp.fs");
 
@@ -147,15 +151,14 @@ int main(int argc, char* argv[]) {
     ui_element.setCenterInPixels(glm::vec2(800, 50));
 
     Transform3D maligron_transform;
-    Unit maligron(maliphron_transform, 1000, 20);
+    Unit maligron(maligron_transform, 1000, 20);
 
     Transform3D yttrios_transform;
     Unit yttrios(yttrios_transform, 1500, 20);
 
-    
-
     // Display loop
     while(window.isOpen()) {
+        game_loop_clock.tick();
         window.clearBuffers();
 
         castle_tower1.draw(camera);
@@ -171,6 +174,10 @@ int main(int argc, char* argv[]) {
         window.display();
 
     }
+
+    cout << "Average frame draw time: " << game_loop_clock.getAverageDeltaTime() << "\n";
+    float average_fps = 1.0f / game_loop_clock.getAverageDeltaTime();
+    cout << "Average frames per second: " << average_fps << "\n";
 
     // Close the window
     window.close();

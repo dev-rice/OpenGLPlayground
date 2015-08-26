@@ -4,7 +4,7 @@ Window::Window(Viewport& viewport, bool fullscreen) : viewport(&viewport), fulls
 
     setShouldClose(false);
     initializeWindow();
-    
+
 }
 
 void Window::display(){
@@ -85,10 +85,12 @@ bool Window::isFullscreen() {
 
 
 Uint32 Window::getCreationFlags() {
-    Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI;
+    Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
 
     if (isFullscreen()){
         flags |= SDL_WINDOW_FULLSCREEN;
+    } else {
+        flags |= SDL_WINDOW_ALLOW_HIGHDPI;
     }
 
     return flags;
