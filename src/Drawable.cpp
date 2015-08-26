@@ -1,6 +1,6 @@
 #include "Drawable.hpp"
 
-Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager) : mesh(&mesh), shader(&shader), texture_manager(&texture_manager) {
+Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, Material& texture_manager) : mesh(&mesh), shader(&shader), texture_manager(&texture_manager) {
 
     getTextureManager().setTextureLocationsInShader(getShaderProgram());
     getMesh().linkToShader(getShaderProgram());
@@ -29,6 +29,16 @@ void Drawable::draw(Camera& camera, Transform3D& transform_3D) {
     glm::mat4 proj = camera.getProjectionMatrix();
     GLint proj_uniform = getShaderProgram().getUniformLocation("proj");
     glUniformMatrix4fv(proj_uniform, 1, GL_FALSE, glm::value_ptr(proj));
+
+    // glm::mat4 rotation_matrix(
+    //     view[0][0], view[1][0], view[2][0], 0,
+    //     view[0][1], view[1][1], view[2][1], 0,
+    //     view[0][2], view[1][2], view[2][2], 0,
+    //     0         , 0         , 0         , 1
+    // );
+    //
+    // GLint rotation_matrix_uniform = getShaderProgram().getUniformLocation("rotation_matrix");
+    // glUniformMatrix4fv(rotation_matrix_uniform, 1, GL_FALSE, glm::value_ptr(rotation_matrix));
 
     getMesh().draw();
 }
@@ -61,6 +71,6 @@ ShaderProgram& Drawable::getShaderProgram() {
     return *shader;
 }
 
-TextureManager& Drawable::getTextureManager() {
+Material& Drawable::getTextureManager() {
     return *texture_manager;
 }

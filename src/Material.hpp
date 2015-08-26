@@ -6,9 +6,9 @@
 #include "Texture.hpp"
 #include "ShaderProgram.hpp"
 
-class TextureManager {
+class Material {
 public:
-    TextureManager(Texture& diffuse);
+    Material(Texture& diffuse);
 
     void setTextureLocationsInShader(ShaderProgram& shader_program);
     void useTextures();

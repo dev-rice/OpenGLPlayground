@@ -5,7 +5,7 @@
 #include <ctime>
 
 #include "Texture.hpp"
-#include "TextureManager.hpp"
+#include "Material.hpp"
 #include "Transform3D.hpp"
 #include "Drawable.hpp"
 #include "Camera.hpp"
@@ -15,7 +15,7 @@
 
 class Particle {
 public:
-    Particle(Mesh& mesh, ShaderProgram& shader_program, TextureManager& textures);
+    Particle(Mesh& mesh, ShaderProgram& shader_program, Material& textures);
 
     void draw(Camera& camera);
 

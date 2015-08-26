@@ -6,12 +6,12 @@
 #include "Camera.hpp"
 #include "Mesh.hpp"
 #include "ShaderProgram.hpp"
-#include "TextureManager.hpp"
+#include "Material.hpp"
 #include "Transform3D.hpp"
 
 class Drawable {
 public:
-    Drawable(Mesh& mesh, ShaderProgram& shader, TextureManager& texture_manager);
+    Drawable(Mesh& mesh, ShaderProgram& shader, Material& texture_manager);
 
     void draw(Camera& camera, Transform3D& transform_3D);
 
@@ -22,13 +22,13 @@ public:
 
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();
-    TextureManager& getTextureManager();
+    Material& getTextureManager();
 
 private:
 
     Mesh* mesh;
     ShaderProgram* shader;
-    TextureManager* texture_manager;
+    Material* texture_manager;
 
     bool is_hidden;
 

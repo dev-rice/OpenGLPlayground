@@ -2,12 +2,12 @@
 
 // THIS CLASS KNOWS TOO MUCH:
 //      How to construct a Transform3D (even though this is simple)
-//      How to construct a Drawable, given a Mesh, a ShaderProgram, a TextureManager, and a Transform3D
+//      How to construct a Drawable, given a Mesh, a ShaderProgram, a Material, and a Transform3D
 //      How to tell a Drawable to draw, given a Camera
 //      How to make low level OpenGL calls to make itself draw correctly
 // BUT IT WORKS SO IDK WHAT'S RIGHT
 
-Particle::Particle(Mesh& mesh, ShaderProgram& shader_program, TextureManager& textures) : transform_3D(), drawable(mesh, shader_program, textures) {
+Particle::Particle(Mesh& mesh, ShaderProgram& shader_program, Material& textures) : transform_3D(), drawable(mesh, shader_program, textures) {
 
     srand(time(NULL));
 

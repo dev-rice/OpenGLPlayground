@@ -7,7 +7,7 @@
 #include "Camera.hpp"
 #include "Drawable.hpp"
 #include "Texture.hpp"
-#include "TextureManager.hpp"
+#include "Material.hpp"
 #include "ShaderProgramFactory.hpp"
 #include "MouseCameraController.hpp"
 #include "MeshFileParserDAE.hpp"
@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
     Mesh fence_mesh = mesh_factory.create3DMesh("res/fence.obj");
 
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
-    TextureManager castle_tower_textures(castle_tower_diffuse);
+    Material castle_tower_textures(castle_tower_diffuse);
     Transform3D castle_tower1_transform;
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_textures);
     castle_tower1_transform.setPosition(glm::vec3(-4, 0, 1));
@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
     castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
-    TextureManager fence_textures(fence_diffuse);
+    Material fence_textures(fence_diffuse);
     Transform3D fence_transform;
     Drawable fence(fence_mesh, shader, fence_textures);
     fence_transform.setPosition(glm::vec3(2, 0, 1));
@@ -161,7 +161,7 @@ int main(int argc, char* argv[]) {
     ShaderProgram billboard_shader = shader_program_factory.createShaderProgram("shaders/billboard.vs", "shaders/billboard.fs");
     Mesh billboard_mesh = mesh_factory.createBillboardMesh();
     Texture particle_diffuse("res/fuzzyball.png");
-    TextureManager particle_textures(particle_diffuse);
+    Material particle_textures(particle_diffuse);
     // Transform3D particle_transform;
     // Drawable particle_drawable(billboard_mesh, billboard_shader, particle_textures, particle_transform);
 
