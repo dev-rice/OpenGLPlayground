@@ -17,9 +17,11 @@ public:
     void bind(GLenum target);
 private:
 
-    GLuint loadTextureFromBytes(GLubyte* data, GLuint width, GLuint height, GLuint filter, bool anisotropic_filtering);
+    void create();
 
-    GLuint loadTextureFromFile(string filepath, GLuint filter, bool anisotropic_filtering);
+    void loadTextureFromBytes(GLubyte* data, GLuint width, GLuint height, GLuint filter, bool anisotropic_filtering);
+
+    void loadTextureFromFile(string filepath, GLuint filter, bool anisotropic_filtering);
 
     GLuint gl_texture_id;
 

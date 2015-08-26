@@ -11,7 +11,7 @@
 
 class Drawable {
 public:
-    Drawable(Mesh& mesh, ShaderProgram& shader, Material& texture_manager);
+    Drawable(Mesh& mesh, ShaderProgram& shader, Material& material);
 
     void draw(Camera& camera, Transform3D& transform_3D);
 
@@ -22,13 +22,13 @@ public:
 
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();
-    Material& getTextureManager();
+    Material& getMaterial();
 
 private:
 
     Mesh* mesh;
     ShaderProgram* shader;
-    Material* texture_manager;
+    Material* material;
 
     bool is_hidden;
 

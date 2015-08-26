@@ -1,7 +1,7 @@
 #include "Texture.hpp"
 
 Texture::Texture(string filepath) {
-    gl_texture_id = loadTextureFromFile(filepath, GL_LINEAR, true);
+    loadTextureFromFile(filepath, GL_LINEAR, true);
 }
 
 GLuint Texture::getGLId() {
@@ -12,11 +12,14 @@ void Texture::bind(GLenum target) {
     glBindTexture(target, getGLId());
 }
 
-GLuint Texture::loadTextureFromBytes(GLubyte* data, GLuint width, GLuint height, GLuint filter, bool anisotropic_filtering){
-    GLuint texture;
+void Texture::create() {
+    glGenTextures(1, &gl_texture_id);
+}
+
+void Texture::loadTextureFromBytes(GLubyte* data, GLuint width, GLuint height, GLuint filter, bool anisotropic_filtering){
     // Set the active texture
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    create();
+    bind(GL_TEXTURE_2D);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, data);
 
@@ -42,10 +45,9 @@ GLuint Texture::loadTextureFromBytes(GLubyte* data, GLuint width, GLuint height,
     // Mipmaps increase efficiency or something
     glGenerateMipmap(GL_TEXTURE_2D);
 
-    return texture;
 }
 
-GLuint Texture::loadTextureFromFile(string filename, GLuint filter, bool anisotropic_filtering){
+void Texture::loadTextureFromFile(string filename, GLuint filter, bool anisotropic_filtering){
     GLuint texture;
 
     string id = filename + std::to_string(filter);
@@ -54,9 +56,7 @@ GLuint Texture::loadTextureFromFile(string filename, GLuint filter, bool anisotr
     int width, height;
     GLubyte* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGBA);
 
-    texture = loadTextureFromBytes(image, width, height, filter, anisotropic_filtering);
+    loadTextureFromBytes(image, width, height, filter, anisotropic_filtering);
     SOIL_free_image_data(image);
-
-    return texture;
 
 }
