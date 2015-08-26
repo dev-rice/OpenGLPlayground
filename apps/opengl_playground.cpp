@@ -137,7 +137,7 @@ int main(int argc, char* argv[]) {
     castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
-    Texture fence_emissive("res/pink.png");
+    Texture fence_emissive("res/blank.png");
     Material fence_material(fence_diffuse, fence_emissive);
     Transform3D fence_transform;
     Drawable fence(fence_mesh, shader, fence_material);
