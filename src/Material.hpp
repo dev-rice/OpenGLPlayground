@@ -8,16 +8,18 @@
 
 class Material {
 public:
-    Material(Texture& diffuse);
+    Material(Texture& diffuse, Texture& emissive);
 
     void setTextureLocationsInShader(ShaderProgram& shader_program);
     void useTextures();
 
     Texture& getDiffuse();
+    Texture& getEmissive();
 
 private:
 
     Texture* diffuse;
+    Texture* emissive;
 
 };
 
