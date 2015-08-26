@@ -5,13 +5,13 @@ Material::Material(Texture& diffuse) : diffuse(&diffuse) {
 }
 
 void Material::setTextureLocationsInShader(ShaderProgram& shader_program) {
-
-    glUniform1i(shader_program.getUniformLocation("diffuse_texture"), 0);
+    shader_program.use();
+    glUniform1i(shader_program.getUniformLocation("diffuse_texture"), 1);
 
 }
 
 void Material::useTextures() {
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE1);
     getDiffuse().bind(GL_TEXTURE_2D);
 }
 
