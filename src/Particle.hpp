@@ -13,9 +13,11 @@
 #include "ShaderProgram.hpp"
 #include "GameClock.hpp"
 
+using namespace std;
+
 class Particle {
 public:
-    Particle(const Drawable& drawable, const Transform3D& transform_3D);
+    Particle(Drawable drawable, Transform3D transform_3D);
 
     void draw(Camera& camera);
 
@@ -27,8 +29,8 @@ private:
 
     float randomFloat(float a, float b);
 
-    Transform3D transform_3D;
     Drawable drawable;
+    Transform3D transform_3D;
 
 };
 

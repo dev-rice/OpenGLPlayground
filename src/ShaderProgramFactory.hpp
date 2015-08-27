@@ -2,6 +2,7 @@
 #define ShaderProgramFactory_h
 
 #include <string>
+#include <iostream>
 
 #include "VertexShaderCreator.hpp"
 #include "FragmentShaderCreator.hpp"

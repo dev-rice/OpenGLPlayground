@@ -1,11 +1,11 @@
 #include "Camera.hpp"
 
-Camera::Camera(Viewport& viewport, Transform3D&& transform_3D, float field_of_view, float near_clip, float far_clip) : viewport(&viewport), transform_3D(transform_3D), field_of_view(field_of_view), near_clip(near_clip), far_clip(far_clip) {
+Camera::Camera(Viewport& viewport, Transform3D transform_3D, float field_of_view, float near_clip, float far_clip) : viewport(viewport), transform_3D(move(transform_3D)), field_of_view(field_of_view), near_clip(near_clip), far_clip(far_clip) {
 
 }
 
 Viewport& Camera::getViewport() {
-    return *viewport;
+    return viewport;
 }
 
 Transform3D& Camera::getTransform3D() {
