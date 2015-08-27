@@ -7,7 +7,7 @@
 //      How to make low level OpenGL calls to make itself draw correctly
 // BUT IT WORKS SO IDK WHAT'S RIGHT
 
-Particle::Particle(Mesh& mesh, ShaderProgram& shader_program, Material& textures) : transform_3D(), drawable(mesh, shader_program, textures) {
+Particle::Particle(const Drawable& drawable, const Transform3D& transform_3D) : drawable(drawable), transform_3D(transform_3D) {
 
     srand(time(NULL));
 

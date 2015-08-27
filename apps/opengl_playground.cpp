@@ -168,10 +168,9 @@ int main(int argc, char* argv[]) {
     // Transform3D particle_transform;
     // Drawable particle_drawable(billboard_mesh, billboard_shader, particle_material, particle_transform);
 
-    vector<Particle*> particles;
+    vector<Particle> particles;
     for (int i = 0; i < 10; ++i) {
-        Particle* new_particle = new Particle(billboard_mesh, billboard_shader, particle_material);
-        particles.push_back(new_particle);
+        particles.push_back(Particle(Drawable(billboard_mesh, billboard_shader, particle_material), Transform3D()));
     }
 
     // Display loop
@@ -184,9 +183,9 @@ int main(int argc, char* argv[]) {
         fence.draw(camera, fence_transform);
 
 
-        for (Particle* particle : particles) {
-            (*particle).draw(camera);
-            (*particle).moveRandomDirection(game_loop_clock);
+        for (Particle& particle : particles) {
+            particle.draw(camera);
+            particle.moveRandomDirection(game_loop_clock);
         }
 
         ui_element.draw();

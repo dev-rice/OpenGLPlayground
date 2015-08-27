@@ -15,7 +15,7 @@
 
 class Particle {
 public:
-    Particle(Mesh& mesh, ShaderProgram& shader_program, Material& textures);
+    Particle(const Drawable& drawable, const Transform3D& transform_3D);
 
     void draw(Camera& camera);
 
