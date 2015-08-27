@@ -169,7 +169,7 @@ int main(int argc, char* argv[]) {
     // Drawable particle_drawable(billboard_mesh, billboard_shader, particle_material, particle_transform);
 
     vector<Particle> particles;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 100; ++i) {
         particles.push_back(Particle(Drawable(billboard_mesh, billboard_shader, particle_material), Transform3D()));
     }
 
