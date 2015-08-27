@@ -15,8 +15,6 @@ public:
     ShaderProgram createShaderProgram(string vertex_shader_filename, string fragment_shader_filename);
 
 private:
-    VertexShaderCreator vertex_shader_creator;
-    FragmentShaderCreator fragment_shader_creator;
 
 };
 

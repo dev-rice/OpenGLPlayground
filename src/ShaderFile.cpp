@@ -1,6 +1,6 @@
 #include "ShaderFile.hpp"
 
-ShaderFile::ShaderFile(string filename, ShaderCreator& shader_creator) : filename(filename), shader_creator(&shader_creator) {
+ShaderFile::ShaderFile(string filename, ShaderCreator&& shader_creator) : filename(filename), shader_creator(shader_creator) {
 
     setGLId(loadShader(filename));
     printErrors();
@@ -49,7 +49,7 @@ string ShaderFile::getFileContents(string filename) {
 }
 
 ShaderCreator& ShaderFile::getShaderCreator() {
-    return *shader_creator;
+    return shader_creator;
 }
 
 void ShaderFile::printErrors() {

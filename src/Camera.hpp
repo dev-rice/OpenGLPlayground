@@ -12,7 +12,7 @@ using namespace std;
 
 class Camera {
 public:
-    Camera(Viewport& viewport, const Transform3D& transform_3D, float field_of_view, float near_clip, float far_clip);
+    Camera(Viewport& viewport, Transform3D&& transform_3D, float field_of_view, float near_clip, float far_clip);
 
     glm::mat4 getViewMatrix();
     glm::mat4 getProjectionMatrix();

@@ -13,7 +13,7 @@ using namespace std;
 
 class ShaderFile {
 public:
-    ShaderFile(string filename, ShaderCreator& shader_creator);
+    ShaderFile(string filename, ShaderCreator&& shader_creator);
     ~ShaderFile();
 
     void attachTo(GLuint shader_program);
@@ -33,7 +33,7 @@ private:
 
     GLuint shader_id;
     string filename;
-    ShaderCreator* shader_creator;
+    ShaderCreator& shader_creator;
 };
 
 #endif
