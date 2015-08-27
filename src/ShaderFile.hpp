@@ -26,7 +26,7 @@ public:
 
 private:
     void printErrors();
-    
+
     void setGLId(GLuint id);
     string getFileContents(string filename);
     GLuint loadShader(string filename);

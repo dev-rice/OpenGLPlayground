@@ -111,13 +111,13 @@ int main(int argc, char* argv[]) {
     float field_of_view = 45.0f;
     float near_clip = 0.1f;
     float far_clip = 500.0f;
-    Transform3D camera_transform;
-    Camera camera(viewport, camera_transform, field_of_view, near_clip, far_clip);
+    Camera camera(viewport, Transform3D(), field_of_view, near_clip, far_clip);
 
-    MouseCameraController mouse_camera_controller(mouse, camera_transform, window, 0.001);
+    MouseCameraController mouse_camera_controller(mouse, camera.getTransform3D(), window, 0.001);
 
     glm::vec3 camera_start_position(-1, 2, 6);
-    camera_transform.setPosition(camera_start_position);
+    #warning LoD violation
+    camera.getTransform3D().setPosition(camera_start_position);
 
     MeshFactory mesh_factory;
     Mesh castle_tower_mesh = mesh_factory.create3DMesh("res/castle_tower.dae");
@@ -151,8 +151,8 @@ int main(int argc, char* argv[]) {
     FlatDrawable test_box(flat_mesh, flat_shader, text_box_transform);
     UserInterfaceElement ui_element(viewport, test_box);
     ui_element.setWidthInPixels(1600);
-    ui_element.setHeightInPixels(100);
-    ui_element.setCenterInPixels(glm::vec2(800, 50));
+    ui_element.setHeightInPixels(60);
+    ui_element.setCenterInPixels(glm::vec2(800, 30));
 
     Transform3D maligron_transform;
     Unit maligron(maligron_transform, 1000, 20);
@@ -165,8 +165,6 @@ int main(int argc, char* argv[]) {
     Texture particle_diffuse("res/blank.png");
     Texture particle_emissive("res/fuzzyball.png");
     Material particle_material(particle_diffuse, particle_emissive);
-    // Transform3D particle_transform;
-    // Drawable particle_drawable(billboard_mesh, billboard_shader, particle_material, particle_transform);
 
     vector<Particle> particles;
     for (int i = 0; i < 100; ++i) {
@@ -192,7 +190,7 @@ int main(int argc, char* argv[]) {
 
         castle_tower1_transform.rotateByGlobal(game_loop_clock.getDeltaTime() * glm::vec3(0, M_PI/4.0, 0));
 
-        handleInputs(mouse, window, camera_transform);
+        handleInputs(mouse, window, camera.getTransform3D());
         mouse_camera_controller.update();
         window.display();
 
