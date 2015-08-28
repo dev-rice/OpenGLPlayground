@@ -126,30 +126,31 @@ int main(int argc, char* argv[]) {
     Texture castle_tower_diffuse("res/castle_tower_diff.png");
     Texture castle_tower_emissive("res/blank.png");
     Material castle_tower_material(castle_tower_diffuse, castle_tower_emissive);
-    Transform3D castle_tower1_transform;
     Drawable castle_tower1(castle_tower_mesh, shader, castle_tower_material);
+
+    Transform3D castle_tower1_transform;
     castle_tower1_transform.setPosition(glm::vec3(-4, 0, 1));
     castle_tower1_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
-    Transform3D castle_tower2_transform;
     Drawable castle_tower2(castle_tower_mesh, shader, castle_tower_material);
+
+    Transform3D castle_tower2_transform;
     castle_tower2_transform.setPosition(glm::vec3(-4, 0, -5));
     castle_tower2_transform.rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
     Texture fence_emissive("res/blank.png");
     Material fence_material(fence_diffuse, fence_emissive);
-    Transform3D fence_transform;
     Drawable fence(fence_mesh, shader, fence_material);
+
+    Transform3D fence_transform;
     fence_transform.setPosition(glm::vec3(2, 0, 1));
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
 
     Mesh flat_mesh = mesh_factory.createFlatMesh();
 
-    Transform2D text_box_transform;
-    FlatDrawable test_box(flat_mesh, flat_shader, text_box_transform);
-    UserInterfaceElement ui_element(viewport, test_box);
+    UserInterfaceElement ui_element(viewport, FlatDrawable(flat_mesh, flat_shader), Transform2D());
     ui_element.setWidthInPixels(1600);
     ui_element.setHeightInPixels(60);
     ui_element.setCenterInPixels(glm::vec2(800, 30));
@@ -177,7 +178,6 @@ int main(int argc, char* argv[]) {
         castle_tower1.draw(camera, castle_tower1_transform);
         castle_tower2.draw(camera, castle_tower2_transform);
         fence.draw(camera, fence_transform);
-
 
         for (Particle& particle : particles) {
             particle.draw(camera);

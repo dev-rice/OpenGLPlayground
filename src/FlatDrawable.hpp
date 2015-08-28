@@ -9,9 +9,9 @@
 
 class FlatDrawable {
 public:
-    FlatDrawable(Mesh& mesh, ShaderProgram& shader_program, Transform2D& transform_2D);
+    FlatDrawable(Mesh& mesh, ShaderProgram& shader_program);
 
-    void draw();
+    void draw(Transform2D& transform_2D);
 
     void show();
     void hide();
@@ -20,13 +20,11 @@ public:
 
     Mesh& getMesh();
     ShaderProgram& getShaderProgram();
-    Transform2D& getTransform2D();
 
 private:
 
     Mesh& mesh;
     ShaderProgram& shader_program;
-    Transform2D& transform_2D;
 
     bool is_hidden;
 
