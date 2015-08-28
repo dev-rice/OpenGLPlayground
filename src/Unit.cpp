@@ -1,6 +1,6 @@
 #include "Unit.hpp"
 
-Unit::Unit(Transform3D& transform_3D, double max_health, double attack_range) : transform_3D(&transform_3D), max_health(max_health), health(max_health), attack_range(attack_range) {
+Unit::Unit(Transform3D transform_3D, double max_health, double attack_range) : transform_3D(move(transform_3D)), max_health(max_health), health(max_health), attack_range(attack_range) {
 
 }
 
@@ -86,5 +86,5 @@ void Unit::setMaxHealth(double max_health) {
 }
 
 Transform3D& Unit::getTransform3D() {
-    return *transform_3D;
+    return transform_3D;
 }

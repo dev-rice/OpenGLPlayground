@@ -1,6 +1,6 @@
 #include "Drawable.hpp"
 
-Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, Material& material) : mesh(&mesh), shader(&shader), material(&material) {
+Drawable::Drawable(Mesh& mesh, ShaderProgram& shader, Material& material) : mesh(mesh), shader(shader), material(material) {
 
     getMaterial().setTextureLocationsInShader(getShaderProgram());
     getMesh().linkToShader(getShaderProgram());
@@ -64,13 +64,13 @@ void Drawable::toggleVisibility() {
 }
 
 Mesh& Drawable::getMesh() {
-    return *mesh;
+    return mesh;
 }
 
 ShaderProgram& Drawable::getShaderProgram() {
-    return *shader;
+    return shader;
 }
 
 Material& Drawable::getMaterial() {
-    return *material;
+    return material;
 }

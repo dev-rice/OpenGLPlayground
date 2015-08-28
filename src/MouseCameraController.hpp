@@ -31,9 +31,9 @@ private:
     Window& getWindow();
     float getSensitivity();
 
-    Mouse* mouse;
-    Transform3D* camera_transform;
-    Window* window;
+    Mouse& mouse;
+    Transform3D& camera_transform;
+    Window& window;
 
     float sensitivity;
     glm::vec2 last_position;

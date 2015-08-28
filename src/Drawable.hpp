@@ -26,9 +26,9 @@ public:
 
 private:
 
-    Mesh* mesh;
-    ShaderProgram* shader;
-    Material* material;
+    Mesh& mesh;
+    ShaderProgram& shader;
+    Material& material;
 
     bool is_hidden;
 

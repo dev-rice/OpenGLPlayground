@@ -9,7 +9,7 @@ using namespace std;
 
 class Unit {
 public:
-    Unit(Transform3D& transform_3D, double max_health, double attack_range);
+    Unit(Transform3D transform_3D, double max_health, double attack_range);
 
     void takeDamage(double damage_amount);
     void healFor(double heal_amount);
@@ -40,7 +40,7 @@ private:
     bool isKillingBlow(double damage_amount);
     bool wouldBeOverFullHealth(double heal_amount);
 
-    Transform3D* transform_3D;
+    Transform3D transform_3D;
     double max_health;
     double health;
     double attack_range;

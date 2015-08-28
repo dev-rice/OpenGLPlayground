@@ -1,6 +1,6 @@
 #include "Window.hpp"
 
-Window::Window(Viewport& viewport, bool fullscreen) : viewport(&viewport), fullscreen(fullscreen) {
+Window::Window(Viewport& viewport, bool fullscreen) : viewport(viewport), fullscreen(fullscreen) {
 
     setShouldClose(false);
     initializeWindow();
@@ -72,11 +72,11 @@ Viewport Window::getFullscreenDimensions() {
 }
 
 Viewport& Window::getViewport() {
-    return *viewport;
+    return viewport;
 }
 
 void Window::setViewport(Viewport& viewport) {
-    this->viewport = &viewport;
+    this->viewport = viewport;
 }
 
 bool Window::isFullscreen() {

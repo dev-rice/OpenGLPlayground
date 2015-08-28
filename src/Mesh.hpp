@@ -44,7 +44,7 @@ private:
     GLuint vbo;
     GLuint ebo;
     int number_of_elements;
-    VertexSpecification* vertex_specification;
+    VertexSpecification& vertex_specification;
 };
 
 #endif

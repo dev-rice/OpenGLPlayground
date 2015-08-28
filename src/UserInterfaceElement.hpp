@@ -6,9 +6,11 @@
 #include "Viewport.hpp"
 #include "FlatDrawable.hpp"
 
+using namespace std;
+
 class UserInterfaceElement {
 public:
-    UserInterfaceElement(Viewport& viewport, FlatDrawable& flat_drawable);
+    UserInterfaceElement(Viewport& viewport, FlatDrawable flat_drawable);
 
     Viewport& getViewport();
     FlatDrawable& getFlatDrawable();
@@ -20,8 +22,8 @@ public:
     void setCenterInPixels(glm::vec2 center_in_pixels);
 
 private:
-    Viewport* viewport;
-    FlatDrawable* flat_drawable;
+    Viewport& viewport;
+    FlatDrawable flat_drawable;
 };
 
 #endif

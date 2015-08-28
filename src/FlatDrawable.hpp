@@ -24,9 +24,9 @@ public:
 
 private:
 
-    Mesh* mesh;
-    ShaderProgram* shader_program;
-    Transform2D* transform_2D;
+    Mesh& mesh;
+    ShaderProgram& shader_program;
+    Transform2D& transform_2D;
 
     bool is_hidden;
 

@@ -1,6 +1,6 @@
 #include "MouseCameraController.hpp"
 
-MouseCameraController::MouseCameraController(Mouse& mouse, Transform3D& camera_transform, Window& window, float sensitivity) : mouse(&mouse), camera_transform(&camera_transform), window(&window), sensitivity(sensitivity) {
+MouseCameraController::MouseCameraController(Mouse& mouse, Transform3D& camera_transform, Window& window, float sensitivity) : mouse(mouse), camera_transform(camera_transform), window(window), sensitivity(sensitivity) {
 
     mouse.hide();
     resetToBasePosition();
@@ -45,15 +45,15 @@ void MouseCameraController::resetToBasePosition() {
 
 
 Mouse& MouseCameraController::getMouse() {
-    return *mouse;
+    return mouse;
 }
 
 Transform3D& MouseCameraController::getCameraTransform() {
-    return *camera_transform;
+    return camera_transform;
 }
 
 Window& MouseCameraController::getWindow() {
-    return *window;
+    return window;
 }
 
 float MouseCameraController::getSensitivity() {

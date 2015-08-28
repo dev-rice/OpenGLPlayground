@@ -1,6 +1,6 @@
 #include "Material.hpp"
 
-Material::Material(Texture& diffuse, Texture& emissive) : diffuse(&diffuse), emissive(&emissive) {
+Material::Material(Texture& diffuse, Texture& emissive) : diffuse(diffuse), emissive(emissive) {
 
 }
 
@@ -20,9 +20,9 @@ void Material::useTextures() {
 }
 
 Texture& Material::getDiffuse() {
-    return *diffuse;
+    return diffuse;
 }
 
 Texture& Material::getEmissive() {
-    return *emissive;
+    return emissive;
 }

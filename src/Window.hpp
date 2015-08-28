@@ -56,7 +56,7 @@ private:
 
     Viewport getFullscreenDimensions();
 
-    Viewport* viewport;
+    Viewport& viewport;
     bool fullscreen;
 
     bool should_close;

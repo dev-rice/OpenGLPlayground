@@ -15,8 +15,8 @@ public:
     vector<GLuint>& getElements();
 
 private:
-    vector<GLfloat>* vertices;
-    vector<GLuint>* elements;
+    vector<GLfloat>& vertices;
+    vector<GLuint>& elements;
 
 };
 

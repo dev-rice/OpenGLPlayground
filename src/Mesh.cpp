@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
 
-Mesh::Mesh(MeshData& mesh_data, VertexSpecification& vertex_specification) : vertex_specification(&vertex_specification) {
+Mesh::Mesh(MeshData& mesh_data, VertexSpecification& vertex_specification) : vertex_specification(vertex_specification) {
     sendMeshDataToOpenGL(mesh_data);
     setMeshStatsFromMeshData(mesh_data);
 }
@@ -56,7 +56,7 @@ void Mesh::linkToShader(ShaderProgram& shader_program) {
 }
 
 VertexSpecification& Mesh::getVertexSpecification() {
-    return *vertex_specification;
+    return vertex_specification;
 }
 
 void Mesh::draw() {

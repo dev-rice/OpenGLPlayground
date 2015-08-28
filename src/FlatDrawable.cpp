@@ -1,6 +1,6 @@
 #include "FlatDrawable.hpp"
 
-FlatDrawable::FlatDrawable(Mesh& mesh, ShaderProgram& shader_program, Transform2D& transform_2D) : mesh(&mesh), shader_program(&shader_program), transform_2D(&transform_2D) {
+FlatDrawable::FlatDrawable(Mesh& mesh, ShaderProgram& shader_program, Transform2D& transform_2D) : mesh(mesh), shader_program(shader_program), transform_2D(transform_2D) {
 
     getMesh().linkToShader(getShaderProgram());
     show();
@@ -43,13 +43,13 @@ void FlatDrawable::toggleVisibility() {
 }
 
 Mesh& FlatDrawable::getMesh() {
-    return *mesh;
+    return mesh;
 }
 
 ShaderProgram& FlatDrawable::getShaderProgram() {
-    return *shader_program;
+    return shader_program;
 }
 
 Transform2D& FlatDrawable::getTransform2D() {
-    return *transform_2D;
+    return transform_2D;
 }

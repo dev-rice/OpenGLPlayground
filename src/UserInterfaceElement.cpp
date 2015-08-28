@@ -1,6 +1,6 @@
 #include "UserInterfaceElement.hpp"
 
-UserInterfaceElement::UserInterfaceElement(Viewport& viewport, FlatDrawable& flat_drawable) : viewport(&viewport), flat_drawable(&flat_drawable) {
+UserInterfaceElement::UserInterfaceElement(Viewport& viewport, FlatDrawable flat_drawable) : viewport(viewport), flat_drawable(move(flat_drawable)) {
 
 }
 
@@ -43,9 +43,9 @@ void UserInterfaceElement::setCenterInPixels(glm::vec2 center_in_pixels) {
 }
 
 Viewport& UserInterfaceElement::getViewport() {
-    return *viewport;
+    return viewport;
 }
 
 FlatDrawable& UserInterfaceElement::getFlatDrawable() {
-    return *flat_drawable;
+    return flat_drawable;
 }

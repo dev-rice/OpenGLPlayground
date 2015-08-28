@@ -18,8 +18,8 @@ public:
 
 private:
 
-    Texture* diffuse;
-    Texture* emissive;
+    Texture& diffuse;
+    Texture& emissive;
 
 };
 
