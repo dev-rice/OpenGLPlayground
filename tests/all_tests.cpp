@@ -33,11 +33,10 @@ protected:
     float near_clip;
     float far_clip;
     Viewport viewport;
-    Transform3D camera_transform;
 };
 
 TEST_F(CameraTest, getProjectionMatrixTest) {
-    Camera camera(viewport, camera_transform, field_of_view, near_clip, far_clip);
+    Camera camera(viewport, Transform3D(), field_of_view, near_clip, far_clip);
 
     EXPECT_EQ(camera.getProjectionMatrix(), glm::perspective(field_of_view, viewport.getAspectRatio(), near_clip, far_clip));
 
@@ -141,25 +140,23 @@ protected:
 
     OpenGLContext open_gl_context;
 
-    VertexShaderCreator vertex_shader_creator;
-    FragmentShaderCreator fragment_shader_creator;
 };
 
 TEST_F(ShaderFileTest, hasErrorsTest) {
 
-    ShaderFile vertex_shader_with_errors("tests/shaders/test_errors.vs", vertex_shader_creator);
+    ShaderFile vertex_shader_with_errors("tests/shaders/test_errors.vs", VertexShaderCreator());
 
     EXPECT_EQ(vertex_shader_with_errors.hasErrors(), true);
 
-    ShaderFile fragment_shader_with_errors("tests/shaders/test_errors.fs", fragment_shader_creator);
+    ShaderFile fragment_shader_with_errors("tests/shaders/test_errors.fs", FragmentShaderCreator());
 
     EXPECT_EQ(fragment_shader_with_errors.hasErrors(), true);
 
-    ShaderFile vertex_shader_okay("tests/shaders/test_okay.vs", vertex_shader_creator);
+    ShaderFile vertex_shader_okay("tests/shaders/test_okay.vs", VertexShaderCreator());
 
     EXPECT_EQ(vertex_shader_okay.hasErrors(), false);
 
-    ShaderFile fragment_shader_okay("tests/shaders/test_okay.fs", fragment_shader_creator);
+    ShaderFile fragment_shader_okay("tests/shaders/test_okay.fs", FragmentShaderCreator());
 
     EXPECT_EQ(fragment_shader_okay.hasErrors(), false);
 
@@ -179,13 +176,11 @@ protected:
 
     OpenGLContext open_gl_context;
 
-    VertexShaderCreator vertex_shader_creator;
-    FragmentShaderCreator fragment_shader_creator;
 };
 
 TEST_F(ShaderProgramTest, getUniformLocationTest) {
-    ShaderFile vertex_shader("tests/shaders/test_okay.vs", vertex_shader_creator);
-    ShaderFile fragment_shader("tests/shaders/test_okay.fs", fragment_shader_creator);
+    ShaderFile vertex_shader("tests/shaders/test_okay.vs", VertexShaderCreator());
+    ShaderFile fragment_shader("tests/shaders/test_okay.fs", FragmentShaderCreator());
 
     ShaderProgram shader_program(vertex_shader, fragment_shader);
 
@@ -197,8 +192,8 @@ TEST_F(ShaderProgramTest, getUniformLocationTest) {
 
 TEST_F(ShaderProgramTest, getAttributeLocationTest) {
 
-    ShaderFile vertex_shader("tests/shaders/test_okay.vs", vertex_shader_creator);
-    ShaderFile fragment_shader("tests/shaders/test_okay.fs", fragment_shader_creator);
+    ShaderFile vertex_shader("tests/shaders/test_okay.vs", VertexShaderCreator());
+    ShaderFile fragment_shader("tests/shaders/test_okay.fs", FragmentShaderCreator());
 
     ShaderProgram shader_program(vertex_shader, fragment_shader);
 
@@ -350,18 +345,17 @@ protected:
 
     }
 
-    Transform3D unit_transform;
 };
 
 TEST_F(UnitTest, constructorTest) {
-    Unit jimmy(unit_transform, 200, 7);
+    Unit jimmy(Transform3D(), 200, 7);
 
     EXPECT_EQ(jimmy.getHealth(), 200);
     EXPECT_EQ(jimmy.getMaxHealth(), 200);
 }
 
 TEST_F(UnitTest, takeDamageTest) {
-    Unit jimmy(unit_transform, 100, 7);
+    Unit jimmy(Transform3D(), 100, 7);
 
     jimmy.takeDamage(24);
     EXPECT_EQ(jimmy.getHealth(), 76);
@@ -371,7 +365,7 @@ TEST_F(UnitTest, takeDamageTest) {
 }
 
 TEST_F(UnitTest, healForTest) {
-    Unit jimmy(unit_transform, 100, 7);
+    Unit jimmy(Transform3D(), 100, 7);
 
     jimmy.takeDamage(82);
     jimmy.healFor(12);
@@ -383,14 +377,14 @@ TEST_F(UnitTest, healForTest) {
 }
 
 TEST_F(UnitTest, dieTest) {
-    Unit jimmy(unit_transform, 100, 7);
+    Unit jimmy(Transform3D(), 100, 7);
     jimmy.die();
 
     EXPECT_EQ(jimmy.getHealth(), 0);
 }
 
 TEST_F(UnitTest, isDeadTest) {
-    Unit jimmy(unit_transform, 100, 7);
+    Unit jimmy(Transform3D(), 100, 7);
 
     EXPECT_EQ(jimmy.isDead(), false);
 
@@ -398,13 +392,13 @@ TEST_F(UnitTest, isDeadTest) {
     // :(
     EXPECT_EQ(jimmy.isDead(), true);
 
-    Unit already_dead(unit_transform, -2000, 0);
+    Unit already_dead(Transform3D(), -2000, 0);
     EXPECT_EQ(already_dead.isDead(), true);
 }
 
 TEST_F(UnitTest, attackTest) {
-    Unit jimmy(unit_transform, 200, 7);
-    Unit zeratul(unit_transform, 50, 1);
+    Unit jimmy(Transform3D(), 200, 7);
+    Unit zeratul(Transform3D(), 50, 1);
 
     jimmy.attack(zeratul, 20);
     EXPECT_EQ(zeratul.getHealth(), 30);
@@ -414,8 +408,8 @@ TEST_F(UnitTest, attackTest) {
 }
 
 TEST_F(UnitTest, healTest) {
-    Unit uther(unit_transform, 180, 1);
-    Unit tychus(unit_transform, 200, 5);
+    Unit uther(Transform3D(), 180, 1);
+    Unit tychus(Transform3D(), 200, 5);
 
     tychus.takeDamage(90);
     uther.heal(tychus, 40);
@@ -427,20 +421,17 @@ TEST_F(UnitTest, healTest) {
 }
 
 TEST_F(UnitTest, isInAttackRangeTest) {
-    Transform3D uther_transform;
     double uther_attack_range = 1.0;
-    Unit uther(uther_transform, 180, uther_attack_range);
-    uther_transform.setPosition(glm::vec3(0, 0, 0));
+    Unit uther(Transform3D(), 180, uther_attack_range);
+    uther.getTransform3D().setPosition(glm::vec3(0, 0, 0));
 
-    Transform3D tychus_transform;
     double tychus_attack_range = 5.0;
-    Unit tychus(tychus_transform, 200, tychus_attack_range);
-    tychus_transform.setPosition(glm::vec3(2, 0, 0));
+    Unit tychus(Transform3D(), 200, tychus_attack_range);
+    tychus.getTransform3D().setPosition(glm::vec3(2, 0, 0));
 
-    Transform3D jimmy_transform;
     double jimmy_attack_range = 7.0;
-    Unit jimmy(jimmy_transform, 200, jimmy_attack_range);
-    jimmy_transform.setPosition(glm::vec3(1, 0, -5));
+    Unit jimmy(Transform3D(), 200, jimmy_attack_range);
+    jimmy.getTransform3D().setPosition(glm::vec3(1, 0, -5));
 
     EXPECT_EQ(uther.isInAttackRange(tychus), false);
     EXPECT_EQ(uther.isInAttackRange(jimmy), false);
