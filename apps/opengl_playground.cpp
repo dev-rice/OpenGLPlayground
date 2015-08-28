@@ -154,11 +154,9 @@ int main(int argc, char* argv[]) {
     ui_element.setHeightInPixels(60);
     ui_element.setCenterInPixels(glm::vec2(800, 30));
 
-    Transform3D maligron_transform;
-    Unit maligron(maligron_transform, 1000, 20);
+    Unit maligron(Transform3D(), 1000, 20);
 
-    Transform3D yttrios_transform;
-    Unit yttrios(yttrios_transform, 1500, 20);
+    Unit yttrios(Transform3D(), 1500, 20);
 
     ShaderProgram billboard_shader = shader_program_factory.createShaderProgram("shaders/billboard.vs", "shaders/billboard.fs");
     Mesh billboard_mesh = mesh_factory.createBillboardMesh();
