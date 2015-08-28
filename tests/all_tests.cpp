@@ -44,7 +44,7 @@ TEST_F(CameraTest, getProjectionMatrixTest) {
 }
 
 ///////////////////////////////
-// Drawable Tests
+// MeshRenderer Tests
 ///////////////////////////////
 class DrawableTest : public ::testing::Test {
 protected:

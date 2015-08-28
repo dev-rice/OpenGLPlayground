@@ -2,12 +2,12 @@
 
 // THIS CLASS KNOWS TOO MUCH:
 //      How to construct a Transform3D (even though this is simple)
-//      How to construct a Drawable, given a Mesh, a ShaderProgram, a Material, and a Transform3D
-//      How to tell a Drawable to draw, given a Camera
+//      How to construct a MeshRenderer, given a Mesh, a ShaderProgram, a Material, and a Transform3D
+//      How to tell a MeshRenderer to draw, given a Camera
 //      How to make low level OpenGL calls to make itself draw correctly
 // BUT IT WORKS SO IDK WHAT'S RIGHT
 
-Particle::Particle(Drawable drawable, Transform3D transform_3D) : drawable(move(drawable)), transform_3D(move(transform_3D)) {
+Particle::Particle(MeshRenderer drawable, Transform3D transform_3D) : drawable(move(drawable)), transform_3D(move(transform_3D)) {
 
     srand(time(NULL));
 
@@ -36,7 +36,7 @@ float Particle::randomFloat(float a, float b) {
     return a + r;
 }
 
-Drawable& Particle::getDrawable() {
+MeshRenderer& Particle::getDrawable() {
     return drawable;
 }
 
