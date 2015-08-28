@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <memory>
 #include "includes/gl.hpp"
 #include "includes/sdl.hpp"
 #include "includes/glm.hpp"
@@ -144,19 +145,19 @@ protected:
 
 TEST_F(ShaderFileTest, hasErrorsTest) {
 
-    ShaderFile vertex_shader_with_errors("tests/shaders/test_errors.vs", VertexShaderCreator());
+    ShaderFile vertex_shader_with_errors("tests/shaders/test_errors.vs", make_unique<VertexShaderCreator>());
 
     EXPECT_EQ(vertex_shader_with_errors.hasErrors(), true);
 
-    ShaderFile fragment_shader_with_errors("tests/shaders/test_errors.fs", FragmentShaderCreator());
+    ShaderFile fragment_shader_with_errors("tests/shaders/test_errors.fs", make_unique<FragmentShaderCreator>());
 
     EXPECT_EQ(fragment_shader_with_errors.hasErrors(), true);
 
-    ShaderFile vertex_shader_okay("tests/shaders/test_okay.vs", VertexShaderCreator());
+    ShaderFile vertex_shader_okay("tests/shaders/test_okay.vs", make_unique<VertexShaderCreator>());
 
     EXPECT_EQ(vertex_shader_okay.hasErrors(), false);
 
-    ShaderFile fragment_shader_okay("tests/shaders/test_okay.fs", FragmentShaderCreator());
+    ShaderFile fragment_shader_okay("tests/shaders/test_okay.fs", make_unique<FragmentShaderCreator>());
 
     EXPECT_EQ(fragment_shader_okay.hasErrors(), false);
 
@@ -179,8 +180,8 @@ protected:
 };
 
 TEST_F(ShaderProgramTest, getUniformLocationTest) {
-    ShaderFile vertex_shader("tests/shaders/test_okay.vs", VertexShaderCreator());
-    ShaderFile fragment_shader("tests/shaders/test_okay.fs", FragmentShaderCreator());
+    ShaderFile vertex_shader("tests/shaders/test_okay.vs", make_unique<VertexShaderCreator>());
+    ShaderFile fragment_shader("tests/shaders/test_okay.fs", make_unique<FragmentShaderCreator>());
 
     ShaderProgram shader_program(vertex_shader, fragment_shader);
 
@@ -192,8 +193,8 @@ TEST_F(ShaderProgramTest, getUniformLocationTest) {
 
 TEST_F(ShaderProgramTest, getAttributeLocationTest) {
 
-    ShaderFile vertex_shader("tests/shaders/test_okay.vs", VertexShaderCreator());
-    ShaderFile fragment_shader("tests/shaders/test_okay.fs", FragmentShaderCreator());
+    ShaderFile vertex_shader("tests/shaders/test_okay.vs", make_unique<VertexShaderCreator>());
+    ShaderFile fragment_shader("tests/shaders/test_okay.fs", make_unique<FragmentShaderCreator>());
 
     ShaderProgram shader_program(vertex_shader, fragment_shader);
 

@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <memory>
 
 #include "includes/gl.hpp"
 
@@ -13,7 +14,7 @@ using namespace std;
 
 class ShaderFile {
 public:
-    ShaderFile(string filename, ShaderCreator&& shader_creator);
+    ShaderFile(string filename, unique_ptr<ShaderCreator> shader_creator);
     ~ShaderFile();
 
     void attachTo(GLuint shader_program);
@@ -33,7 +34,7 @@ private:
 
     GLuint shader_id;
     string filename;
-    ShaderCreator& shader_creator;
+    unique_ptr<ShaderCreator> shader_creator;
 };
 
 #endif
