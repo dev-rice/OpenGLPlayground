@@ -99,12 +99,22 @@ void handleInputs(Mouse& mouse, Window& window, Transform3D& camera_transform) {
 
 int main(int argc, char* argv[]) {
 
-    Viewport viewport(1600, 900);
+    Viewport viewport(1920, 1080);
     Window window(viewport, false);
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
 
     GameClock game_loop_clock;
+
+    SDL_version compiled;
+    SDL_version linked;
+
+    SDL_VERSION(&compiled);
+    SDL_GetVersion(&linked);
+    printf("We compiled against SDL version %d.%d.%d ...\n",
+           compiled.major, compiled.minor, compiled.patch);
+    printf("But we are linking against SDL version %d.%d.%d.\n",
+           linked.major, linked.minor, linked.patch);
 
     ShaderProgramFactory shader_program_factory;
     ShaderProgram shader = shader_program_factory.createShaderProgram("shaders/temp.vs", "shaders/temp.fs");
