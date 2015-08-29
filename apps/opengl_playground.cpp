@@ -99,7 +99,7 @@ void handleInputs(Mouse& mouse, Window& window, Transform3D& camera_transform) {
 
 int main(int argc, char* argv[]) {
 
-    Viewport viewport(1920, 1080);
+    Viewport viewport(1600, 900);
     Window window(viewport, false);
     OpenGLContext gl_context(4, 1, window);
     Mouse mouse;
