@@ -4,13 +4,9 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "Texture.hpp"
-#include "Material.hpp"
 #include "Transform3D.hpp"
 #include "MeshRenderer.hpp"
 #include "Camera.hpp"
-#include "Mesh.hpp"
-#include "ShaderProgram.hpp"
 #include "GameClock.hpp"
 
 using namespace std;

@@ -1,5 +1,5 @@
-#ifndef Drawable_h
-#define Drawable_h
+#ifndef Doodad_h
+#define Doodad_h
 
 #include "MeshRenderer.hpp"
 #include "Transform3D.hpp"
@@ -7,9 +7,9 @@
 
 using namespace std;
 
-class Drawable {
+class Doodad {
 public:
-    Drawable(MeshRenderer mesh_renderer, Transform3D transform_3D);
+    Doodad(MeshRenderer mesh_renderer, Transform3D transform_3D);
 
     void draw(Camera& camera);
 

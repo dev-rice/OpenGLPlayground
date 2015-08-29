@@ -21,7 +21,7 @@
 #include "GameClock.hpp"
 #include "Unit.hpp"
 #include "Particle.hpp"
-#include "Drawable.hpp"
+#include "Doodad.hpp"
 
 #include <vector>
 #include <iostream>
@@ -129,19 +129,19 @@ int main(int argc, char* argv[]) {
     Material castle_tower_material(castle_tower_diffuse, castle_tower_emissive);
 
 
-    Drawable castle_tower(MeshRenderer(castle_tower_mesh, shader, castle_tower_material), Transform3D());
+    Doodad castle_tower(MeshRenderer(castle_tower_mesh, shader, castle_tower_material), Transform3D());
     castle_tower.getTransform3D().setPosition(glm::vec3(-4, 0, 1));
     castle_tower.getTransform3D().rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
-    Drawable castle_tower2(MeshRenderer(castle_tower_mesh, shader, castle_tower_material), Transform3D());
-    castle_tower.getTransform3D().setPosition(glm::vec3(-4, 0, -5));
-    castle_tower.getTransform3D().rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
+    Doodad castle_tower2(MeshRenderer(castle_tower_mesh, shader, castle_tower_material), Transform3D());
+    castle_tower2.getTransform3D().setPosition(glm::vec3(-4, 0, -5));
+    castle_tower2.getTransform3D().rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
     Texture fence_emissive("res/blank.png");
     Material fence_material(fence_diffuse, fence_emissive);
 
-    Drawable fence(MeshRenderer(fence_mesh, shader, fence_material), Transform3D());
+    Doodad fence(MeshRenderer(fence_mesh, shader, fence_material), Transform3D());
     fence.getTransform3D().setPosition(glm::vec3(2, 0, 1));
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
 
         ui_element.draw();
 
-        castle_tower.getTransform3D().rotateByGlobal(game_loop_clock.getDeltaTime() * glm::vec3(0, M_PI/4.0, 0));
+        castle_tower2.getTransform3D().rotateByGlobal(game_loop_clock.getDeltaTime() * glm::vec3(0, M_PI/4.0, 0));
 
         handleInputs(mouse, window, camera.getTransform3D());
         mouse_camera_controller.update();
