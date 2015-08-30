@@ -11,7 +11,7 @@ OBJDIR  := obj
 OBJECTS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
 
 MAC_LIBRARIES := -framework OpenGl -framework CoreFoundation -I/usr/local/include -lglew -lSOIL `sdl2-config --libs`
-LINUX_LIBRARIES := -lGL -lGLEW -I /usr/lib/x86_64-linux-gnu/ -I /usr/local/include -lSOIL -lpthread `sdl2-config --cflags --libs`
+LINUX_LIBRARIES := -lGL -lGLEW -I /usr/lib/x86_64-linux-gnu/ -I /usr/local/include -lSOIL -lpthread `sdl2-config --libs`
 
 LIBRARY_DIR := lib
 LOCAL_LIBRARIES := -L$(LIBRARY_DIR) -l pugixml
@@ -91,7 +91,7 @@ pugixml:
 	@ rm pugixml.o
 
 configure-linux:
-	@ sudo apt-get install libglew-dev libglm-dev libsdl2-dev curl nmap libjsoncpp-dev
+	@ sudo apt-get install libglew-dev libglm-dev libsdl2-dev
 	@ wget http://www.lonesock.net/files/soil.zip
 	@ unzip soil.zip -d soil
 	@ rm soil.zip
