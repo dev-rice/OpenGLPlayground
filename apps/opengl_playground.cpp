@@ -89,6 +89,8 @@ int main(int argc, char* argv[]) {
     printf("But we are linking against SDL version %d.%d.%d.\n",
            linked.major, linked.minor, linked.patch);
 
+    cout << "GLEW Version: " << glewGetString(GLEW_VERSION) << "\n";
+
     ShaderProgramFactory shader_program_factory;
     ShaderProgram shader = shader_program_factory.createShaderProgram("shaders/temp.vs", "shaders/temp.fs");
 
