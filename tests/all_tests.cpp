@@ -217,7 +217,7 @@ protected:
 TEST_F(Transform3DTest, constructorTest) {
     Transform3D transform_3D;
 
-    EXPECT_EQ(transform_3D.getPosition(), glm::vec3(0, 0, 0));
+    EXPECT_EQ(transform_3D.getAbsolutePosition(), glm::vec3(0, 0, 0));
     EXPECT_EQ(transform_3D.getScale(), glm::vec3(1, 1, 1));
 }
 
@@ -225,12 +225,12 @@ TEST_F(Transform3DTest, moveByGlobalTest1) {
     Transform3D transform_3D;
 
     glm::vec3 start_position = glm::vec3(0, 0, 0);
-    transform_3D.setPosition(start_position);
+    transform_3D.setRelativePosition(start_position);
 
     glm::vec3 move_amount = glm::vec3(1, 0, 52);
     transform_3D.moveByGlobal(move_amount);
 
-    EXPECT_EQ(transform_3D.getPosition(), glm::vec3(1, 0, 52));
+    EXPECT_EQ(transform_3D.getAbsolutePosition(), glm::vec3(1, 0, 52));
 
 }
 
@@ -238,53 +238,48 @@ TEST_F(Transform3DTest, moveByGlobalTest2) {
     Transform3D transform_3D;
 
     glm::vec3 start_position = glm::vec3(10, -50, 32);
-    transform_3D.setPosition(start_position);
+    transform_3D.setRelativePosition(start_position);
 
     glm::vec3 move_amount = glm::vec3(-40, 0, 52);
     transform_3D.moveByGlobal(move_amount);
 
-    EXPECT_EQ(transform_3D.getPosition(), glm::vec3(-30, -50, 84));
+    EXPECT_EQ(transform_3D.getAbsolutePosition(), glm::vec3(-30, -50, 84));
 }
 
 TEST_F(Transform3DTest, moveByLocalTest1) {
     Transform3D transform_3D;
 
     transform_3D.moveByLocal(glm::vec3(1, 0, 0));
-    glm::vec3 transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 0, 0.001);
 
     transform_3D.rotateByGlobal(glm::vec3(0, -M_PI / 2.0, 0));
     transform_3D.moveByLocal(glm::vec3(-1, 0, 0));
-    transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, -1, 0.001);
 }
 
 TEST_F(Transform3DTest, moveByLocalTest2) {
     Transform3D transform_3D;
 
     transform_3D.moveByLocal(glm::vec3(0, 1, 0));
-    glm::vec3 transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 1, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 0, 0.001);
 
     transform_3D.rotateByGlobal(glm::vec3(0, -M_PI / 2.0, 0));
     transform_3D.moveByLocal(glm::vec3(0, -1, 0));
-    transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 0, 0.001);
 
     transform_3D.rotateByGlobal(glm::vec3(0, 0, -M_PI / 2.0));
     transform_3D.moveByLocal(glm::vec3(0, 1, 0));
-    transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 1, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 0, 0.001);
 
 }
 
@@ -292,48 +287,77 @@ TEST_F(Transform3DTest, moveByLocalTest3) {
     Transform3D transform_3D;
 
     transform_3D.moveByLocal(glm::vec3(0, 0, -1));
-    glm::vec3 transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, -1, 0.001);
 
     transform_3D.rotateByGlobal(glm::vec3(0, -M_PI / 2.0, 0));
     transform_3D.moveByLocal(glm::vec3(0, 0, 1));
-    transform_3D_position = transform_3D.getPosition();
-    EXPECT_NEAR(transform_3D_position.x, -1, 0.001);
-    EXPECT_NEAR(transform_3D_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_3D_position.z, -1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, -1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, -1, 0.001);
 
 }
 
 TEST_F(Transform3DTest, moveByLocalTest4) {
-    Transform3D transform;
-    transform.moveByLocal(glm::vec3(0, 0, 1));
-    glm::vec3 transform_position = transform.getPosition();
-    EXPECT_NEAR(transform_position.x, 0, 0.001);
-    EXPECT_NEAR(transform_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_position.z, 1, 0.001);
+    Transform3D transform_3D;
+    transform_3D.moveByLocal(glm::vec3(0, 0, 1));
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 1, 0.001);
 
-    transform.rotateByLocal(glm::vec3(0, M_PI / 2.0, 0));
-    transform.moveByLocal(glm::vec3(0, 0, -1));
-    transform_position = transform.getPosition();
-    EXPECT_NEAR(transform_position.x, -1, 0.001);
-    EXPECT_NEAR(transform_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_position.z, 1, 0.001);
+    transform_3D.rotateByLocal(glm::vec3(0, M_PI / 2.0, 0));
+    transform_3D.moveByLocal(glm::vec3(0, 0, -1));
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, -1, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 1, 0.001);
 
-    transform.rotateByLocal(glm::vec3(M_PI / 2.0, 0, 0));
-    transform.moveByLocal(glm::vec3(0, -1, 0));
-    transform_position = transform.getPosition();
-    EXPECT_NEAR(transform_position.x, -2, 0.001);
-    EXPECT_NEAR(transform_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_position.z, 1, 0.001);
+    transform_3D.rotateByLocal(glm::vec3(M_PI / 2.0, 0, 0));
+    transform_3D.moveByLocal(glm::vec3(0, -1, 0));
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, -2, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 1, 0.001);
 
-    transform.rotateByLocal(glm::vec3(0, 0, M_PI / 2.0));
-    transform.moveByLocal(glm::vec3(2, -1, 0));
-    transform_position = transform.getPosition();
-    EXPECT_NEAR(transform_position.x, 0, 0.001);
-    EXPECT_NEAR(transform_position.y, 0, 0.001);
-    EXPECT_NEAR(transform_position.z, 0, 0.001);
+    transform_3D.rotateByLocal(glm::vec3(0, 0, M_PI / 2.0));
+    transform_3D.moveByLocal(glm::vec3(2, -1, 0));
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().x, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().y, 0, 0.001);
+    EXPECT_NEAR(transform_3D.getAbsolutePosition().z, 0, 0.001);
+
+}
+
+TEST_F(Transform3DTest, parentingPositionTest) {
+    // Things learned from this test:
+    //      setAbsolutePosition should not be allowed; otherwise, what would be the point of having a parent?
+    //      Naming conventions for the transform functions
+    //
+
+    // Need to be able to optionally pass in a parent to a Transform3D. I cannot make this the only constructor or else the chain goes on forever.
+    Transform3D parent;
+
+    Transform3D child;
+    child.setParent(parent);
+
+    Transform3D grandchild;
+    grandchild.setParent(child);
+
+    parent.setRelativePosition(glm::vec3(10, 20, -5));
+    child.setRelativePosition(glm::vec3(10, 10, 0));
+    grandchild.setRelativePosition(glm::vec3( -10, -80, 500));
+
+    EXPECT_NEAR(parent.getAbsolutePosition().x, 10, 0.001);
+    EXPECT_NEAR(parent.getAbsolutePosition().y, 20, 0.001);
+    EXPECT_NEAR(parent.getAbsolutePosition().z, -5, 0.001);
+
+    EXPECT_NEAR(child.getAbsolutePosition().x, 20, 0.001);
+    EXPECT_NEAR(child.getAbsolutePosition().y, 30, 0.001);
+    EXPECT_NEAR(child.getAbsolutePosition().z, -5, 0.001);
+
+    EXPECT_NEAR(grandchild.getAbsolutePosition().x, 10, 0.001);
+    EXPECT_NEAR(grandchild.getAbsolutePosition().y, -50, 0.001);
+    EXPECT_NEAR(grandchild.getAbsolutePosition().z, 495, 0.001);
+
+
 
 }
 
@@ -424,15 +448,15 @@ TEST_F(UnitTest, healTest) {
 TEST_F(UnitTest, isInAttackRangeTest) {
     double uther_attack_range = 1.0;
     Unit uther(Transform3D(), 180, uther_attack_range);
-    uther.getTransform3D().setPosition(glm::vec3(0, 0, 0));
+    uther.getTransform3D().setRelativePosition(glm::vec3(0, 0, 0));
 
     double tychus_attack_range = 5.0;
     Unit tychus(Transform3D(), 200, tychus_attack_range);
-    tychus.getTransform3D().setPosition(glm::vec3(2, 0, 0));
+    tychus.getTransform3D().setRelativePosition(glm::vec3(2, 0, 0));
 
     double jimmy_attack_range = 7.0;
     Unit jimmy(Transform3D(), 200, jimmy_attack_range);
-    jimmy.getTransform3D().setPosition(glm::vec3(1, 0, -5));
+    jimmy.getTransform3D().setRelativePosition(glm::vec3(1, 0, -5));
 
     EXPECT_EQ(uther.isInAttackRange(tychus), false);
     EXPECT_EQ(uther.isInAttackRange(jimmy), false);

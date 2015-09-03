@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
 
     glm::vec3 camera_start_position(-1, 2, 6);
     #warning LoD violation
-    camera.getTransform3D().setPosition(camera_start_position);
+    camera.getTransform3D().setRelativePosition(camera_start_position);
 
     MeshFactory mesh_factory;
     Mesh castle_tower_mesh = mesh_factory.create3DMesh("res/castle_tower.dae");
@@ -115,11 +115,11 @@ int main(int argc, char* argv[]) {
     Material castle_tower_material(castle_tower_diffuse, castle_tower_emissive);
 
     Doodad castle_tower(MeshRenderer(castle_tower_mesh, shader, castle_tower_material), Transform3D());
-    castle_tower.getTransform3D().setPosition(glm::vec3(-4, 0, 1));
+    castle_tower.getTransform3D().setRelativePosition(glm::vec3(-4, 0, 1));
     castle_tower.getTransform3D().rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Doodad castle_tower2(MeshRenderer(castle_tower_mesh, shader, castle_tower_material), Transform3D());
-    castle_tower2.getTransform3D().setPosition(glm::vec3(-4, 0, -5));
+    castle_tower2.getTransform3D().setRelativePosition(glm::vec3(-4, 0, -5));
     castle_tower2.getTransform3D().rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
 
     Texture fence_diffuse("res/fence_diff.png");
@@ -127,7 +127,7 @@ int main(int argc, char* argv[]) {
     Material fence_material(fence_diffuse, fence_emissive);
 
     Doodad fence(MeshRenderer(fence_mesh, shader, fence_material), Transform3D());
-    fence.getTransform3D().setPosition(glm::vec3(2, 0, 1));
+    fence.getTransform3D().setRelativePosition(glm::vec3(2, 0, 1));
 
     ShaderProgram flat_shader = shader_program_factory.createShaderProgram("shaders/flat.vs", "shaders/flat.fs");
 
@@ -161,6 +161,8 @@ int main(int argc, char* argv[]) {
         fence.draw(camera);
 
         particle_emitter.draw(camera, game_loop_clock);
+
+        particle_emitter.getTransform3D().moveByLocal(glm::vec3(0.001 * game_loop_clock.getDeltaTime(), 0, 0));
 
         ui_element.draw();
 

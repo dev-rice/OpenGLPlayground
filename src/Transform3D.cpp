@@ -1,7 +1,7 @@
 #include "Transform3D.hpp"
 
-Transform3D::Transform3D() {
-    setPosition(glm::vec3(0, 0, 0));
+Transform3D::Transform3D() : parent(this) {
+    setRelativePosition(glm::vec3(0, 0, 0));
     setScale(glm::vec3(1, 1, 1));
 
     setLocalAxes();
@@ -14,7 +14,7 @@ void Transform3D::setLocalAxes() {
 }
 
 void Transform3D::moveByGlobal(glm::vec3 move_vector) {
-    setPosition(getPosition() + move_vector);
+    setRelativePosition(getAbsolutePosition() + move_vector);
 }
 
 void Transform3D::rotateByGlobal(glm::vec3 rotation_vector) {
@@ -77,7 +77,7 @@ void Transform3D::setRotationMatrix(glm::mat4 rotation_matrix) {
 }
 
 glm::mat4 Transform3D::calculateTranslationMatrix() {
-    return glm::translate(glm::mat4(), position);
+    return glm::translate(glm::mat4(), getRelativePosition());
 }
 
 glm::mat4 Transform3D::calculateScaleMatrix() {
@@ -85,11 +85,21 @@ glm::mat4 Transform3D::calculateScaleMatrix() {
 }
 
 float Transform3D::distanceTo(Transform3D& other_transform_3D) {
-    return glm::distance(getPosition(), other_transform_3D.getPosition());
+    return glm::distance(getAbsolutePosition(), other_transform_3D.getAbsolutePosition());
 }
 
 glm::mat4 Transform3D::getModelMatrix() {
-    return getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
+    glm::mat4 model_matrix = getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
+
+    if (!isOwnParent()) {
+        model_matrix =  getParent().getModelMatrix() * model_matrix;
+    }
+
+    return model_matrix;
+}
+
+bool Transform3D::isOwnParent() {
+    return parent == this;
 }
 
 glm::mat4 Transform3D::getInverseModelMatrix() {
@@ -108,7 +118,15 @@ glm::mat4 Transform3D::getScaleMatrix() {
     return calculateScaleMatrix();
 }
 
-glm::vec3 Transform3D::getPosition() {
+glm::vec3 Transform3D::getAbsolutePosition() {
+    if (isOwnParent()) {
+        return position;
+    } else {
+        return getParent().getAbsolutePosition() + position;
+    }
+}
+
+glm::vec3 Transform3D::getRelativePosition() {
     return position;
 }
 
@@ -116,10 +134,18 @@ glm::vec3 Transform3D::getScale() {
     return scale;
 }
 
-void Transform3D::setPosition(glm::vec3 position) {
+Transform3D& Transform3D::getParent() {
+    return *parent;
+}
+
+void Transform3D::setRelativePosition(glm::vec3 position) {
     this->position = position;
 }
 
 void Transform3D::setScale(glm::vec3 scale) {
     this->scale = scale;
+}
+
+void Transform3D::setParent(Transform3D& parent) {
+    this->parent = &parent;
 }

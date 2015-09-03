@@ -7,6 +7,7 @@ ParticleEmitter::ParticleEmitter(Particle& to_be_emitted, Transform3D transform_
 void ParticleEmitter::fill(int number_of_particles) {
     for (int i = 0; i < number_of_particles; ++i) {
         particles.push_back(Particle(to_be_emitted));
+        particles[i].getTransform3D().setParent(getTransform3D());
     }
 }
 
