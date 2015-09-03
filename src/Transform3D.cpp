@@ -14,7 +14,7 @@ void Transform3D::setLocalAxes() {
 }
 
 void Transform3D::moveByGlobal(glm::vec3 move_vector) {
-    setRelativePosition(getAbsolutePosition() + move_vector);
+    setRelativePosition(getRelativePosition() + move_vector);
 }
 
 void Transform3D::rotateByGlobal(glm::vec3 rotation_vector) {
@@ -92,7 +92,7 @@ glm::mat4 Transform3D::getModelMatrix() {
     glm::mat4 model_matrix = getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
 
     if (!isOwnParent()) {
-        model_matrix =  getParent().getModelMatrix() * model_matrix;
+        model_matrix = getParent().getModelMatrix() * model_matrix;
     }
 
     return model_matrix;

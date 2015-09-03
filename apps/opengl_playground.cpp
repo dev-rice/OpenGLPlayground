@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
 
     window.setVsync(true);
 
-    GameClock game_loop_clock;
+    GameClock clock;
 
     SDL_version compiled;
     SDL_version linked;
@@ -153,20 +153,21 @@ int main(int argc, char* argv[]) {
 
     // Display loop
     while(window.isOpen()) {
-        game_loop_clock.tick();
+        clock.tick();
         window.clearBuffers();
 
         castle_tower.draw(camera);
         castle_tower2.draw(camera);
         fence.draw(camera);
 
-        particle_emitter.draw(camera, game_loop_clock);
+        particle_emitter.draw(camera, clock);
 
-        particle_emitter.getTransform3D().moveByLocal(glm::vec3(0.001 * game_loop_clock.getDeltaTime(), 0, 0));
+        particle_emitter.getTransform3D().rotateByGlobal(clock.getDeltaTime() * glm::vec3(0, 0, M_PI / 4.0));
+        particle_emitter.getTransform3D().moveByLocal(clock.getDeltaTime() * glm::vec3(0.1, 0, 0));
 
         ui_element.draw();
 
-        castle_tower2.getTransform3D().rotateByGlobal(game_loop_clock.getDeltaTime() * glm::vec3(0, M_PI/4.0, 0));
+        castle_tower2.getTransform3D().rotateByGlobal(clock.getDeltaTime() * glm::vec3(0, M_PI/4.0, 0));
 
         handleInputs(mouse, window);
         mouse_camera_controller.update();
@@ -174,8 +175,8 @@ int main(int argc, char* argv[]) {
 
     }
 
-    cout << "Average frame draw time: " << game_loop_clock.getAverageDeltaTime() << "\n";
-    float average_fps = 1.0f / game_loop_clock.getAverageDeltaTime();
+    cout << "Average frame draw time: " << clock.getAverageDeltaTime() << "\n";
+    float average_fps = 1.0f / clock.getAverageDeltaTime();
     cout << "Average frames per second: " << average_fps << "\n";
 
     // Close the window
