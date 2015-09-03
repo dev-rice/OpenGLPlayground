@@ -22,6 +22,7 @@
 #include "Unit.hpp"
 #include "Particle.hpp"
 #include "Doodad.hpp"
+#include "ParticleEmitter.hpp"
 
 #include <vector>
 #include <iostream>
@@ -113,7 +114,6 @@ int main(int argc, char* argv[]) {
     Texture castle_tower_emissive("res/blank.png");
     Material castle_tower_material(castle_tower_diffuse, castle_tower_emissive);
 
-
     Doodad castle_tower(MeshRenderer(castle_tower_mesh, shader, castle_tower_material), Transform3D());
     castle_tower.getTransform3D().setPosition(glm::vec3(-4, 0, 1));
     castle_tower.getTransform3D().rotateByGlobal(glm::vec3(-M_PI / 2.0, 0, 0));
@@ -147,10 +147,9 @@ int main(int argc, char* argv[]) {
     Texture particle_emissive("res/fuzzyball.png");
     Material particle_material(particle_diffuse, particle_emissive);
 
-    vector<Particle> particles;
-    for (int i = 0; i < 100; ++i) {
-        particles.push_back(Particle(MeshRenderer(billboard_mesh, billboard_shader, particle_material), Transform3D()));
-    }
+    Particle to_be_emitted = Particle(MeshRenderer(billboard_mesh, billboard_shader, particle_material), Transform3D());
+    ParticleEmitter particle_emitter(to_be_emitted, Transform3D());
+    particle_emitter.fill(200);
 
     // Display loop
     while(window.isOpen()) {
@@ -161,10 +160,7 @@ int main(int argc, char* argv[]) {
         castle_tower2.draw(camera);
         fence.draw(camera);
 
-        for (Particle& particle : particles) {
-            particle.draw(camera);
-            particle.moveRandomDirection(game_loop_clock);
-        }
+        particle_emitter.draw(camera, game_loop_clock);
 
         ui_element.draw();
 
