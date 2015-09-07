@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
 
     ShaderProgram billboard_shader = shader_program_factory.createShaderProgram("shaders/billboard.vs", "shaders/billboard.fs");
     Mesh billboard_mesh = mesh_factory.createBillboardMesh();
-    Texture particle_diffuse("res/blank.png");
+    Texture particle_diffuse("res/pink.png");
     Texture particle_emissive("res/fuzzyball.png");
     Material particle_material(particle_diffuse, particle_emissive);
 
@@ -162,7 +162,6 @@ int main(int argc, char* argv[]) {
 
         particle_emitter.draw(camera, clock);
 
-        particle_emitter.getTransform3D().rotateByGlobal(clock.getDeltaTime() * glm::vec3(0, 0, M_PI / 4.0));
         particle_emitter.getTransform3D().moveByLocal(clock.getDeltaTime() * glm::vec3(0.1, 0, 0));
 
         ui_element.draw();

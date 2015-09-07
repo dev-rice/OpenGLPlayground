@@ -99,7 +99,7 @@ glm::mat4 Transform3D::getModelMatrix() {
 }
 
 bool Transform3D::isOwnParent() {
-    return parent == this;
+    return &getParent() == this;
 }
 
 glm::mat4 Transform3D::getInverseModelMatrix() {

@@ -12,23 +12,23 @@ public:
 
     Transform3D();
 
-    virtual void moveByGlobal(glm::vec3 move_vector);
-    virtual void rotateByGlobal(glm::vec3 rotation_vec);
+    void moveByGlobal(glm::vec3 move_vector);
+    void rotateByGlobal(glm::vec3 rotation_vec);
 
-    virtual void moveByLocal(glm::vec3 move_vector);
-    virtual void rotateByLocal(glm::vec3 rotation_vec);
+    void moveByLocal(glm::vec3 move_vector);
+    void rotateByLocal(glm::vec3 rotation_vec);
 
-    virtual void setRelativePosition(glm::vec3 position);
-    virtual void setScale(glm::vec3 scale);
+    void setRelativePosition(glm::vec3 position);
+    void setScale(glm::vec3 scale);
 
-    virtual glm::mat4 getModelMatrix();
-    virtual glm::mat4 getInverseModelMatrix();
+    glm::mat4 getModelMatrix();
+    glm::mat4 getInverseModelMatrix();
 
-    virtual glm::vec3 getAbsolutePosition();
-    virtual glm::vec3 getRelativePosition();
-    virtual glm::vec3 getScale();
+    glm::vec3 getAbsolutePosition();
+    glm::vec3 getRelativePosition();
+    glm::vec3 getScale();
 
-    virtual Transform3D& getParent();
+    Transform3D& getParent();
 
     // Valid for all subclasses
     float distanceTo(Transform3D& other_transform_3D);
