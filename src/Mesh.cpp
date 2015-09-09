@@ -60,11 +60,19 @@ VertexSpecification& Mesh::getVertexSpecification() {
 }
 
 void Mesh::draw() {
-    drawAllElements();
+    drawAllElementsSolid();
 }
 
-void Mesh::drawAllElements() {
-    glDrawElements(GL_TRIANGLES, getNumberOfElements(), GL_UNSIGNED_INT, 0);
+void Mesh::drawAllElementsWireframe() {
+    drawAllElements(GL_LINES);
+}
+
+void Mesh::drawAllElementsSolid() {
+    drawAllElements(GL_TRIANGLES);
+}
+
+void Mesh::drawAllElements(GLint draw_mode) {
+    glDrawElements(draw_mode, getNumberOfElements(), GL_UNSIGNED_INT, 0);
 }
 
 int Mesh::getNumberOfTriangles() {

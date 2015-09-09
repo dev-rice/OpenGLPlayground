@@ -36,7 +36,9 @@ private:
     void setNumberOfElements(int number_of_elements);
     int getNumberOfElements();
 
-    void drawAllElements();
+    void drawAllElementsWireframe();
+    void drawAllElementsSolid();
+    void drawAllElements(GLint draw_mode);
 
     VertexSpecification& getVertexSpecification();
 
